@@ -1,3 +1,6 @@
 # Python files
 .venv/
+__pycache__
 
+# Production files
+db.sqlite3
