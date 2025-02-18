@@ -22,6 +22,10 @@ def _enum_getter(mapping):
     raise ValueError(f"'{value}' not found in environment mapping")
   return _getter
 
+def _csv_getter():
+  def _getter(value):
+    return [v.strip() for v in value.split(',')]
+  return _getter
 
 # Public Api
 VariableNames = Literal[
@@ -31,6 +35,10 @@ VariableNames = Literal[
   # Django cryptographic secret key
   # See: https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
   'DJANGO_SECRET',
+
+  # Comma-separated list of allowed domains for our application
+  # See: https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
+  'ALLOWED_HOSTS',
 ]
 
 class Env(Enum):
@@ -42,7 +50,8 @@ def get_environment(name: VariableNames):
     'ENV': _enum_getter({
       'dev': Env.DEV,
       'prod': Env.PROD
-    })
+    }),
+    'ALLOWED_HOSTS': _csv_getter()
   }
 
   if name in getters:

@@ -7,9 +7,10 @@ from utils.environment import Env, get_environment
 
 # Project root
 BASE_DIR = Path(__file__).resolve().parent.parent
+CURRENT_ENVIRONMENT = get_environment('ENV')
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#debug
-DEBUG = get_environment('ENV') == Env.DEV
+DEBUG = CURRENT_ENVIRONMENT == Env.DEV
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -18,16 +19,36 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# https://docs.djangoproject.com/en/5.1/ref/settings/#silenced-system-checks
+SILENCED_SYSTEM_CHECKS = [
+    # HSTS Preload disabled - Chrome recommends against using this feature, see:
+    # https://hstspreload.org/#preloading
+    'security.W021',
+
+    # DEBUG set to True - this is controlled by an environment variable and will
+    # be False in deployed application
+    'security.W018',
+]
+
 
 
 # --- HOSTING --- #
 
-# TODO: Add production host config
 # https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_environment('ALLOWED_HOSTS')
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'core.wsgi.application'
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#secure-ssl-redirect
+SECURE_SSL_REDIRECT = CURRENT_ENVIRONMENT == Env.PROD
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#secure-hsts-seconds
+# See also: https://hstspreload.org/#deployment-recommendations
+SECURE_HSTS_SECONDS = 300
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-SECURE_HSTS_INCLUDE_SUBDOMAINS
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 
 
@@ -61,6 +82,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 # https://docs.djangoproject.com/en/5.1/ref/settings/#templates
 TEMPLATES = [
     {
@@ -86,6 +108,21 @@ STATIC_URL = 'static/'
 
 
 # --- SECURITY --- #
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-age
+SESSION_COOKIE_AGE = 2 * 60 ^ 60 # (in seconds)
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-name
+SESSION_COOKIE_NAME = 'session'
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-secure
+SESSION_COOKIE_SECURE = True
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-secure
+CSRF_COOKIE_SECURE = True
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-use-sessions
+CSRF_USE_SESSIONS = True
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
 SECRET_KEY = get_environment('DJANGO_SECRET')
