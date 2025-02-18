@@ -60,4 +60,4 @@ def get_environment(name: VariableNames):
   if name in _base_environment:
     return _base_environment.get(name)  
   
-  raise ValueError(f'Unable to load environment variable: {name}')
+  return None
