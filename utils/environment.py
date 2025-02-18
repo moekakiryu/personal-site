@@ -8,8 +8,9 @@ from typing import Literal
 # Load values from files
 _base_environment = {
   **dotenv_values('.env'),
-  **dotenv_values('.env.dist'),
   **dotenv_values('.env.local'),
+  **dotenv_values('.env.dev'),
+  **dotenv_values('.env.prod'),
   **os.environ,
 }
 
@@ -24,7 +25,12 @@ def _enum_getter(mapping):
 
 # Public Api
 VariableNames = Literal[
+  # Global environment switch ('dev' | 'prod')
   'ENV',
+
+  # Django cryptographic secret key
+  # See: https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
+  'DJANGO_SECRET',
 ]
 
 class Env(Enum):
