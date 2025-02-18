@@ -5,29 +5,8 @@ from dotenv import dotenv_values
 
 from typing import Literal
 
-# Load values from files
-_base_environment = {
-  **dotenv_values('.env'),
-  **dotenv_values('.env.local'),
-  **dotenv_values('.env.dev'),
-  **dotenv_values('.env.prod'),
-  **os.environ,
-}
+# --- Environment Variables --- #
 
-# Getters
-def _enum_getter(mapping):
-  def _getter(value):
-    if value in mapping:
-      return mapping.get(value)
-    raise ValueError(f"'{value}' not found in environment mapping")
-  return _getter
-
-def _csv_getter():
-  def _getter(value):
-    return [v.strip() for v in value.split(',')]
-  return _getter
-
-# Public Api
 VariableNames = Literal[
   # Global environment switch ('dev' | 'prod')
   'ENV',
@@ -45,17 +24,45 @@ class Env(Enum):
   DEV = 'dev'
   PROD = 'prod'
 
-def get_environment(name: VariableNames):
-  getters = {
-    'ENV': _enum_getter({
-      'dev': Env.DEV,
-      'prod': Env.PROD
-    }),
-    'ALLOWED_HOSTS': _csv_getter()
-  }
 
-  if name in getters:
-    return getters[name](_base_environment.get(name))
+# --- Load and parse values --- #
+
+# Getters
+def _enum_getter(mapping):
+  def _getter(value):
+    if value in mapping:
+      return mapping.get(value)
+    raise ValueError(f"'{value}' not found in environment mapping")
+  return _getter
+
+def _csv_getter():
+  def _getter(value):
+    return [v.strip() for v in value.split(',')]
+  return _getter
+
+# Load variables from files
+_base_environment = {
+  **dotenv_values('.env'),
+  **dotenv_values('.env.local'),
+  **dotenv_values('.env.dev'),
+  **dotenv_values('.env.prod'),
+  **os.environ,
+}
+
+# Apply tranformations as needed
+_variable_transformations = {
+  'ENV': _enum_getter({
+    'dev': Env.DEV,
+    'prod': Env.PROD
+  }),
+  'ALLOWED_HOSTS': _csv_getter()
+}
+
+
+# --- Public Api --- #
+def get_environment(name: VariableNames):
+  if name in _variable_transformations:
+    return _variable_transformations[name](_base_environment.get(name))
 
   if name in _base_environment:
     return _base_environment.get(name)  
