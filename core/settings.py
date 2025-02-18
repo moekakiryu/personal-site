@@ -1,24 +1,42 @@
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 import os
 from pathlib import Path
 
 from utils.environment import Env, get_environment
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Project root
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+# https://docs.djangoproject.com/en/5.1/ref/settings/#debug
+DEBUG = get_environment('ENV') == Env.DEV
 
-SECRET_KEY = get_environment('DJANGO_SECRET')
+# Internationalization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-if get_environment('ENV') == Env.DEV:
-    DEBUG = True
-    ALLOWED_HOSTS = []
-else:
-    DEBUG = False
-    ALLOWED_HOSTS = [] # @TODO: Add a production config here
 
+
+# --- HOSTING --- #
+
+# TODO: Add production host config
+# https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = []
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#wsgi-application
+WSGI_APPLICATION = 'core.wsgi.application'
+
+
+
+# --- DJANGO CORE --- #
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#root-urlconf
+ROOT_URLCONF = 'core.urls'
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#installed-apps
 INSTALLED_APPS = [
     # Django Core
     'django.contrib.admin',
@@ -32,6 +50,7 @@ INSTALLED_APPS = [
     'apps.root.apps.RootConfig',
 ]
 
+# https://docs.djangoproject.com/en/5.1/ref/settings/#middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -41,7 +60,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-ROOT_URLCONF = 'core.urls'
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -59,18 +79,17 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'core.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = 'static/'
 
-# Password validation
+
+
+# --- SECURITY --- #
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
+SECRET_KEY = get_environment('DJANGO_SECRET')
+
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -87,18 +106,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-STATIC_URL = 'static/'
+# --- DATABASE --- #
 
-# Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
