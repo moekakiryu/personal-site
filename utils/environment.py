@@ -37,6 +37,8 @@ def _enum_getter(mapping):
 
 def _csv_getter():
   def _getter(value):
+    if not value:
+      return []
     return [v.strip() for v in value.split(',')]
   return _getter
 

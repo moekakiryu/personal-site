@@ -35,7 +35,9 @@ SILENCED_SYSTEM_CHECKS = [
 # --- HOSTING --- #
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = get_environment('ALLOWED_HOSTS')
+ALLOWED_HOSTS = [
+  *get_environment('ALLOWED_HOSTS'),
+]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'core.wsgi.application'
@@ -149,11 +151,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+    Env.DEV: {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    },
+    Env.PROD: {},
+}[CURRENT_ENVIRONMENT]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
