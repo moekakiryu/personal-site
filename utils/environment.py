@@ -18,6 +18,9 @@ VariableNames = Literal[
   # Comma-separated list of allowed domains for our application
   # See: https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
   'ALLOWED_HOSTS',
+
+  # The public URL where the site will be hosted
+  'TARGET_DOMAIN',
 ]
 
 class Env(Enum):

@@ -37,6 +37,7 @@ SILENCED_SYSTEM_CHECKS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
   *get_environment('ALLOWED_HOSTS'),
+  get_environment('TARGET_DOMAIN')
 ]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#wsgi-application
@@ -104,8 +105,11 @@ TEMPLATES = [
     },
 ]
 
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
+# https://docs.djangoproject.com/en/5.1/ref/settings/#static-url
 STATIC_URL = 'static/'
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#static-root
+STATIC_ROOT = f'/var/www/{(get_environment('TARGET_DOMAIN') or 'default').strip('.')}/static'
 
 
 
