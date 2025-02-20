@@ -9,7 +9,7 @@ from typing import Literal
 
 VariableNames = Literal[
   # Global environment switch ('dev' | 'prod')
-  'ENV',
+  'DJANGO_ENV',
 
   # Django cryptographic secret key
   # See: https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
@@ -17,10 +17,10 @@ VariableNames = Literal[
 
   # Comma-separated list of allowed domains for our application
   # See: https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
-  'ALLOWED_HOSTS',
+  'DJANGO_ALLOWED_HOSTS',
 
   # The public URL where the site will be hosted
-  'TARGET_DOMAIN',
+  'DJANGO_TARGET_DOMAIN',
 ]
 
 class Env(Enum):
@@ -56,11 +56,11 @@ _base_environment = {
 
 # Apply tranformations as needed
 _variable_transformations = {
-  'ENV': _enum_getter({
+  'DJANGO_ENV': _enum_getter({
     'dev': Env.DEV,
     'prod': Env.PROD
   }),
-  'ALLOWED_HOSTS': _csv_getter()
+  'DJANGO_ALLOWED_HOSTS': _csv_getter()
 }
 
 

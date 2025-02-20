@@ -7,7 +7,7 @@ from utils.environment import Env, get_environment
 
 # Project root
 BASE_DIR = Path(__file__).resolve().parent.parent
-CURRENT_ENVIRONMENT = get_environment('ENV')
+CURRENT_ENVIRONMENT = get_environment('DJANGO_ENV')
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#debug
 DEBUG = CURRENT_ENVIRONMENT == Env.DEV
@@ -36,8 +36,8 @@ SILENCED_SYSTEM_CHECKS = [
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
-  *get_environment('ALLOWED_HOSTS'),
-  get_environment('TARGET_DOMAIN')
+  *get_environment('DJANGO_ALLOWED_HOSTS'),
+  get_environment('DJANGO_TARGET_DOMAIN')
 ]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#wsgi-application
@@ -109,7 +109,7 @@ TEMPLATES = [
 STATIC_URL = 'static/'
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#static-root
-STATIC_ROOT = f'/var/www/{(get_environment('TARGET_DOMAIN') or 'default').strip('.')}/static'
+STATIC_ROOT = f"/var/www/{(get_environment('DJANGO_TARGET_DOMAIN') or 'default').strip('.')}/static"
 
 
 
