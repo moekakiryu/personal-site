@@ -162,12 +162,14 @@ DATABASES = {
         }
     },
     Env.PROD: {
+      'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': get_environment('POSTGRESQL_DB'),
         'USER': get_environment('POSTGRESQL_USERNAME'),
         'PASSWORD': get_environment('POSTGRESQL_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '',
+      }
     },
 }[CURRENT_ENVIRONMENT]
 
