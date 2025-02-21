@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secure-ssl-redirect
-SECURE_SSL_REDIRECT = CURRENT_ENVIRONMENT == Env.PROD
+SECURE_SSL_REDIRECT = False # CURRENT_ENVIRONMENT == Env.PROD
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secure-hsts-seconds
 # See also: https://hstspreload.org/#deployment-recommendations
@@ -161,7 +161,14 @@ DATABASES = {
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     },
-    Env.PROD: {},
+    Env.PROD: {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': get_environment('POSTGRESQL_DB'),
+        'USER': get_environment('POSTGRESQL_USERNAME'),
+        'PASSWORD': get_environment('POSTGRESQL_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '',
+    },
 }[CURRENT_ENVIRONMENT]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

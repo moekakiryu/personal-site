@@ -21,6 +21,15 @@ VariableNames = Literal[
 
   # The public URL where the site will be hosted
   'DJANGO_TARGET_DOMAIN',
+
+  # The name of the PostgreSQL database
+  'POSTGRESQL_DB',
+
+  # Usename for a PostgreSQL superuser
+  'POSTGRESQL_USERNAME',
+
+  # Passowrd corresponding to the above username
+  'POSTGRESQL_PASSWORD',
 ]
 
 class Env(Enum):
