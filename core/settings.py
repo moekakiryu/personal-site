@@ -44,7 +44,9 @@ ALLOWED_HOSTS = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secure-ssl-redirect
-SECURE_SSL_REDIRECT = False # CURRENT_ENVIRONMENT == Env.PROD
+# Note: Even on prod this should be safe to leave off - redirects are handled
+#       by the domain provider. We will leave this setting on as a fallback.
+SECURE_SSL_REDIRECT = CURRENT_ENVIRONMENT == Env.PROD
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secure-hsts-seconds
 # See also: https://hstspreload.org/#deployment-recommendations
