@@ -83,6 +83,10 @@ git checkout master
 git push deploy master # or `git push deploy` on subsequent updates
 ```
 
+Finally, SSH to your host to verify all files are in the `deployment` directory
+and continue with the rest of the steps
+
+
 ### Server Setup
 
 1. Create a `.env.prod` file based on the values listed in
@@ -95,6 +99,7 @@ by this repository.
 3. After compeleting these steps, update your domain's DNS settings to point to
 your new server and verify that the site is being hosted correctly (you may need
 to update your browswer's setttings to allow `http` connections without SSL).
+
 
 ### Add SSL Support
 
