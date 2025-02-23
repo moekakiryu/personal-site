@@ -133,6 +133,8 @@ CSRF_COOKIE_SECURE = True
 CSRF_USE_SESSIONS = True
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
+if not get_environment('DJANGO_SECRET'):
+  raise ValueError('Django secret key not found. Please set `DJANGO_SECRET` environment variable before continuing.')
 SECRET_KEY = get_environment('DJANGO_SECRET')
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
