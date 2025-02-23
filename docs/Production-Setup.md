@@ -156,3 +156,15 @@ to update your browswer's setttings to allow `http` connections without SSL).
 
 4. Confirm your nginx config is valid: `sudo nginx -t`
 5. Restart the nginx service: `sudo systemctl restart nginx`
+
+
+## Sources
+
+1. **Thilina Lakshan / Quick web deployments using git-bare repositories**  
+    https://thilinatlm.medium.com/quick-web-deployments-using-git-bare-repositories-2e6e1ceaa06e
+
+2. **DigialOcean / How To Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu**  
+    https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu#step-2-creating-the-postgresql-database-and-user
+
+3. **Mozilla / SSL Configuration Generator**  
+    https://ssl-config.mozilla.org/
