@@ -119,11 +119,11 @@ to update your browswer's setttings to allow `http` connections without SSL).
     server {
     -    listen              80;
     +    listen              443 ssl;
-        server_name         example.com www.example.com;
+        server_name         <example.com> www.<example.com>;
 
     +    # SSL Certificates
-    +    ssl_certificate     /etc/nginx/ssl/example_com/ssl-certificate.crt;
-    +    ssl_certificate_key /etc/nginx/ssl/example_com/private.key;
+    +    ssl_certificate     /etc/nginx/ssl/<example_com>/ssl-certificate.crt;
+    +    ssl_certificate_key /etc/nginx/ssl/<example_com>/private.key;
 
     +    # SSL Additional Config
     +    ssl_protocols       TLSv1.2 TLSv1.3;
@@ -133,7 +133,7 @@ to update your browswer's setttings to allow `http` connections without SSL).
 
         location = /favicon.ico { access_log off; log_not_found off; }
         location /static/ {
-            root /var/www/example.com/static;
+            root /var/www/<example.com>/static;
         }
 
         location / {
@@ -146,10 +146,10 @@ to update your browswer's setttings to allow `http` connections without SSL).
     + server {
     +    listen      80;
     +    listen      [::]:80;
-    +    server_name example.com www.example.com;
+    +    server_name <example.com> www.<example.com>;
     +
     +    location / {
-    +        return 301 https://example.com$request_uri;
+    +        return 301 https://<example.com>$request_uri;
     +    }
     +}
     ```
