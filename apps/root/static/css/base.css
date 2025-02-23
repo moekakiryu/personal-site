@@ -1,0 +1,75 @@
+/* --- Global Styles --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* --- Global Utility Classes --- */
+.container {
+  padding: 0 2em;
+  margin: 0 auto;
+
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* --- Header Styles --- */
+.header {
+  display: flex;
+  margin-bottom: 2em;
+}
+
+.header .title {
+  margin-top: 5em;
+  text-align: center;
+}
+
+.header .nav {
+  display: flex;
+  justify-content: center;
+
+  margin: 0;
+  padding: 2em 0;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.header .nav li {
+  display: inline-block;
+}
+
+.header .nav li a {
+  position: relative;
+
+  margin: 0 .5em;
+  padding: 0 .5em;
+
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.header .nav li a::after {
+  content: none;
+  position: absolute;
+
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 1px;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: black;
+}
+
+.header .nav li a:hover::after,
+.header .nav li a:focus::after {
+  content: "";
+}
