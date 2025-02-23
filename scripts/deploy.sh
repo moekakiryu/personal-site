@@ -1,5 +1,7 @@
 # This is very basic and flaky, this should be updated with extra checks and fallbacks in the future
 
+echo "DEBUG: $(pwd)"
+
 # Verify this script is being run in the correct directory
 # Note: We assume that finding an django entry is enough verification for this
 if [ ! -f manage.py ]; then
@@ -14,8 +16,15 @@ if [ ! -f .venv/bin/activate ]; then
 fi
 source .venv/bin/activate
 
+which python3
+python3 -m django --version
+
+# DEBUG: Skip deployment to confirm directory is correct
+deactivate
+exit 0
+
 echo -e "\n\n-- Installing new requirements --"
-python3 -m pip install -r requiremetns.txt
+python3 -m pip install -r requirements.txt
 
 echo -e "\n\n-- Collecting Django updates --"
 python3 manage.py collectstatic
