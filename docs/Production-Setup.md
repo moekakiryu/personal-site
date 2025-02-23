@@ -133,7 +133,7 @@ to update your browswer's setttings to allow `http` connections without SSL).
 
         location = /favicon.ico { access_log off; log_not_found off; }
         location /static/ {
-            root /var/www/yourdomain.com/static;
+            root /var/www/example.com/static;
         }
 
         location / {
