@@ -16,18 +16,21 @@ this necessarily follows best practices, but is what worked well for me.
 
 ### Initial Setup
 
-Follow the steps in [this tutorial by DitigalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu#step-2-creating-the-postgresql-database-and-user).
-Please feel free to skip step 3 as that has already been completed by this repository.
+1. Create a `.env.prod` file based on the values listed in `./utils/environment.py`
 
-After compeleting these steps, update your domain's DNS settings to point to your new server and
+2. Follow the steps in [this tutorial by DitigalOcean](https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu#step-2-creating-the-postgresql-database-and-user).
+Please feel free to skip step 3 in that guide as that has already been completed by this repository.
+
+3. After compeleting these steps, update your domain's DNS settings to point to your new server and
 verify that the site is being hosted correctly (you may need to update your browswer's setttings to
 allow `http` connections without SSL).
 
 ### Add SSL Support
 
-1. Get and enable a valid SSL certificate from a [trusted certifying authority](https://developer.visa.com/pages/trusted_certifying_authorities).
+1. Get and enable a valid SSL certificate from a [trusted certifying authority (CA)](https://developer.visa.com/pages/trusted_certifying_authorities).
 
-    1. Please follow [this guide by Sectigo](https://www.sectigo.com/knowledge-base/detail/ECC-CSR-Generation-Using-OpenSSL-1527076086315/kA01N000000zFKR) to generate a private SSL key and a CSR file (needed by certifying authorities to generate a SSL certificate).
+    1. Please follow [this guide by Sectigo](https://www.sectigo.com/knowledge-base/detail/ECC-CSR-Generation-Using-OpenSSL-1527076086315/kA01N000000zFKR) to generate a private SSL key and a CSR file (needed by CAs to generate a SSL certificate).
+    2. Follow any steps from your chosen CA to verify site ownership and generate an SSL certificate.
 
 2. Save both the certificate and private key in your system. For this project, we recommend: `/etc/nginx/ssl/example_com/`
 3. Update your nginx config as follows:

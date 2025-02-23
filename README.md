@@ -9,6 +9,10 @@
 
 *These steps are for a development server. For production setup, please see the [production setup guide](./docs/Production-Setup.md).*
 
+1. Create an `.env.dev` file in the project root. A `.env.dev.example` file has been provided and can be used as a template.
+
+2. Run the following commands in your terminal
+
 ```sh
 # Create python virtual environment
 python -m venv .venv
