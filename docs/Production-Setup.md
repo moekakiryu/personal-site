@@ -115,44 +115,44 @@ to update your browswer's setttings to allow `http` connections without SSL).
    we recommend: `/etc/nginx/ssl/example_com/`
 3. Update your nginx config as follows:
 
-```diff
-server {
--    listen              80;
-+    listen              443 ssl;
-    server_name         example.com www.example.com;
+    ```diff
+    server {
+    -    listen              80;
+    +    listen              443 ssl;
+        server_name         example.com www.example.com;
 
-+    # SSL Certificates
-+    ssl_certificate     /etc/nginx/ssl/example_com/ssl-certificate.crt;
-+    ssl_certificate_key /etc/nginx/ssl/example_com/private.key;
+    +    # SSL Certificates
+    +    ssl_certificate     /etc/nginx/ssl/example_com/ssl-certificate.crt;
+    +    ssl_certificate_key /etc/nginx/ssl/example_com/private.key;
 
-+    # SSL Additional Config
-+    ssl_protocols       TLSv1.2 TLSv1.3;
-+    ssl_ecdh_curve      X25519:prime256v1:secp384r1;
-+    ssl_ciphers         ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
-+    ssl_prefer_server_ciphers off;
+    +    # SSL Additional Config
+    +    ssl_protocols       TLSv1.2 TLSv1.3;
+    +    ssl_ecdh_curve      X25519:prime256v1:secp384r1;
+    +    ssl_ciphers         ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305;
+    +    ssl_prefer_server_ciphers off;
 
-    location = /favicon.ico { access_log off; log_not_found off; }
-    location /static/ {
-        root /var/www/yourdomain.com/static;
+        location = /favicon.ico { access_log off; log_not_found off; }
+        location /static/ {
+            root /var/www/yourdomain.com/static;
+        }
+
+        location / {
+                include proxy_params;
+                proxy_pass http://unix:/run/gunicorn.sock;
+        }
     }
 
-    location / {
-            include proxy_params;
-            proxy_pass http://unix:/run/gunicorn.sock;
-    }
-}
-
-+ # HTTP redirect
-+ server {
-+    listen      80;
-+    listen      [::]:80;
-+    server_name example.com www.example.com;
-+
-+    location / {
-+        return 301 https://example.com$request_uri;
-+    }
-+}
-```
+    + # HTTP redirect
+    + server {
+    +    listen      80;
+    +    listen      [::]:80;
+    +    server_name example.com www.example.com;
+    +
+    +    location / {
+    +        return 301 https://example.com$request_uri;
+    +    }
+    +}
+    ```
 
 4. Confirm your nginx config is valid: `sudo nginx -t`
 5. Restart the nginx service: `sudo systemctl restart nginx`
