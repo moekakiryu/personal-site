@@ -18,7 +18,7 @@ echo -e "\n\n-- Installing new requirements --"
 python3 -m pip install -r requirements.txt
 
 echo -e "\n\n-- Collecting Django updates --"
-python3 manage.py collectstatic
+python3 manage.py collectstatic --no-input
 
 echo -e "\n\n-- Collecting Django updates --"
 python3 manage.py migrate
