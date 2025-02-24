@@ -9,6 +9,10 @@
   --spacing-md: 2rem;
 
   --shadow-md: 0 0 8px -4px;
+
+  --font-heading: "Andada Pro", "Times New Roman", Times, serif;
+  --font-body: "Montserrat", Geneva, Verdana, sans-serif;
+  --font-color-primary: #383838;
 }
 
 body {
@@ -19,10 +23,12 @@ body {
   margin: 0;
   padding: 0 var(--spacing-sm);
 
+  font-family: var(--font-body);
+  color: var(--font-color-primary);
+
   background-image: url(/static/assets/img/dots.png);
   background-size: 200px;
 }
-
 
 .main-content {
   flex-grow: 1;
@@ -56,6 +62,7 @@ body {
 .header {
   display: flex;
   flex-direction: column;
+  font-family: var(--font-heading);
 }
 
 .header .title {
