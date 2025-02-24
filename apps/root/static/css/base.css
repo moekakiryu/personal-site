@@ -33,7 +33,7 @@ body {
   border-right: 1px solid black;
 
   width: 100%;
-  max-width: 1200px;
+  max-width: 75rem;
 
   box-shadow: var(--shadow-md);
   background-color: white;
@@ -47,17 +47,22 @@ body {
 
 
 /* --- Global Utility Classes --- */
+.container {
+  margin: var(--spacing-md) auto 0 auto;
+  max-width: 50rem;
+}
 
 /* --- Header Styles --- */
 .header {
   display: flex;
   flex-direction: column;
-  margin-bottom: var(--spacing-md);
 }
 
 .header .title {
   margin: var(--spacing-sm) 0;
   text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .header .primary-nav {
