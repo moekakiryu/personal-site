@@ -83,6 +83,7 @@ body {
 .header .primary-nav ul {
   display: grid;
   grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   grid-column-gap: var(--spacing-sm);
 
   margin: 0;
