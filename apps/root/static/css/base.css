@@ -99,11 +99,16 @@ body {
 
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-xs);
+  border-top: 2px solid transparent;
 
   color: black;
   font-weight: bold;
   text-decoration: none;
   text-align: center;
+}
+
+.header .primary-nav li a.active {
+  border-top-color: black;
 }
 
 .header .primary-nav li a::after {
