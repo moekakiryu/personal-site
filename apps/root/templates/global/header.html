@@ -1,9 +1,9 @@
 <div class="header">
-  <div class="container">
-    <div class="title">
-      <h1>{{title|default:"Moeka Kiryu"}}</h1>
-    </div>
-    <ul class="nav">
+  <div class="title">
+    <h1>{{title|default:"Moeka Kiryu"}}</h1>
+  </div>
+  <nav class="primary-nav">
+    <ul>
       <li>
         <a href="{% url "root.home" %}">Home</a>
       </li>
@@ -11,5 +11,5 @@
         <a href="{% url "root.sandbox" %}">Sandbox</a>
       </li>
     </ul>
-  </div>
+  </nav>
 </div>

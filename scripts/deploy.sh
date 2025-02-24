@@ -1,4 +1,4 @@
-# This is very basic and flaky, this should be updated with extra checks and fallbacks in the future
+#!/bin/bash
 
 # Verify this script is being run in the correct directory
 # Note: We assume that finding an django entry is enough verification for this

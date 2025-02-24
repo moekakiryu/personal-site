@@ -12,10 +12,9 @@
 	<title>{% block head.title %}{% endblock head.title %}</title>
 </head>
 <body>
-  {% include "global/header.html" %}
-
-  <div class="container">
+  <div class="main-content">
+    {% include "global/header.html" %}
     {% block content%}{% endblock content %}
-  </div>
+  </div>  
 </body>
 </html>

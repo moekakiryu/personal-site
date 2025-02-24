@@ -3,73 +3,111 @@
   box-sizing: border-box;
 }
 
+:root {
+  --spacing-xs: .5em;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+
+  --shadow-md: 0 0 8px -4px;
+}
+
 body {
   display: flex;
   flex-direction: column;
 
   min-height: 100vh;
   margin: 0;
+  padding: 0 var(--spacing-sm);
+
+  background-image: url(/static/assets/img/dots.png);
+  background-size: 200px;
 }
 
-/* --- Global Utility Classes --- */
-.container {
-  padding: 0 2em;
+
+.main-content {
+  flex-grow: 1;
+
   margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+  border-left: 1px solid black;
+  border-right: 1px solid black;
 
   width: 100%;
   max-width: 1200px;
+
+  box-shadow: var(--shadow-md);
+  background-color: white;
 }
+
+@media screen and (min-width: 640px) {
+  .main-content {
+    padding: 0 var(--spacing-md);
+  }
+}
+
+
+/* --- Global Utility Classes --- */
 
 /* --- Header Styles --- */
 .header {
   display: flex;
-  margin-bottom: 2em;
+  flex-direction: column;
+  margin-bottom: var(--spacing-md);
 }
 
 .header .title {
-  margin-top: 5em;
+  margin: var(--spacing-sm) 0;
   text-align: center;
 }
 
-.header .nav {
+.header .primary-nav {
   display: flex;
   justify-content: center;
 
-  margin: 0;
-  padding: 2em 0;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
 
-.header .nav li {
+.header .primary-nav ul {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: var(--spacing-sm);
+
+  margin: 0;
+  padding: 0;
+}
+
+.header .primary-nav li {
   display: inline-block;
 }
 
-.header .nav li a {
+.header .primary-nav li a {
   position: relative;
+  display: inline-block;
 
-  margin: 0 .5em;
-  padding: 0 .5em;
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-xs);
 
   color: black;
   font-weight: bold;
   text-decoration: none;
+  text-align: center;
 }
 
-.header .nav li a::after {
+.header .primary-nav li a::after {
   content: none;
   position: absolute;
 
   left: 0;
-  bottom: -8px;
+  bottom: 0;
   width: 100%;
-  height: 1px;
+  height: 2px;
   border-radius: 999px;
   overflow: hidden;
   background-color: black;
 }
 
-.header .nav li a:hover::after,
-.header .nav li a:focus::after {
+.header .primary-nav li a:hover::after,
+.header .primary-nav li a:focus::after {
   content: "";
 }
