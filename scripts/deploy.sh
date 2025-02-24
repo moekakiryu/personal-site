@@ -14,17 +14,19 @@ if [ ! -f .venv/bin/activate ]; then
 fi
 source .venv/bin/activate
 
-echo -e "\n\n-- Installing new requirements --"
+echo -e "\n\n-- Installing new requirements --\n"
 python3 -m pip install -r requirements.txt
 
-echo -e "\n\n-- Collecting Django updates --"
+echo -e "\n\n-- Collecting Django updates --\n"
 python3 manage.py collectstatic --no-input
 
-echo -e "\n\n-- Collecting Django updates --"
+echo -e "\n\n-- Collecting Django updates --\n"
 python3 manage.py migrate
 
 # Deactivate python virtual environment since all python operations have been completed
 deactivate
 
-echo -e "\n\n-- Restarting gunicorn service --"
+echo -e "\n\n-- Restarting gunicorn service --\n"
 sudo systemctl restart gunicorn
+
+echo -e "Deployment Complete.\n"
