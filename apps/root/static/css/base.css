@@ -14,9 +14,14 @@
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
 
+  --color-greyscale-0: #000;
   --color-greyscale-20: #383838;
+  --color-greyscale-90: #cecece;
+  --color-greyscale-100: #fff;
 
   --color-terminal-blue: #00316f;
+  --color-terminal-blue-70: #e6e7ed;
+  --color-terminal-blue-90: #f2f3f7;
 
   --font-heading: "Andada Pro", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
