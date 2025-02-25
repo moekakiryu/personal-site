@@ -14,6 +14,7 @@
 .card, .card:visited {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
   gap: var(--spacing-sm);
 
   padding: var(--spacing-sm);
@@ -22,6 +23,12 @@
 
   color: inherit;
   text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+  .card, .card:visited {
+    flex-direction: row;
+  }
 }
 
 .card:hover, .card:focus {
@@ -35,7 +42,14 @@
 
 .card .image {
   position: relative;
+  align-self: center;
   width: 90px;
+}
+
+@media screen and (min-width: 768px) {
+  .card .image {
+    align-self: auto;
+  }
 }
 
 .card .image::before {
