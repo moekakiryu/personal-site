@@ -14,11 +14,17 @@
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
 
+  --color-greyscale-20: #383838;
+
+  --color-terminal-blue: #00316f;
+
   --font-heading: "Andada Pro", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
 
-  --font-color-primary: #383838;
-  --color-font-secondary: #00316f;
+  /* Derived */
+
+  --font-color-primary: var(--color-greyscale-20);
+  --font-color-secondary: var(--color-terminal-blue);
 }
 
 body {
@@ -39,7 +45,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, .header {
   font-family: var(--font-heading);
-  color: var(--color-font-secondary);
+  color: var(--font-color-secondary);
 }
 
 /* --- Global Utility Classes --- */
@@ -97,7 +103,7 @@ h1, h2, h3, h4, h5, h6, .header {
 
 .header .title > svg {
   width: 100%;
-  fill: var(--color-font-secondary);
+  fill: var(--font-color-secondary);
 }
 
 .header .primary-nav {
