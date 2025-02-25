@@ -4,15 +4,21 @@
 }
 
 :root {
-  --spacing-xs: .5em;
+  --spacing-xs: .5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
+  --spacing-lg: 4rem;
 
   --shadow-md: 0 0 8px -4px;
 
+  --rounded-sm: .5rem;
+  --rounded-full: 9999px;
+
   --font-heading: "Andada Pro", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
+
   --font-color-primary: #383838;
+  --color-font-secondary: #00316f;
 }
 
 body {
@@ -30,6 +36,12 @@ body {
   background-size: 200px;
 }
 
+h1, h2, h3, h4, h5, h6, .header {
+  font-family: var(--font-heading);
+  color: var(--color-font-secondary);
+}
+
+/* --- Global Utility Classes --- */
 .main-content {
   flex-grow: 1;
 
@@ -51,12 +63,23 @@ body {
   }
 }
 
-
-/* --- Global Utility Classes --- */
 .container {
   margin: var(--spacing-md) auto 0 auto;
   max-width: 50rem;
 }
+
+.section-header {
+  display: block;
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+@media screen and (min-width: 640px) {
+  .section-header {
+    margin-top: var(--spacing-lg);
+  }
+}
+
 
 /* --- Header Styles --- */
 .header {
@@ -120,7 +143,7 @@ body {
   bottom: 0;
   width: 100%;
   height: 2px;
-  border-radius: 999px;
+  border-radius: var(--rounded-full);
   overflow: hidden;
   background-color: black;
 }
