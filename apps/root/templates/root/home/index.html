@@ -12,35 +12,7 @@
 
 {# Body #}
 {% block content %}
-  {# --- About Me --- #}
-  <div class="container">
-    <h2 class="section-header">Who am I?</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam iaculis pulvinar ex, in rhoncus magna aliquet vel. Proin sit amet nulla a mi volutpat consequat.</p>
-  </div>
-
-  {# --- Recent Projects---#}
-  <div class="container">
-    <h2 class="section-header">Featured Projects</h2>
-    <div class="card-grid">
-      <div class="card">
-        Lorem ipsum
-      </div>
-      <div class="card">
-        Lorem ipsum
-      </div>
-      <div class="card">
-        Lorem ipsum
-      </div>
-      <div class="card">
-        Lorem ipsum
-      </div>
-    </div>
-  </div>
-
-  {# --- Recent Articles / Blog ---#}
-  <div class="container">
-    <h2 class="section-header">Latest Articles</h2>
-    <div class="article">
-    </div>
-  </div>
+  {% include "root/home/about.html" %}
+  {% include "root/home/projects.html" %}
+  {% include "root/home/articles.html" %}
 {% endblock content %}
