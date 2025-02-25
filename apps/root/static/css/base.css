@@ -89,10 +89,14 @@ h1, h2, h3, h4, h5, h6, .header {
 }
 
 .header .title {
-  margin: var(--spacing-sm) 0;
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
+  margin: var(--spacing-md) auto;
+  width: 80%;
+  max-width: 400px;
+}
+
+.header .title > svg {
+  width: 100%;
+  fill: var(--color-font-secondary);
 }
 
 .header .primary-nav {
