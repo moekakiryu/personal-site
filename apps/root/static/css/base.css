@@ -34,6 +34,7 @@ body {
 
   background-image: url(/static/assets/img/dots.png);
   background-size: 200px;
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6, .header {
