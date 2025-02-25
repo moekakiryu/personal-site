@@ -59,14 +59,14 @@ h1, h2, h3, h4, h5, h6, .header {
 
   margin: 0 auto;
   padding: 0 var(--spacing-sm);
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 1px solid var(--color-greyscale-0);
+  border-right: 1px solid var(--color-greyscale-0);
 
   width: 100%;
   max-width: 75rem;
 
   box-shadow: var(--shadow-md);
-  background-color: white;
+  background-color: var(--color-greyscale-100);
 }
 
 @media screen and (min-width: 640px) {
@@ -115,8 +115,8 @@ h1, h2, h3, h4, h5, h6, .header {
   display: flex;
   justify-content: center;
 
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid var(--color-greyscale-0);
+  border-bottom: 1px solid var(--color-greyscale-0);
 }
 
 .header .primary-nav ul {
@@ -141,14 +141,14 @@ h1, h2, h3, h4, h5, h6, .header {
   padding: var(--spacing-sm) var(--spacing-xs);
   border-top: 2px solid transparent;
 
-  color: black;
+  color: var(--color-greyscale-0);
   font-weight: bold;
   text-decoration: none;
   text-align: center;
 }
 
 .header .primary-nav li a.active {
-  border-top-color: black;
+  border-top-color: var(--color-greyscale-0);
 }
 
 .header .primary-nav li a::after {
@@ -161,7 +161,7 @@ h1, h2, h3, h4, h5, h6, .header {
   height: 2px;
   border-radius: var(--rounded-full);
   overflow: hidden;
-  background-color: black;
+  background-color: var(--color-greyscale-0);
 }
 
 .header .primary-nav li a:hover::after,
