@@ -4,7 +4,7 @@ from django.http import HttpResponse
 def home(request):
   mock_projects = [
     {
-      "name": "Project",
+      "name": "Magnolia",
       "description": "Lorem ipsum"
     },
     {

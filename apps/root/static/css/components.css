@@ -69,6 +69,8 @@
 
 .card .name {
   margin: 0 0 var(--spacing-xs) 0;
+
+  color: var(--font-color-primary);
 }
 
 .card .description {
