@@ -2,9 +2,19 @@
   <h2 class="section-header">Featured Projects</h2>
   <div class="card-grid">
     {% for project in projects %}
-      <div class="card">
-        {{project.description}}
-      </div>
+      <a class="card" href="">
+        <div class="image">
+          <div class="mock-placeholder"></div>
+        </div>
+        <div class="details">
+          <h3 class="name">
+            {{project.name}}
+          </h3>
+          <p class="description">
+            {{project.description}}
+          </p>
+        </div>
+      </a>
     {% endfor %}
   </div>
 </div>
