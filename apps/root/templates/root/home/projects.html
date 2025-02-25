@@ -1,17 +1,10 @@
 <div class="container">
   <h2 class="section-header">Featured Projects</h2>
   <div class="card-grid">
-    <div class="card">
-      Lorem ipsum
-    </div>
-    <div class="card">
-      Lorem ipsum
-    </div>
-    <div class="card">
-      Lorem ipsum
-    </div>
-    <div class="card">
-      Lorem ipsum
-    </div>
+    {% for project in projects %}
+      <div class="card">
+        {{project.description}}
+      </div>
+    {% endfor %}
   </div>
 </div>
