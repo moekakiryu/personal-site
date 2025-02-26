@@ -212,7 +212,7 @@ TINYMCE_DEFAULT_CONFIG = {
       'headings': {
         'icon': 'change-case',
         'tooltip': 'Headings',
-        'items': 'h1 h2 h3 h4 h5 h6'
+        'items': 'h2 h3 h4 h5 h6'
       },
       'alignment': {
         'icon': 'align-center',
