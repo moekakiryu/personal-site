@@ -64,6 +64,8 @@ h1, h2, h3, h4, h5, h6, .header {
 
 a {
   color: var(--font-color-primary);
+  font-weight: bold;
+  text-decoration: none;
 }
 
 a:hover, a:focus {
@@ -178,14 +180,10 @@ a.tertiary::after {
   padding: var(--spacing-sm) var(--spacing-xs);
   border-top: 2px solid transparent;
 
-  /* color: var(--color-black); */
+  color: var(--font-color-primary);
   font-weight: bold;
   text-decoration: none;
   text-align: center;
-}
-
-.header .primary-nav li a.active {
-  border-top-color: var(--color-black);
 }
 
 .header .primary-nav li a::after {

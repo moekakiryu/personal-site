@@ -1,20 +1,20 @@
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
   grid-auto-rows: 1fr;
   grid-gap: var(--spacing-xs);
 }
 
 @media screen and (min-width: 480px) {
   .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
     grid-gap: var(--spacing-sm);
   }
 }
 
-.card, .card:visited {
+.card {
   display: flex;
   align-items: flex-start;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--spacing-sm);
 
   padding: var(--spacing-sm);
@@ -25,6 +25,22 @@
   text-decoration: none;
 }
 
+a.card, a.card:visited {
+  font-weight: normal;
+  cursor: pointer;
+}
+
+a.card:hover, a.card:focus {
+  color: currentColor;
+}
+
+
+@media screen and (min-width: 480px) {
+  .card, .card:visited {
+    flex-direction: column;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .card, .card:visited {
     flex-direction: row;
@@ -33,9 +49,17 @@
 
 .card .image {
   position: relative;
-  align-self: center;
+  align-self: auto;
+  flex-shrink: 0;
   width: 90px;
 }
+
+@media screen and (min-width: 768px) {
+  .card .image {
+    align-self: center;
+  }
+}
+
 
 @media screen and (min-width: 768px) {
   .card .image {
@@ -80,4 +104,14 @@
 
 .card .description {
   margin: 0;
+}
+
+.card .read-more {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  font-weight: bold;
+}
+
+.card:hover .read-more, .card:focus .read-more {
+  color: var(--color-rose-pink);
 }

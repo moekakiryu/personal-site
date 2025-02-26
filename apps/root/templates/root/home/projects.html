@@ -2,7 +2,7 @@
   <h2 class="section-header">Featured Projects</h2>
   <div class="card-grid">
     {% for project in projects %}
-      <div class="card">
+      <a class="card" href="">
         <div class="image">
           <div class="mock-placeholder"></div>
         </div>
@@ -13,9 +13,11 @@
           <p class="description">
             {{project.description}}
           </p>
-          <a class="tertiary" href="">Read more</a>
+          <span class="read-more">
+            + Read more
+          </span>
         </div>
-      </div>
+      </a>
     {% endfor %}
   </div>
 </div>
