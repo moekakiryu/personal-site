@@ -72,6 +72,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Plugins
+    'tinymce',
+
     # Local Applications
     'apps.root.apps.RootConfig',
 ]
