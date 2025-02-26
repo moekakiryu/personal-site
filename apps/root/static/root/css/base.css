@@ -52,7 +52,7 @@ body {
   font-family: var(--font-body);
   color: var(--font-color-primary);
 
-  background-image: url(/static/assets/img/dots.png);
+  background-image: url(/static/root/assets/img/dots.png);
   background-size: 200px;
   background-attachment: fixed;
 }
