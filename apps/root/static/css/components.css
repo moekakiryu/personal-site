@@ -18,7 +18,7 @@
   gap: var(--spacing-sm);
 
   padding: var(--spacing-sm);
-  border: 1px solid var(--color-greyscale-90);
+  border: 1px solid var(--color-greyscale-extra-light);
   border-radius: var(--rounded-sm);
 
   color: inherit;

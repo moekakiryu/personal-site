@@ -14,21 +14,30 @@
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
 
-  --color-greyscale-0: #000;
-  --color-greyscale-20: #383838;
-  --color-greyscale-90: #cecece;
-  --color-greyscale-100: #fff;
+  --color-black: #000;
+  --color-greyscale-medium: #383838;
+  --color-greyscale-light: #858585;
+  --color-greyscale-extra-light: #b9b9b9;
+  --color-white: #fff;
 
   --color-terminal-blue: #00316f;
-  --color-terminal-blue-70: #e6e7ed;
-  --color-terminal-blue-90: #f2f3f7;
+  --color-terminal-blue-medium: #335a8c;
+  --color-terminal-blue-light: #4d6f9a;
+  --color-terminal-blue-extra-light: #8098b7;
+  --color-terminal-blue-pale: #e6eaf1;
+
+  --color-rose-pink: #dc1040;
+  --color-rose-pink-medium: #e34066;
+  --color-rose-pink-light: #ea708c;
+  --color-rose-pink-extra-light: #f19fb3;
+  --color-rose-pink-pale: #f8cfd9;
 
   --font-heading: "Andada Pro", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
 
   /* Derived */
 
-  --font-color-primary: var(--color-greyscale-20);
+  --font-color-primary: var(--color-greyscale-medium);
   --font-color-secondary: var(--color-terminal-blue);
 }
 
@@ -59,14 +68,14 @@ h1, h2, h3, h4, h5, h6, .header {
 
   margin: 0 auto;
   padding: 0 var(--spacing-sm);
-  border-left: 1px solid var(--color-greyscale-0);
-  border-right: 1px solid var(--color-greyscale-0);
+  border-left: 1px solid var(--color-black);
+  border-right: 1px solid var(--color-black);
 
   width: 100%;
   max-width: 75rem;
 
   box-shadow: var(--shadow-md);
-  background-color: var(--color-greyscale-100);
+  background-color: var(--color-white);
 }
 
 @media screen and (min-width: 480px) {
@@ -115,8 +124,8 @@ h1, h2, h3, h4, h5, h6, .header {
   display: flex;
   justify-content: center;
 
-  border-top: 1px solid var(--color-greyscale-0);
-  border-bottom: 1px solid var(--color-greyscale-0);
+  border-top: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-black);
 }
 
 .header .primary-nav ul {
@@ -141,14 +150,14 @@ h1, h2, h3, h4, h5, h6, .header {
   padding: var(--spacing-sm) var(--spacing-xs);
   border-top: 2px solid transparent;
 
-  color: var(--color-greyscale-0);
+  /* color: var(--color-black); */
   font-weight: bold;
   text-decoration: none;
   text-align: center;
 }
 
 .header .primary-nav li a.active {
-  border-top-color: var(--color-greyscale-0);
+  border-top-color: var(--color-black);
 }
 
 .header .primary-nav li a::after {
@@ -161,7 +170,7 @@ h1, h2, h3, h4, h5, h6, .header {
   height: 2px;
   border-radius: var(--rounded-full);
   overflow: hidden;
-  background-color: var(--color-greyscale-0);
+  background-color: var(--color-rose-pink);
 }
 
 .header .primary-nav li a:hover::after,
