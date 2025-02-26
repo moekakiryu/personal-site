@@ -24,3 +24,5 @@ class Project(models.Model):
     on_delete=models.PROTECT,
   )
 
+  def __str__(self):
+    return self.title
