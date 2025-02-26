@@ -125,11 +125,6 @@ a.tertiary::after {
   margin-bottom: var(--spacing-md);
 }
 
-@media screen and (min-width: 480px) {
-  .section-header {
-    margin-top: var(--spacing-lg);
-  }
-}
 
 
 /* --- Header Styles --- */
