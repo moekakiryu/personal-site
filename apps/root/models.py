@@ -17,7 +17,9 @@ class Project(models.Model):
   project_url = models.URLField()
   title = models.CharField(
     max_length=255,
-    blank=True,
+  )
+  blurb = models.TextField(
+    max_length=120
   )
   writeup = models.ForeignKey(
     BlogEntry,
