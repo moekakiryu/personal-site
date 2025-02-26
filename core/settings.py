@@ -190,11 +190,39 @@ TINYMCE_DEFAULT_CONFIG = {
     "content_css": "tinymce-5-dark",
     "height": 500,
     "menubar": False,
-    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
-    "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
-    "code,help,wordcount",
-    "toolbar": "undo redo | formatselect | "
-    "bold italic backcolor | alignleft aligncenter "
-    "alignright alignjustify | bullist numlist outdent indent | "
-    "removeformat | help",
+
+    "plugins": [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print',
+      'preview', 'anchor', 'searchreplace', 'visualblocks', 'code',
+      'fullscreen', 'insertdatetime', 'media', 'table', 'paste', 'code', 'help',
+      'wordcount', 'code', 'codesample',
+    ],
+    'fullscreen_native': True,
+
+    "toolbar": [
+      { 'name': 'history', 'items': ['undo', 'redo']},
+      { 'name': 'formatting', 'items': ['bold', 'italic', 'underline', 'strikethrough']},
+      { 'name': 'layout', 'items': ['headings', 'links']},
+      { 'name': 'lists', 'items': ['alignment',  'bullist', 'numlist']},
+      { 'name': 'extra formatting', 'items': [ 'codesample', 'blockquote', 'subscript', 'superscript']},
+      { 'name': 'indent', 'items': ['outdent', 'indent']},
+      { 'name': 'extra', 'items': ['code', 'fullscreen']},
+    ],
+    'toolbar_groups': {
+      'headings': {
+        'icon': 'change-case',
+        'tooltip': 'Headings',
+        'items': 'h1 h2 h3 h4 h5 h6'
+      },
+      'alignment': {
+        'icon': 'align-center',
+        'tooltip': 'Alignment',
+        'items': 'alignleft aligncenter alignright alignjustify alignnone'
+      },
+      'links': {
+        'icon': 'link',
+        'tooltip': 'Add Link',
+        'items': 'link unlink'
+      }
+    }
 }
