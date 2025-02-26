@@ -1,28 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from apps.root.models import Project
+
 def home(request):
-  mock_projects = [
-    {
-      "name": "Project",
-      "description": "Lorem ipsum dolor sit amet consecetur adipiscing elit"
-    },
-    {
-      "name": "Project",
-      "description": "Lorem ipsum"
-    },
-    {
-      "name": "Project",
-      "description": "Lorem ipsum"
-    },
-    {
-      "name": "Project",
-      "description": "Lorem ipsum"
-    },
-  ]
+  projects = Project.objects.all()
 
   return render(request, 'root/home/index.html', {
-    'projects': mock_projects
+    'projects': projects
   })
 
 # Create your views here.
