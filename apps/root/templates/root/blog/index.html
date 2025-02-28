@@ -6,6 +6,15 @@
 
 {% block head.styles %}
   <link rel="stylesheet" type="text/css" href="{% static "root/css/prism.css" %}">
+	<style type="text/css">
+    code[class*="language-"], pre[class*="language-"] {
+      background-color: #fff;
+      border: none;
+    }
+    .language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
+      background: none;
+    }
+  </style>
 
   <script src="{% static "root/js/prism.min.js" %}"></script>
 {% endblock head.styles %}

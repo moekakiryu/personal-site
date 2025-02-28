@@ -198,6 +198,20 @@ TINYMCE_DEFAULT_CONFIG = {
       'wordcount', 'code', 'codesample',
     ],
     'fullscreen_native': True,
+    'codesample_languages': [
+      { 'text': 'JavaScript', 'value': 'javascript' },
+      { 'text': 'TypeScript', 'value': 'typescript' },
+      { 'text': 'CSS', 'value': 'scss' },
+      { 'text': 'HTML/XML', 'value': 'markup' },
+      { 'text': 'Python', 'value': 'python' },
+      { 'text': 'JSON', 'value': 'json5' },
+      { 'text': 'C', 'value': 'c' },
+      { 'text': 'Bash', 'value': 'bash' },
+      { 'text': 'GraphQL', 'value': 'graphql' },
+      { 'text': 'SQL', 'value': 'sql' },
+      { 'text': 'HTTP Request', 'value': 'http' },
+      { 'text': 'Regular Expression', 'value': 'regex' },
+    ],
 
     "toolbar": [
       { 'name': 'history', 'items': ['undo', 'redo']},
