@@ -2,7 +2,7 @@
   <h2 class="section-header">Featured Projects</h2>
   <div class="card-grid">
     {% for project in projects|slice:":4" %}
-      <a class="card" href="/blog/{{ project.writeup.slug }}">
+      <a class="card" href="/articles/{{ project.article.slug }}">
         <div class="image">
           <div class="mock-placeholder"></div>
         </div>

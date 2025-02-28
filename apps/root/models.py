@@ -5,7 +5,7 @@ from django.contrib import admin
 from tinymce.models import HTMLField
 
 
-class BlogEntry(models.Model):
+class Article(models.Model):
   # Metadata
   slug = models.UUIDField(
     default=uuid.uuid4,
@@ -49,8 +49,8 @@ class Project(models.Model):
   blurb = models.TextField(
     max_length=120
   )
-  writeup = models.ForeignKey(
-    BlogEntry,
+  article = models.ForeignKey(
+    Article,
     on_delete=models.PROTECT,
   )
 

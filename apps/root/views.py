@@ -1,21 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from apps.root.models import BlogEntry, Project
+from apps.root.models import Article, Project
 
 def home(request):
   projects = Project.objects.all()
-  articles = BlogEntry.objects.all()
+  articles = Article.objects.all()
 
   return render(request, 'root/home/index.html', {
     'projects': projects,
     'articles': articles,
   })
 
-def blog(request, article_id):
-  article = BlogEntry.objects.get(slug=article_id)
+def article(request, article_id):
+  article = Article.objects.get(slug=article_id)
 
-  return render(request, 'root/blog/index.html', {
+  return render(request, 'root/article/index.html', {
     'article': article
   })
 
