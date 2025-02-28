@@ -100,6 +100,9 @@ TEMPLATES = [
         ],
         'APP_DIRS': True,
         'OPTIONS': {
+            'libraries': {
+              'rich_content': 'core.templatetags.rich_content',
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',

@@ -30,11 +30,6 @@ a.card, a.card:visited {
   cursor: pointer;
 }
 
-a.card:hover, a.card:focus {
-  color: currentColor;
-}
-
-
 @media screen and (min-width: 480px) {
   .card, .card:visited {
     flex-direction: column;
@@ -115,3 +110,41 @@ a.card:hover, a.card:focus {
 .card:hover .read-more, .card:focus .read-more {
   color: var(--color-rose-pink);
 }
+
+.article {
+  display: block;
+  border-top: 1px dashed var(--color-terminal-blue);
+  padding: var(--spacing-md) 0;
+
+  color: inherit;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+a.article, a.article:visited {
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.article:last-child {
+  border-bottom: 1px dashed var(--color-terminal-blue);
+}
+
+.article > h3 {
+  margin-top: 0;
+}
+
+.article .description {
+  margin: 0;
+}
+
+.article .read-more {
+  display: inline-block;
+  margin-top: var(--spacing-sm);
+  font-weight: bold;
+}
+
+.article:hover .read-more, .article:focus .read-more {
+  color: var(--color-rose-pink);
+}
+
