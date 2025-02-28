@@ -3,10 +3,10 @@
 <div class="container">
   <h2 class="section-header">Latest Articles</h2>
   {% for article in articles|slice:3 %}
-    <a class="article" href="/blog/{{article.slug}}">
-      <h3 class="name">{{article.title}}</h3> | <p class="date">{{article.updated|date:"N Y"}}</p>
+    <a class="article" href="/blog/{{ article.slug }}">
+      <h3 class="name">{{ article.title }}</h3> | <p class="date">{{ article.updated|date:"N Y" }}</p>
       <div class="details">
-        <p class="description">{{article.content|rich_preview:50}}</p>
+        <p class="description">{{ article.content|rich_preview:50 }}</p>
         <span class="read-more">+ Read more</span>
       </div>
     </a>
