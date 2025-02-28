@@ -1,9 +1,20 @@
+import uuid
+
 from django.db import models
 from django.contrib import admin
 from tinymce.models import HTMLField
 
 
 class BlogEntry(models.Model):
+  # Metadata
+  slug = models.UUIDField(
+    default=uuid.uuid4,
+    editable=False,
+    unique=True,
+    null=False,
+  )
+
+  # Content Fields
   title = models.CharField(
     max_length=255,
   )
@@ -14,6 +25,15 @@ class BlogEntry(models.Model):
 
 
 class Project(models.Model):
+  # Metadata
+  slug = models.UUIDField(
+    default=uuid.uuid4,
+    editable=False,
+    unique=True,
+    null=False,
+  )
+
+  # Content Fields
   project_url = models.URLField()
   title = models.CharField(
     max_length=255,
