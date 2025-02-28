@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {# Stylesheets #}
+  <link rel="preload" href="{% static 'root/css/normalize.css' %}" as="style">
+  <link rel="preload" href="{% static 'root/css/base.css' %}" as="style">
+  <link rel="preload" href="{% static 'root/assets/img/dots.png' %}" as="image">
+
   <link rel="stylesheet" href="{% static 'root/css/normalize.css' %}">
   <link rel="stylesheet" href="{% static 'root/css/base.css' %}">
   {% block head.styles %}{% endblock head.styles %}
