@@ -114,7 +114,7 @@ a.card, a.card:visited {
 .article {
   display: block;
   border-top: 1px dashed var(--color-terminal-blue);
-  padding: var(--spacing-md) 0;
+  padding: var(--spacing-sm) 0;
 
   color: inherit;
   text-decoration: none;
@@ -130,12 +130,25 @@ a.article, a.article:visited {
   border-bottom: 1px dashed var(--color-terminal-blue);
 }
 
-.article > h3 {
-  margin-top: 0;
+.article .name {
+  display: inline-block;
+  margin: 0;
+}
+
+.article .date {
+  display: inline-block;
+  margin-top: var(--spacing-xs);
+
+  font-style: italic;
+}
+
+.article .details {
+  padding-left: var(--spacing-sm);
 }
 
 .article .description {
   margin: 0;
+  font-size: .875rem;
 }
 
 .article .read-more {
