@@ -1,5 +1,8 @@
 <div class="container">
   <h2 class="section-header">Latest Articles</h2>
   <div class="article">
+    {% for article in articles %}
+      <a href="/blog/{{article.slug}}">{{article.title}}</a>
+    {% endfor %}
   </div>
 </div>

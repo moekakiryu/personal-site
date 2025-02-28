@@ -1,0 +1,18 @@
+{% extends "root/base.html" %}
+
+{% load static %}
+
+{% block head.title %}{{article.title}} | Moeka Kiryu {% endblock head.title %}
+
+{% block head.styles %}
+  <link rel="stylesheet" type="text/css" href="{% static "root/css/prism.css" %}">
+
+  <script src="{% static "root/js/prism.min.js" %}"></script>
+{% endblock head.styles %}
+
+{% block content %}
+<div class="container">
+  <h1>{{article.title}}</h1>
+  {{article.content|safe}}
+</div>
+{% endblock content %}

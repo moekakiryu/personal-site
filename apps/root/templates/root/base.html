@@ -14,17 +14,17 @@
   {# Typography #}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400..840;1,400..840&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andada+Pro:ital,wght@0,400..840;1,400..840&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap">
 
   {# Javascript #}
 
   {# Title #}
   <title>{% block head.title %}{% endblock head.title %}</title>
 </head>
-<body>
-  <div class="main-content">
-    {% include "root/header.html" %}
-    {% block content%}{% endblock content %}
-  </div>  
+<body class="line-numbers match-braces no-brace-select">
+    <div class="main-content">
+      {% include "root/header.html" %}
+      {% block content%}{% endblock content %}
+    </div>
 </body>
 </html>
