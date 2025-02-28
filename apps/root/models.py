@@ -13,6 +13,14 @@ class BlogEntry(models.Model):
     unique=True,
     null=False,
   )
+  created = models.DateTimeField(
+    auto_now_add=True,
+    blank=False,
+  )
+  updated = models.DateTimeField(
+    auto_now=True,
+    blank=False,
+  )
 
   # Content Fields
   title = models.CharField(
