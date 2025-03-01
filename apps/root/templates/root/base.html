@@ -26,9 +26,9 @@
   <title>{% block head.title %}{% endblock head.title %}</title>
 </head>
 <body class="line-numbers match-braces no-brace-select">
-    <div class="main-content">
-      {% include "root/header.html" %}
-      {% block content%}{% endblock content %}
-    </div>
+  {% include "root/header.html" %}
+  <div class="main-content">
+    {% block content%}{% endblock content %}
+  </div>
 </body>
 </html>
