@@ -136,10 +136,22 @@ a.article, a.article:visited {
 }
 
 .article .date {
-  display: inline-block;
+  display: block;
   margin-top: var(--spacing-xs);
 
   font-style: italic;
+}
+
+@media screen and (min-width: 768px) {
+  .article .date {
+    display: inline-block;
+  }
+
+  .article .date::before {
+    content: "|";
+    padding: 0 var(--spacing-xs);
+    font-style: normal;
+  }
 }
 
 .article .details {
