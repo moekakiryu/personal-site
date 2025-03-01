@@ -1,16 +1,22 @@
 {% load static %}
 <div class="header">
-  <div class="title">
-    {% include "root/logo.svg" %}
+  <div class="content">
+    <div class="title">
+      <a href="{% url "root.home" %}" aria-label="Go Home">
+        {% include "root/icons/logo.svg" %}
+      </a>
+    </div>
+    <nav class="primary-nav">
+      <div class="drawer">
+        <ul>
+          <li>
+            <a href="{% url "root.sandbox" %}">Projects</a>
+          </li>
+          <li>
+            <a href="{% url "root.sandbox" %}">Articles</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
-  <nav class="primary-nav">
-    <ul>
-      <li>
-        <a href="{% url "root.home" %}">Home</a>
-      </li>
-      <li>
-        <a href="{% url "root.sandbox" %}">Sandbox</a>
-      </li>
-    </ul>
-  </nav>
 </div>

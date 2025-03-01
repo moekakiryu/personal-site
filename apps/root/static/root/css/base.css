@@ -96,23 +96,27 @@ a.tertiary::after {
 }
 
 /* --- Global Utility Classes --- */
-.main-content {
+.content {
+  position: relative;
   flex-grow: 1;
 
   margin: 0 auto;
-  padding: var(--spacing-sm);
-  border-left: 1px solid var(--color-black);
-  border-right: 1px solid var(--color-black);
-
   width: 100%;
   max-width: 75rem;
 
-  box-shadow: var(--shadow-md);
   background-color: var(--color-white);
 }
 
+.body-content {
+  padding: var(--spacing-sm);
+  border-left: 1px solid var(--color-greyscale-extra-light);
+  border-right: 1px solid var(--color-greyscale-extra-light);
+
+  box-shadow: var(--shadow-md);
+}
+
 @media screen and (min-width: 480px) {
-  .main-content {
+  .body-content {
     padding: var(--spacing-md);
   }
 }
@@ -136,18 +140,77 @@ a.tertiary::after {
 
 /* --- Header Styles --- */
 .header {
+  position: sticky;
+
+  top: 0;
+  /* Expand to fill body padding */
+  width: calc(100% + 2 * var(--spacing-md));
+  margin-left: calc(-1 * var(--spacing-md));
+
+  padding: 0 var(--spacing-md);
+  border-bottom: 1px solid var(--color-greyscale-extra-light);
+  
+  background-color: var(--color-white);
+  z-index: 1;
+}
+
+
+@media screen and (min-width: 768px) {
+  .header {
+    border-bottom: none;
+    background-color: transparent;
+  }
+}
+
+.header .content {
   display: flex;
-  flex-direction: column;
-  font-family: var(--font-heading);
+  align-items: center;
+  justify-content: space-between;
+  
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+@media screen and (min-width: 480px) {
+  .header .content {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .header .content {
+    border-left: 1px solid var(--color-greyscale-extra-light);
+    border-right: 1px solid var(--color-greyscale-extra-light);  
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .header .content::after {
+    content: "";
+   
+    position: absolute;
+   
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    margin: 0 var(--spacing-md);
+    
+    background: var(--color-greyscale-extra-light);
+  }
 }
 
 .header .title {
-  margin: var(--spacing-md) auto;
   width: 80%;
-  max-width: 400px;
+  max-width: 175px;
 }
 
-.header .title > svg {
+.header .title a {
+  display: block;
+  height: 100%;
+}
+
+.header .title svg {
   width: 100%;
   fill: var(--font-color-secondary);
 }
@@ -155,9 +218,6 @@ a.tertiary::after {
 .header .primary-nav {
   display: flex;
   justify-content: center;
-
-  border-top: 1px solid var(--color-black);
-  border-bottom: 1px solid var(--color-black);
 }
 
 .header .primary-nav ul {

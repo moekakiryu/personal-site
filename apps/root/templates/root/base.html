@@ -25,10 +25,13 @@
   {# Title #}
   <title>{% block head.title %}{% endblock head.title %}</title>
 </head>
+
 <body class="line-numbers match-braces no-brace-select">
   {% include "root/header.html" %}
-  <div class="main-content">
+
+  <div class="content body-content">
     {% block content%}{% endblock content %}
   </div>
+
 </body>
 </html>
