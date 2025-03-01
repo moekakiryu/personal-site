@@ -144,10 +144,10 @@ a.tertiary::after {
 
   top: 0;
   /* Expand to fill body padding */
-  width: calc(100% + 2 * var(--spacing-md));
-  margin-left: calc(-1 * var(--spacing-md));
+  width: calc(100% + 2 * var(--spacing-sm));
+  margin-left: calc(-1 * var(--spacing-sm));
 
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-sm);
   border-bottom: 1px solid var(--color-greyscale-extra-light);
   
   background-color: var(--color-white);
