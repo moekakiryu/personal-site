@@ -118,8 +118,12 @@ a.tertiary::after {
 }
 
 .container {
-  margin: var(--spacing-md) auto 0 auto;
+  margin: var(--spacing-lg) auto 0 auto;
   max-width: 50rem;
+}
+
+.container:first-child {
+  margin-top: 0;
 }
 
 .section-header {
