@@ -10,6 +10,7 @@
   --spacing-lg: 4rem;
 
   --shadow-md: 0 0 8px -4px;
+  --shadow-lg: 0 0 16px -4px ;
 
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
@@ -220,48 +221,110 @@ a.tertiary::after {
   justify-content: center;
 }
 
-.header .primary-nav ul {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  grid-column-gap: var(--spacing-sm);
+.header .drawer {
+  position: fixed;
 
+  right: 0;
+  left: 0;
+  /* TODO: Fix this hack */
+  top: 55px;
+  bottom: 0;
+
+  padding-left: 20%;
+
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: background-color .5s;
+}
+
+.header .drawer.hidden {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+@media screen and (min-width: 768px) {
+  .header .drawer {
+    position: static;
+    padding: 0;
+    background-color: transparent;
+    overflow: visible;
+    transition: none;
+  }
+}
+
+.header .primary-nav ul {
+  height: 100%;
+  
   margin: 0;
   padding: 0;
+  border-left: 1px solid var(--color-greyscale-extra-light);
+ 
+  background-color: #f1f1f1;
+  box-shadow: var(--shadow-lg) var(--color-black);
+  
+  transform: translateX(0%);
+  transition: transform .5s;
+}
+
+.header .primary-nav .drawer.hidden ul {
+  box-shadow: none;
+  transform: translateX(100%);
+}
+
+@media screen and (min-width: 768px) {
+  .header .primary-nav ul {
+    /* Use grid to enforce equal width nav items */
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    grid-column-gap: var(--spacing-sm);
+
+    border-left: none;
+
+    background-color: transparent;
+    box-shadow: none;
+    transition: none;
+  }
+
+  .header .primary-nav .drawer.hidden ul {
+    transform: none;
+  }
 }
 
 .header .primary-nav li {
-  display: inline-block;
+  display: block;
+  border-bottom: 1px dashed var(--color-greyscale-extra-light);
+  background-color: var(--color-white);
+}
+
+.header .primary-nav li:last-child {
+  border-bottom-style: solid;
+}
+
+@media screen and (min-width: 768px) {
+  .header .primary-nav li {
+    display: inline-block;
+    border-width: 0;
+  }
 }
 
 .header .primary-nav li a {
-  position: relative;
   display: inline-block;
 
   width: 100%;
-  padding: var(--spacing-sm) var(--spacing-xs);
-  border-top: 2px solid transparent;
+  padding: var(--spacing-md) var(--spacing-sm);
 
   color: var(--font-color-primary);
-  font-weight: bold;
   text-decoration: none;
-  text-align: center;
 }
 
-.header .primary-nav li a::after {
-  content: none;
-  position: absolute;
-
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 2px;
-  border-radius: var(--rounded-full);
-  overflow: hidden;
-  background-color: var(--color-rose-pink);
+.header .primary-nav li a:focus,
+.header .primary-nav li a:hover {
+  color: var(--color-rose-pink);
 }
 
-.header .primary-nav li a:hover::after,
-.header .primary-nav li a:focus::after {
-  content: "";
+@media screen and (min-width: 768px) {
+  .header .primary-nav li a {
+    padding: var(--spacing-sm) var(--spacing-xs);
+    text-align: center;
+  }
 }
