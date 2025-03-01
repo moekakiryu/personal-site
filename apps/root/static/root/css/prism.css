@@ -196,3 +196,15 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
   color: #dc1040;
   font-weight: bold;
  }
+
+ .token.keyword.control-flow {
+    color: #0000ff;
+  }
+
+  .token.keyword.null.nil {
+    color: #0000ff;
+  }
+
+  .token.keyword {
+    color: #e90b0b;
+  }
