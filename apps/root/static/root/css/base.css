@@ -41,6 +41,10 @@
   --font-color-secondary: var(--color-terminal-blue);
 }
 
+::selection {
+  background: #e5e5e5;
+}
+
 body {
   display: flex;
   flex-direction: column;

@@ -181,6 +181,17 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
    background: linear-gradient(to right, rgba(193, 222, 241, 0.2) 70%, rgba(221, 222, 241, 0));
  }
  
+ /* Patch colors from the main theme above */
+ pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+ code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+   background: #e5e5e5;
+ }
+
+ pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+ code[class*="language-"]::selection, code[class*="language-"] ::selection {
+   background: #e5e5e5;
+ }
+
  .token.keyword.module {
   color: #dc1040;
   font-weight: bold;
