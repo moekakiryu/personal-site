@@ -124,8 +124,14 @@ button {
 }
 
 .container {
-  margin: var(--spacing-lg) auto 0 auto;
+  margin: var(--spacing-md) auto 0 auto;
   max-width: 50rem;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    margin-top: var(--spacing-lg);
+  }
 }
 
 .container:first-child {
