@@ -3,7 +3,12 @@
   <div class="content">
     <div class="title">
       <a href="{% url "root.home" %}" aria-label="Go Home">
-        {% include "root/icons/logo.svg" %}
+        <span class='mobile'>
+          {% include "root/icons/logo-small.svg" %}
+        </span>
+        <span class="desktop">
+          {% include "root/icons/logo.svg" %}
+        </span>
       </a>
     </div>
     <nav class="primary-nav" role="navigation" aria-label="Main Menu">

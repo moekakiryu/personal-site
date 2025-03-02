@@ -137,8 +137,18 @@ button {
   margin-bottom: var(--spacing-md);
 }
 
+@media screen and (min-width: 768px) {
+  .mobile {
+    display: none !important;
+  }
+}
 
-
+/* NOTE: Use max-width here to hide on small screens */
+@media screen and (max-width: 768px) {
+  .desktop {
+    display: none !important;
+  }
+}
 /* --- Header Styles --- */
 .header {
   position: sticky;
@@ -201,15 +211,24 @@ button {
   }
 }
 
-.header .title {
-  width: 80%;
-  max-width: 175px;
-}
-
-.header .title a {
+.header .title a,
+.header .title span {
   display: block;
   height: 100%;
   fill: var(--font-color-secondary);
+}
+
+.header .title svg {
+  width: 100%;
+  vertical-align: bottom;
+}
+
+.header .icon-logo-small {
+  max-width: 75px;
+}
+
+.header .icon-logo {
+  max-width: 175px;
 }
 
 .header .primary-nav {
