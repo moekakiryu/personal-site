@@ -262,11 +262,6 @@ button {
   transition: all .5s;
 }
 
-.header .primary-nav.navigated .icon-hamburger #top-bar,
-.header .primary-nav.navigated .icon-hamburger #bottom-bar {
-  transition: none;
-}
-
 .header .primary-nav.open .icon-hamburger #top-bar {
   transform: translateY(-2px) translateX(2px) rotate(-135deg);
 }
@@ -293,10 +288,6 @@ button {
 
 .header .primary-nav.open .splash {
   background: rgba(0, 0, 0, 0.3);
-}
-
-.header .primary-nav.navigated .splash {
-  display: none;
 }
 
 @media screen and (min-width: 768px) {

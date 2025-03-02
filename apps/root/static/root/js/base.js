@@ -50,12 +50,10 @@ const Navigation = {
     toggleButton: '.hamburger',
     splash: '.splash',
     drawer: '.splash ul',
-    links: 'a'
   },
 
   classes: {
     openMenu: 'open',
-    navigationInitiated: 'navigated',
   },
 
   // Elements
@@ -73,10 +71,6 @@ const Navigation = {
 
   get drawer() {
     return this.root.querySelector(this.selectors.drawer)
-  },
-
-  get navLinks() {
-    return this.root.querySelectorAll(this.selectors.links)
   },
 
   // State
@@ -107,10 +101,6 @@ const Navigation = {
     this.root.classList.remove(this.classes.openMenu)
     this.toggleButton.setAttribute('aria-expanded', 'false')    
     document.body.style.overflowY = ''
-  },
-
-  initiateNavigation() {
-    this.root.classList.add(this.classes.navigationInitiated)
   },
 
   // Actions
@@ -156,13 +146,6 @@ const Navigation = {
     }
   },
 
-  handleNavLinkClick() {
-    if (!this.isMobile) {
-      return
-    }
-    this.initiateNavigation()
-  },
-
   handleWindowResize() {   
     if (!this.isMobile) {
       this.srShow()
@@ -184,10 +167,6 @@ const Navigation = {
 
       bindEvents(this.toggleButton, {
         click: this.handleToggleClick.bind(this)
-      })
-
-      bindEvents(this.navLinks, {
-        click: this.handleNavLinkClick.bind(this)
       })
 
       bindEvents(window, {
