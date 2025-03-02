@@ -1,8 +1,7 @@
 {% load rich_content %}
 
-<div class="container">
-  <h2 class="section-header">Latest Articles</h2>
-  {% for article in articles|slice:3 %}
+<div>
+  {% for article in articles %}
     <a class="article" href="{% url "root.article" article.slug %}">
       <h3 class="name">{{ article.title }}</h3><p class="date">{{ article.updated|date:"N Y" }}</p>
       <div class="details">

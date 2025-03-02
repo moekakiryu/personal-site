@@ -1,0 +1,15 @@
+{% extends "root/base.html" %}
+
+{% load static %}
+
+{% block head.styles %}
+  <link rel="stylesheet" href="{% static 'root/css/components.css' %}">
+{% endblock head.styles %}
+
+{# Body #}
+{% block content %}
+  <div class="container">
+    <h1>My Projects</h1>
+    {% include "root/projects/list.html" %}
+  </div>
+{% endblock content %}

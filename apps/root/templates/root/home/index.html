@@ -13,9 +13,17 @@
 {# Body #}
 {% block content %}
   <div class="container">
-    <h1 style="text-align: center;">Raymond Lewandowski</h1>
+    <h1>Raymond Lewandowski</h1>
   </div>
   {% include "root/home/about.html" %}
-  {% include "root/home/projects.html" %}
-  {% include "root/home/articles.html" %}
+  
+  <div class="container">
+    <h2 class="section-header">Featured Projects</h2>
+    {% include "root/projects/list.html" with projects=projects.list%}
+  </div>
+
+  <div class="container">
+    <h2 class="section-header">Latest Articles</h2>
+    {% include "root/articles/list.html" with articles=articles.list %}
+  </div>
 {% endblock content %}
