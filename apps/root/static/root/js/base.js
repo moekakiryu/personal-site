@@ -55,6 +55,7 @@ const Navigation = {
 
   classes: {
     openMenu: 'open',
+    navigationInitiated: 'navigated',
   },
 
   get root() {
@@ -141,6 +142,11 @@ const Navigation = {
     }
   },
 
+  handleLinkClick() {
+    this.root.classList.add(this.classes.navigationInitiated)
+    this.srHide()
+  },
+
   handleWindowResize() {
     this.closeMenu()
 
@@ -164,7 +170,7 @@ const Navigation = {
       })
 
       bindEvents(this.navLinks, {
-        click: () => this.srHide()
+        click: () => this.handleLinkClick()
       })
 
       bindEvents(window, {
