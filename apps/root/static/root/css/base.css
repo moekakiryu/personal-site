@@ -137,7 +137,6 @@ button {
   align-items: center;
   justify-content: space-between;
   margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
 }
 
 @media screen and (min-width: 768px) {
@@ -167,6 +166,13 @@ button {
 
   cursor: pointer;
   transition: all .25s;
+}
+
+@media screen and (min-width: 768px) {
+  .primary,
+  .secondary {
+    margin: var(--spacing-sm) 0;
+  }  
 }
 
 .primary {
