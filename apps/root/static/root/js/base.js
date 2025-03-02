@@ -58,6 +58,7 @@ const Navigation = {
     navigationInitiated: 'navigated',
   },
 
+  // Elements
   get root() {
     return document.querySelector(this.selectors.root)
   },
@@ -78,6 +79,7 @@ const Navigation = {
     return this.root.querySelectorAll(this.selectors.links)
   },
 
+  // State
   get isOpen() {
     return this.root.classList.contains(this.classes.openMenu)
   },
@@ -86,12 +88,13 @@ const Navigation = {
     return window.innerWidth < BREAKPOINTS.md
   },
 
+  // DOM Mutations
   srHide() {
-    this.splash.style.display = 'none'
+    this.splash.style.visibility = 'hidden'
   },
 
   srShow() {
-    this.splash.style.display = ''
+    this.splash.style.visibility = ''
   },
 
   openDrawer() {
@@ -110,13 +113,12 @@ const Navigation = {
     this.root.classList.add(this.classes.navigationInitiated)
   },
 
+  // Actions
   openMenu() {
     if (!this.isMobile) return
 
     this.srShow()
-    setTimeout(() => {
-      this.openDrawer()
-    }, 1) // 1ms to fire after srShow
+    this.openDrawer()
   },
 
   closeMenu() {
@@ -141,6 +143,11 @@ const Navigation = {
     this.closeDrawer()
   },
 
+  // Handlers
+  handleSplashClick() {
+    this.closeMenu()
+  },
+
   handleToggleClick() {
     if (this.isOpen) {
       this.closeMenu()
@@ -149,7 +156,7 @@ const Navigation = {
     }
   },
 
-  handleLinkClick() {
+  handleNavLinkClick() {
     if (!this.isMobile) {
       return
     }
@@ -164,29 +171,30 @@ const Navigation = {
     this.closeMenu()
   },
 
-  bind() {
+  // Module Entry
+  init() {
     document.addEventListener('DOMContentLoaded', () => {
       if (this.isMobile) {
         this.closeMenu()
       }
 
       bindEvents(this.splash, {
-        click: () => this.closeMenu()
+        click: this.handleSplashClick.bind(this)
       })
 
       bindEvents(this.toggleButton, {
-        click: () => this.handleToggleClick()
+        click: this.handleToggleClick.bind(this)
       })
 
       bindEvents(this.navLinks, {
-        click: () => this.handleLinkClick()
+        click: this.handleNavLinkClick.bind(this)
       })
 
       bindEvents(window, {
-        resize: () => this.handleWindowResize(),
+        resize: this.handleWindowResize.bind(this),
       })
     })
   }
 }
 
-Navigation.bind()
+Navigation.init()
