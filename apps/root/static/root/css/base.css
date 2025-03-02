@@ -89,6 +89,13 @@ svg {
   width: 100%;
 }
 
+button {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 /* --- Global Utility Classes --- */
 .content {
   position: relative;
@@ -210,15 +217,24 @@ svg {
   justify-content: center;
 }
 
-.header .primary-nav .icon-hamburger {
-  width: 40px;
+.header .primary-nav .hamburger {
+  display: flex;
   fill: var(--font-color-primary);
 }
 
+.header .primary-nav .hamburger:hover,
+.header .primary-nav .hamburger:hover {
+  fill: var(--color-rose-pink);
+}
+
 @media screen and (min-width: 768px) {
-  .header .primary-nav .icon-hamburger {
+  .header .primary-nav .hamburger {
     display: none;
   }
+}
+
+.header .primary-nav .icon-hamburger {
+  width: 40px;
 }
 
 .header .primary-nav .icon-hamburger #top-bar,
@@ -235,7 +251,7 @@ svg {
   transform: translateY(1.5px) translateX(2px) rotate(135deg);
 }
 
-.header .primary-nav .drawer {
+.header .primary-nav .splash {
   position: fixed;
 
   right: 0;
@@ -251,13 +267,13 @@ svg {
   transition: background-color .5s;
 }
 
-.header .primary-nav.open .drawer {
+.header .primary-nav.open .splash {
   background: rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (min-width: 768px) {
-  .header .primary-nav .drawer,
-  .header .primary-nav.open .drawer {
+  .header .primary-nav .splash,
+  .header .primary-nav.open .splash {
     position: static;
     padding: 0;
     background-color: transparent;

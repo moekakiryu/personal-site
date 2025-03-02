@@ -6,10 +6,11 @@
         {% include "root/icons/logo.svg" %}
       </a>
     </div>
-    <nav class="primary-nav">
-      {% include "root/icons/hamburger.svg" %}
-
-      <div class="drawer">
+    <nav class="primary-nav" role="navigation" aria-label="Main Menu">
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+        {% include "root/icons/hamburger.svg" %}
+      </button>
+      <div class="splash">
         <ul>
           <li>
             <a class="inverted" href="{% url "root.sandbox" %}">Projects</a>
