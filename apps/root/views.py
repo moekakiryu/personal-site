@@ -8,7 +8,7 @@ def home(request):
   article_count = 3
   project_count = 2
 
-  projects = Project.objects.all().reverse()
+  projects = Project.objects.all().order_by('-id')
   articles = Article.objects.all().order_by('-created')
 
   return render(request, 'root/home/index.html', {
@@ -40,7 +40,7 @@ def article(request, article_id):
 
 
 def projects(request):
-  projects = Project.objects.all().reverse()
+  projects = Project.objects.all().order_by('-id')
 
   return render(request, 'root/projects/index.html', {
     'projects': projects
