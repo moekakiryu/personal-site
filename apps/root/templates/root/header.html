@@ -7,16 +7,18 @@
       </a>
     </div>
     <nav class="primary-nav">
-      <div class="drawer hidden">
+      {% include "root/icons/hamburger.svg" %}
+
+      <div class="drawer">
         <ul>
           <li>
-            <a href="{% url "root.sandbox" %}">Projects</a>
+            <a class="inverted" href="{% url "root.sandbox" %}">Projects</a>
           </li>
           <li>
-            <a href="{% url "root.sandbox" %}">Articles</a>
+            <a class="inverted" href="{% url "root.sandbox" %}">Articles</a>
           </li>
           <li>
-            <a href="{% url "root.sandbox" %}">Hire me!</a>
+            <a class="inverted" href="{% url "root.sandbox" %}">Hire me!</a>
           </li>
         </ul>
       </div>
