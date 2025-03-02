@@ -90,6 +90,7 @@ svg {
 }
 
 button {
+  display: block;
   border: none;
   padding: 0;
   background-color: transparent;
@@ -132,7 +133,9 @@ button {
 }
 
 .section-header {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-md);
 }
@@ -149,6 +152,45 @@ button {
     display: none !important;
   }
 }
+
+.primary,
+.secondary {
+  display: block;
+
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm);
+  border-radius: var(--rounded-sm);
+
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all .25s;
+}
+
+.primary {
+  background-color: var(--color-terminal-blue-light);
+  color: var(--color-white);
+}
+
+.primary:hover,
+.primary:focus {
+  background-color: var(--color-rose-pink-medium);
+}
+
+.secondary {
+  border: 2px solid var(--color-terminal-blue);
+  background-color: var(--color-white);
+  color: var(--color-terminal-blue);
+}
+
+.secondary:hover,
+.secondary:focus {
+  border-color: var(--color-rose-pink);
+  color: var(--color-rose-pink)
+}
+
 /* --- Header Styles --- */
 .header {
   position: sticky;

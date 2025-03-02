@@ -6,7 +6,7 @@ from apps.root.models import Article, Project
 
 def home(request):
   article_count = 3
-  project_count = 4
+  project_count = 2
 
   projects = Project.objects.all().reverse()
   articles = Article.objects.all().order_by('-created')
