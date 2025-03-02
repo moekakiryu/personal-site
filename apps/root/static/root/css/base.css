@@ -295,6 +295,10 @@ button {
   background: rgba(0, 0, 0, 0.3);
 }
 
+.header .primary-nav.navigated .splash {
+  display: none;
+}
+
 @media screen and (min-width: 768px) {
   .header .primary-nav .splash,
   .header .primary-nav.open .splash {

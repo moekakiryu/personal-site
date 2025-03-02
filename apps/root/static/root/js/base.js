@@ -106,15 +106,22 @@ const Navigation = {
     document.body.style.overflowY = ''
   },
 
-  openMenu() {
-    this.srShow()
+  initiateNavigation() {
+    this.root.classList.add(this.classes.navigationInitiated)
+  },
 
+  openMenu() {
+    if (!this.isMobile) return
+
+    this.srShow()
     setTimeout(() => {
       this.openDrawer()
     }, 1) // 1ms to fire after srShow
   },
 
   closeMenu() {
+    if (!this.isMobile) return
+
     if (!this.isOpen) {
       this.srHide()
       return
@@ -143,16 +150,18 @@ const Navigation = {
   },
 
   handleLinkClick() {
-    this.root.classList.add(this.classes.navigationInitiated)
-    this.srHide()
+    if (!this.isMobile) {
+      return
+    }
+    this.initiateNavigation()
   },
 
-  handleWindowResize() {
-    this.closeMenu()
-
+  handleWindowResize() {   
     if (!this.isMobile) {
       this.srShow()
+      return
     }
+    this.closeMenu()
   },
 
   bind() {
