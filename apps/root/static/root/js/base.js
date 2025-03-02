@@ -134,8 +134,11 @@ const Navigation = {
   },
 
   // Handlers
-  handleSplashClick() {
-    this.closeMenu()
+  handleSplashClick({ target, currentTarget }) {
+    // Only close menu if user directly clicked on splash
+    if (target === currentTarget) {
+      this.closeMenu()
+    }
   },
 
   handleToggleClick() {
