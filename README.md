@@ -27,3 +27,7 @@ python manage.py migrate
 # Start server
 python manage.py runserver
 ```
+
+## Guidelines
+
+1. [CSS / Styling](./docs/Styling.md)
