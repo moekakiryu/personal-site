@@ -1,30 +1,28 @@
 {% load static %}
 <div class="header">
-  <div class="content">
-    <div class="title">
-      <a href="{% url "root.home" %}" aria-label="Go Home">
-        <span class='mobile'>
-          {% include "root/icons/logo-small.svg" %}
-        </span>
-        <span class="desktop">
-          {% include "root/icons/logo.svg" %}
-        </span>
-      </a>
-    </div>
+  <div class="inner">
+    <a class="logo" href="{% url "root.home" %}" aria-label="Go Home">
+      <span class='mobile'>
+        {% include "root/icons/logo-small.svg" %}
+      </span>
+      <span class="desktop">
+        {% include "root/icons/logo.svg" %}
+      </span>
+    </a>
     <nav class="primary-nav" role="navigation" aria-label="Main Menu">
-      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+      <button class="hamburger mobile" aria-label="Open menu" aria-expanded="false">
         {% include "root/icons/hamburger.svg" %}
       </button>
       <div class="splash">
-        <ul>
-          <li>
-            <a class="inverted" href="{% url "root.projects" %}">Projects</a>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="{% url "root.projects" %}">Projects</a>
           </li>
-          <li>
-            <a class="inverted" href="{% url "root.articles" %}">Articles</a>
+          <li class="nav-item">
+            <a href="{% url "root.articles" %}">Articles</a>
           </li>
-          <li>
-            <a class="inverted" href="{% url "root.sandbox" %}">Hire me!</a>
+          <li class="nav-item">
+            <a href="{% url "root.sandbox" %}">Hire me!</a>
           </li>
         </ul>
       </div>
