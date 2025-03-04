@@ -16,44 +16,6 @@
     <h1>Raymond Lewandowski</h1>
   </div>
   {% include "root/home/about.html" %}
-  
-  <div class="container">
-    <div class="section-header">
-      <h2>Stuff I've made</h2>
-      
-      {% if projects.has_more %}
-        <div class="desktop">
-          <a class="secondary" href="{% url "root.projects" %}">View all projects</a>
-        </div>
-      {% endif %}
-    </div>
-
-    {% include "root/projects/list.html" with projects=projects.list%}
-
-    {% if projects.has_more %}
-      <div class="mobile">
-        <a class="secondary" href="{% url "root.projects" %}">View all projects</a>
-      </div>
-    {% endif %}
-  </div>
-
-  <div class="container">
-    <div class="section-header">
-      <h2>Stuff I've written</h2>
-
-      {% if articles.has_more %}
-        <div class="desktop">
-          <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
-        </div>
-      {% endif %}
-    </div>
-
-    {% include "root/articles/list.html" with articles=articles.list %}
-
-    {% if projects.has_more %}
-      <div class="mobile">
-        <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
-      </div>
-    {% endif %}
-  </div>
+  {% include "root/home/projects.html" %}  
+  {% include "root/home/articles.html" %}
 {% endblock content %}

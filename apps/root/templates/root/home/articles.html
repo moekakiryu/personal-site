@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="section-header">
+    <h2>Stuff I've written</h2>
+
+    {% if articles.has_more %}
+      <div class="desktop">
+        <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
+      </div>
+    {% endif %}
+  </div>
+
+  {% include "root/articles/list.html" with articles=articles.list %}
+
+  {% if projects.has_more %}
+    <div class="mobile">
+      <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
+    </div>
+  {% endif %}
+</div>
