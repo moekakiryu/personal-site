@@ -44,13 +44,12 @@
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
 
   /* Site configuration */
-  --max-content-width: 75rem;
+  --max-container-width: 75rem;
+  --max-content-width: 50rem;
   --site-padding: 0 var(--spacing-sm);
   --content-padding: var(--spacing-md);
 
-
   /* Derived */
-
   --font-color-primary: var(--color-greyscale-medium);
   --font-color-secondary: var(--color-terminal-blue);
   --font-color-link: var(--color-greyscale-medium);
@@ -66,6 +65,8 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 
   background-image: url(/static/root/assets/img/dots.png);
