@@ -12,7 +12,10 @@
   <link rel="preload" href="{% static 'root/assets/img/dots.png' %}" as="image">
 
   <link rel="stylesheet" href="{% static 'root/css/normalize.css' %}">
+  {# TODO: Compile the below into a single minified stylesheet #}
   <link rel="stylesheet" href="{% static 'root/css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'root/css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'root/css/header.css' %}">
   {% block head.styles %}{% endblock head.styles %}
 
   {# Typography #}
