@@ -1,8 +1,22 @@
 {
   "name": "personal-site",
   "packageManager": "yarn@4.7.0",
+  "scripts": {
+    "build:css": "postcss apps/root/styles/*.css -d apps/root/static/root/css",
+    "dev:css": "yarn run build:css --watch"
+  },
   "volta": {
     "node": "22.14.0",
     "yarn": "4.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^7.0.2",
+    "postcss-nested-props": "^2.0.0"
   }
 }

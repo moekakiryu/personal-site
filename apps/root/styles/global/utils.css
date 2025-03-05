@@ -1,3 +1,17 @@
+/* Utility classes (CREATE SPARINGLY) */
+@media screen and (min-width: 768px) {
+  .mobile {
+    display: none !important;
+  }
+}
+
+/* NOTE: Use max-width here to hide on small screens */
+@media screen and (max-width: 768px) {
+  .desktop {
+    display: none !important;
+  }
+}
+
 /* Generic Component Styles */
 .primary,
 .secondary {

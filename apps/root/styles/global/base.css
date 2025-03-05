@@ -1,0 +1,169 @@
+/* --- Global Styles --- */
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Useful values */
+  --spacing-xs: .5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+
+  --shadow-md: 0 0 8px -4px;
+  --shadow-lg: 0 0 16px -4px ;
+
+  --rounded-sm: .5rem;
+  --rounded-full: 9999px;
+
+  --z-nav: 2;
+
+  --duration-short: .25s;
+  --duration-standard: .5s;
+
+  /* Colors */
+  /* TODO: Refine and/or remove these */
+  --color-black: #000;
+  --color-greyscale-medium: #383838;
+  --color-greyscale-light: #858585;
+  --color-greyscale-extra-light: #b9b9b9;
+  --color-white: #fff;
+
+  --color-terminal-blue: #00316f;
+  --color-terminal-blue-medium: #335a8c;
+  --color-terminal-blue-light: #4d6f9a;
+  --color-terminal-blue-extra-light: #8098b7;
+  --color-terminal-blue-pale: #e6eaf1;
+
+  --color-rose-pink: #dc1040;
+  --color-rose-pink-medium: #e34066;
+  --color-rose-pink-light: #ea708c;
+  --color-rose-pink-extra-light: #f19fb3;
+  --color-rose-pink-pale: #f8cfd9;
+
+  --font-heading: "Andada Pro", "Times New Roman", Times, serif;
+  --font-body: "Montserrat", Geneva, Verdana, sans-serif;
+
+  /* Site configuration */
+  --max-container-width: 75rem;
+  --max-content-width: 50rem;
+  --site-padding: 0 var(--spacing-sm);
+  --content-padding: var(--spacing-md);
+
+  /* Derived */
+  --font-color-primary: var(--color-greyscale-medium);
+  --font-color-secondary: var(--color-terminal-blue);
+  --font-color-link: var(--color-greyscale-medium);
+  --font-color-link-hover: var(--color-rose-pink);
+
+  /* Global Styles */
+  font-family: var(--font-body);
+  color: var(--font-color-primary);
+}
+
+::selection {
+  background: #e5e5e5;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  background-image: url(/static/root/assets/img/dots.png);
+  background-size: 200px;
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6, .header {
+  font-family: var(--font-heading);
+  color: var(--font-color-secondary);
+}
+
+a {
+  color: var(--font-color-link);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: var(--font-color-link-hover);
+}
+
+svg {
+  width: 100%;
+}
+
+button {
+  display: block;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Utility classes (CREATE SPARINGLY) */
+@media screen and (min-width: 768px) {
+  .mobile {
+    display: none !important;
+  }
+}
+
+/* NOTE: Use max-width here to hide on small screens */
+@media screen and (max-width: 768px) {
+  .desktop {
+    display: none !important;
+  }
+}
+
+/* Generic Component Styles */
+.primary,
+.secondary {
+  display: block;
+
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm);
+  border-radius: var(--rounded-sm);
+
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all var(--duration-short);
+}
+
+@media screen and (min-width: 768px) {
+  .primary,
+  .secondary {
+    margin: var(--spacing-sm) 0;
+  }  
+}
+
+.primary {
+  background-color: var(--color-terminal-blue-light);
+  color: var(--color-white);
+}
+
+.primary:hover,
+.primary:focus {
+  background-color: var(--color-rose-pink-medium);
+}
+
+.secondary {
+  border: 2px solid var(--color-terminal-blue);
+  background-color: var(--color-white);
+  color: var(--color-terminal-blue);
+}
+
+.secondary:hover,
+.secondary:focus {
+  border-color: var(--color-rose-pink);
+  color: var(--color-rose-pink)
+}
+
+.header-with-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
