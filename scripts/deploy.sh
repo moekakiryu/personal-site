@@ -8,10 +8,18 @@ if [ ! -f manage.py ]; then
 fi
 
 # Verify that node and yarn are installed (assume they are the correct versions due to volta)
-if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v yarn)" ]; then
-  echo "Unable to find node and yarn. Please ensure both are installed correctly."
+if [ ! -x "$(command -v node)" ]; then
+  echo "Unable to find node. Please ensure it is installed correctly."
+  echo "$(node --version)"
   exit 1;
 fi
+
+if [ ! -x "$(command -v yarn)" ]; then
+  echo "$(yarn --version)"
+  echo "Unable to find yarn. Please ensure it is installed correctly."
+  exit 1;
+fi
+
 
 # Activate python virtual environment
 if [ ! -f .venv/bin/activate ]; then
