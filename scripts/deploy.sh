@@ -35,7 +35,7 @@ echo -e "\n\n-- Installing new requirements --"
 yarn install --immutable
 python3 -m pip install -r requirements.txt
 
-echo -e "\n\n-- Collecting Django updates --"
+echo -e "\n\n-- Collecting Django Static Files --"
 python3 manage.py collectstatic --no-input
 
 echo -e "\n\n-- Collecting Django updates --"
