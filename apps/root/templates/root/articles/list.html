@@ -6,7 +6,7 @@
       <h3 class="name">{{ article.title }}</h3><p class="date">{{ article.updated|date:"N Y" }}</p>
       <div class="details">
         <p class="description">{{ article.content|rich_preview:40 }}</p>
-        <span class="read-more">+ Read more</span>
+        <div class="read-more">+ Read more</div>
       </div>
     </a>
   {% endfor %}
