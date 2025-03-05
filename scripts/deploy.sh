@@ -9,18 +9,18 @@ fi
 
 # Verify that node and yarn are installed (assume they are the correct versions due to volta)
 if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v yarn)" ]; then
-  echo "$PATH"
-  echo "$HOME"
-  echo "Warning: Unable to find node and yarn. Attempting to load from Volta.";
+  echo "Info: Unable to find node and yarn. Attempting to load from Volta.";
+
+  # Volta adds itself to the user's bashrc file, which is not loaded in git
+  # hooks. If this is running from inside a hook, add the volta directory to
+  # PATH manually.
   export PATH="$HOME/.volta/bin:$PATH";
+
   if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v yarn)" ]; then
-    echo "$PATH"
-    echo "Error: Attempt unsuccessful";
+    echo "Error: Attempt unsuccessful. Please ensure node and yarn are installed correctly.";
     exit 1;
   else
-    echo "$PATH"
-    echo "Success"
-    exit 0;
+    echo "Success."
   fi
 fi
 
