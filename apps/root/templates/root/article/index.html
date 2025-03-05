@@ -5,23 +5,13 @@
 {% block head.title %}{{ article.title }} | Moeka Kiryu {% endblock head.title %}
 
 {% block head.styles %}
-  <link rel="stylesheet" type="text/css" href="{% static "root/css/prism.css" %}">
-	<style type="text/css">
-    code[class*="language-"], pre[class*="language-"] {
-      background-color: #fff;
-      border: none;
-    }
-    .language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
-      background: none;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="{% static "root/css/article.css" %}">
   <script src="{% static "root/js/prism.min.js" %}"></script>
 {% endblock head.styles %}
 
 {% block content %}
-<div class="container">
-  <h1>{{ article.title }}</h1>
-  {{ article.content|safe }}
-</div>
+  <div class="container">
+    <h1>{{ article.title }}</h1>
+    {{ article.content|safe }}
+  </div>
 {% endblock content %}

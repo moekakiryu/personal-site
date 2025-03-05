@@ -1,1 +1,11 @@
-@import "external/prism.scss"
+@import "external/prism.scss";
+
+/* Additional styles for Prism */
+code[class*="language-"], pre[class*="language-"] {
+  background-color: #fff;
+  border: none;
+}
+
+.language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
+  background: none;
+}
