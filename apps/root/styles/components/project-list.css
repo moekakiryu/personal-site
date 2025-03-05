@@ -4,7 +4,7 @@
   gap: var(--spacing-xs)
 }
 
-@media screen and (min-width: 480px) {
+@media (--tablet) {
   .card-grid {
     grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
   }
@@ -27,13 +27,13 @@
   color: var(--font-color-link);
 }
 
-@media screen and (min-width: 480px) {
+@media (--tablet) {
   .card, .card:visited {
     flex-direction: column;
   }
 }
 
-@media screen and (min-width: 768px) {
+@media (--desktop) {
   .card, .card:visited {
     flex-direction: row;
   }

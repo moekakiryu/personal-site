@@ -1,5 +1,5 @@
 /* Utility classes (CREATE SPARINGLY) */
-@media screen and (min-width: 768px) {
+@media (--desktop) {
   .mobile {
     display: none !important;
   }
@@ -29,7 +29,7 @@
   transition: all var(--duration-short);
 }
 
-@media screen and (min-width: 768px) {
+@media (--desktop) {
   .primary,
   .secondary {
     margin: var(--spacing-sm) 0;

@@ -1,7 +1,6 @@
 /* Core */
 @import "external/normalize.css";
 
-@import "global/media.css";
 @import "global/base.css";
 @import "global/layout.css";
 @import "global/utils.css";
