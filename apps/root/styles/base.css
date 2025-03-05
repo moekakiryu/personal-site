@@ -1,11 +1,11 @@
 /* Core */
 @import "external/normalize.css";
 
-@import "global/base.css";
-@import "global/layout.css";
-@import "global/utils.css";
+@import "global/base.scss";
+@import "global/layout.scss";
+@import "global/utils.scss";
 
 /* Components */
-@import "components/header.css";
-@import "components/project-list.css";
-@import "components/article-list.css";
+@import "components/header.scss";
+@import "components/project-list.scss";
+@import "components/article-list.scss";

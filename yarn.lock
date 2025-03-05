@@ -1325,6 +1325,7 @@ __metadata:
     postcss-import: "npm:^16.1.0"
     postcss-nested: "npm:^7.0.2"
     postcss-nested-props: "npm:^2.0.0"
+    postcss-scss: "npm:^4.0.9"
   languageName: unknown
   linkType: soft
 
@@ -1736,6 +1737,15 @@ __metadata:
   peerDependencies:
     postcss: ^8.1.0
   checksum: 10c0/c58280a58efd689645a1e59e5cd31f9e8bebef0581177cbe0db23b52f2de5fdc60027ec2fa18d82f5d2d947058570f6e230dfdd88c70b0cedb45b708512f1931
+  languageName: node
+  linkType: hard
+
+"postcss-scss@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "postcss-scss@npm:4.0.9"
+  peerDependencies:
+    postcss: ^8.4.29
+  checksum: 10c0/f917ecfd4b9113a6648e966a41f027ff7e14238393914978d44596e227a50f084667dc8818742348dc7d8b20130b30d4259aca1d4db86754a9c141202ae03714
   languageName: node
   linkType: hard
 

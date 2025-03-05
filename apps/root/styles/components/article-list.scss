@@ -1,0 +1,55 @@
+.article {
+  display: block;
+
+  border-top: 1px dashed var(--color-terminal-blue);
+  padding: var(--spacing-sm) 0;
+
+  font-weight: normal;
+
+  &:last-child {
+    border-bottom: 1px dashed var(--color-terminal-blue);
+  }
+
+  &:hover,
+  &:focus {
+    color: var(--font-color-link);
+
+    .read-more {
+      color: var(--font-color-link-hover);
+    }
+  }
+
+  .name {
+    display: inline-block;
+    margin: 0;
+  }
+
+  .date {
+    margin-top: var(--spacing-xs);
+    font-style: italic;
+
+    @media (--desktop) {
+      display: inline-block;
+  
+      &::before {
+        content: "|";
+        padding: 0 var(--spacing-xs);
+        font-style: normal;
+      }
+    }
+  }
+
+  .details {
+    padding-left: var(--spacing-sm);
+  }
+
+  .description {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+
+  .read-more {
+    margin-top: var(--spacing-sm);
+    font-weight: bold;
+  }
+}

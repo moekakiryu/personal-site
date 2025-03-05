@@ -27,35 +27,32 @@
 
   cursor: pointer;
   transition: all var(--duration-short);
-}
 
-@media (--desktop) {
-  .primary,
-  .secondary {
+  @media (--desktop) {
     margin: var(--spacing-sm) 0;
-  }  
+  }
 }
 
 .primary {
   background-color: var(--color-terminal-blue-light);
   color: var(--color-white);
-}
 
-.primary:hover,
-.primary:focus {
-  background-color: var(--color-rose-pink-medium);
+  &:hover,
+  &:focus {
+    background-color: var(--color-rose-pink-medium);
+  }
 }
 
 .secondary {
   border: 2px solid var(--color-terminal-blue);
   background-color: var(--color-white);
   color: var(--color-terminal-blue);
-}
 
-.secondary:hover,
-.secondary:focus {
-  border-color: var(--color-rose-pink);
-  color: var(--color-rose-pink)
+  &:hover,
+  &:focus {
+    border-color: var(--color-rose-pink);
+    color: var(--color-rose-pink)
+  }
 }
 
 .header-with-cta {
