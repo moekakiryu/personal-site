@@ -1,0 +1,8 @@
+{
+  "name": "personal-site",
+  "packageManager": "yarn@4.7.0",
+  "volta": {
+    "node": "22.14.0",
+    "yarn": "4.7.0"
+  }
+}
