@@ -1,5 +1,5 @@
 /* Core */
-@import "external/normalize.css";
+@import "external/normalize.scss";
 
 @import "global/base.scss";
 @import "global/layout.scss";
