@@ -10,12 +10,15 @@ fi
 # Verify that node and yarn are installed (assume they are the correct versions due to volta)
 if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v yarn)" ]; then
   echo "$PATH"
+  echo "$HOME"
   echo "Warning: Unable to find node and yarn. Attempting to load from Volta.";
   export PATH="$HOME/.volta/bin:$PATH";
   if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v yarn)" ]; then
+    echo "$PATH"
     echo "Error: Attempt unsuccessful";
     exit 1;
   else
+    echo "$PATH"
     echo "Success"
     exit 0;
   fi
