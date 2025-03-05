@@ -12,6 +12,7 @@ for me.
 2. Python 3.10 ([install](https://www.python.org/downloads/release/python-31012/))
 3. PostgreSQL (install: `sudo apt install libpq-dev postgresql postgresql-contrib`)
 4. Nginx (install: `sudo apt install nginx`)
+4. Volta ([Install](https://docs.volta.sh/guide/getting-started))
 
 ## Guide
 

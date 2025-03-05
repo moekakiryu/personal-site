@@ -4,6 +4,7 @@
 ## System Requisites
 
 1. Python >= 3.10.12 ([Install](https://www.python.org/downloads/release/python-31012/))
+2. Volta ([Install](https://docs.volta.sh/guide/getting-started))
 
 ## Setup
 
@@ -18,7 +19,10 @@
 python -m venv .venv
 source .venv/bin/activate
 
-# Install dependencies
+# Install node dependencies
+yarn install
+
+# Install python dependencies
 python -m pip install -r requirements.txt
 
 # Initialize development database
@@ -26,6 +30,9 @@ python manage.py migrate
 
 # Start server
 python manage.py runserver
+
+# (Optional) Start PostCSS build agent
+yarn dev:css
 ```
 
 ## Guidelines
