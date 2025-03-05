@@ -7,6 +7,12 @@ if [ ! -f manage.py ]; then
   exit 1;
 fi
 
+# Verify that node and yarn are installed (assume they are the correct versions due to volta)
+if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v yarn)" ]; then
+  echo "Unable to find node and yarn. Please ensure both are installed correctly."
+  exit 1;
+fi
+
 # Activate python virtual environment
 if [ ! -f .venv/bin/activate ]; then
   echo "Python virtual environment not initialized"
@@ -15,6 +21,7 @@ fi
 source .venv/bin/activate
 
 echo -e "\n\n-- Installing new requirements --"
+yarn install --immutable
 python3 -m pip install -r requirements.txt
 
 echo -e "\n\n-- Collecting Django updates --"
