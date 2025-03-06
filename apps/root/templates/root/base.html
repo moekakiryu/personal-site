@@ -26,26 +26,18 @@
 </head>
 
 <body class="line-numbers match-braces no-brace-select">
-  {% include "root/header.html" %}
-
+  
   <div class="main-content">
     <div class="section">
-      <div class="placeholder">
-        <div class="inner">
-          <a href="/">
-            {% include "root/icons/logo.svg" %}
-          </a>
-        </div>
-      </div>
+      {% include "root/header.html" %}
     </div>
     <div class="section">
       <div class="panel">
-        <div style="width: 100%;">
+        <div style="inner">
           {% block content%}{% endblock content %}
         </div>
       </div>
     </div>
   </div>
-
 </body>
 </html>

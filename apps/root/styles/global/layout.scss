@@ -33,6 +33,10 @@
     @media (--tablet) {
       padding: var(--spacing-md);
     }
+
+    .inner {
+      width: 100%;
+    }
   }
 }
 
