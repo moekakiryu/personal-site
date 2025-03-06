@@ -1,18 +1,18 @@
 .card-grid {
-  display: grid;
-  grid-auto-rows: 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-xs);
-  
-  @media (--tablet) {
-    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
-  }
 }
 
 
 .card {
   display: flex;
+
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: var(--spacing-sm);
+  flex: 1 1 0;
+
 
   border: 1px solid var(--color-greyscale-extra-light);
   border-radius: var(--rounded-sm);
@@ -31,14 +31,6 @@
     .read-more {
       color: var(--font-color-link-hover);
     }
-  }
-
-  @media (--tablet) {
-    flex-direction: column;
-  }
-
-  @media (--desktop) {
-    flex-direction: row;
   }
 
 
@@ -70,6 +62,12 @@
     left: 0;
   
     background-color: #d6d6d6;
+  }
+
+  .details {
+    flex: 1 1 0;
+    height: 100%;
+    min-width: 250px;
   }
 
   .name {
