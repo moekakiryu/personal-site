@@ -72,4 +72,4 @@ deviate anyway.
 | Mobile         | [Default] |
 | Tablet         | >= 480px  |
 | Desktop        | >= 768px  |
-| Large          | >= 1280px |
+| Large          | >= 1920px |
