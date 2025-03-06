@@ -1,7 +1,7 @@
 /* --- Media Query Definitions --- */
 @custom-media --tablet screen and (min-width: 480px);
 @custom-media --desktop screen and (min-width: 768px);
-@custom-media --large screen and (min-width: 1920px);
+@custom-media --large screen and (min-width: 1280px);
 
 /* --- Global Styles --- */
 * {
@@ -107,16 +107,26 @@ button {
 }
 
 .placeholder {
-  position: sticky;
+  min-height: calc(100vh - 2 * var(--spacing-md));
 
-  margin: 0 auto;
+  .inner {
+    position: sticky;
+  
+    margin: 0 auto;
+  
+    top: 50%;
+    width: 70%;
+    min-width: 250px;
+    max-width: 550px;
+  
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-lg) var(--color-white);
+  
+    fill: var(--color-terminal-blue);
+    transform: translateY(-50%);
 
-  top: 50%;
-  width: 100%;
-  max-width: 550px;
-
-  background-color: var(--color-white);
-  box-shadow: var(--shadow-lg) var(--color-white);
-
-  fill: var(--color-terminal-blue);
+    a {
+      display: block;
+    }
+  }
 }
