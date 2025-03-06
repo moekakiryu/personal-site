@@ -2,7 +2,7 @@
   "name": "personal-site",
   "packageManager": "yarn@4.7.0",
   "scripts": {
-    "build:css": "postcss apps/root/styles/*.css -d apps/root/static/root/css --verbose",
+    "build:css": "postcss apps/root/styles/*.css -d apps/root/static/root/css --ext .min.css --verbose",
     "dev:css": "yarn run build:css --watch"
   },
   "volta": {
