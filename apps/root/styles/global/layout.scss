@@ -38,13 +38,9 @@
 
 .container {
   max-width: var(--max-content-width);
-  margin: var(--spacing-md) auto 0 auto;
+  margin: var(--spacing-lg) auto 0 auto;
 
   &:first-child {
     margin-top: 0;
-  }
-
-  @media (--desktop) {
-    margin-top: var(--spacing-lg);
   }
 }

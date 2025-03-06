@@ -13,7 +13,7 @@
   --spacing-xs: .5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
-  --spacing-lg: 4rem;
+  --spacing-lg: 5rem;
 
   --shadow-sm: 0 0 8px -4px;
   --shadow-md: 0 0 16px -4px;
@@ -36,18 +36,9 @@
   --color-white: #fff;
 
   --color-terminal-blue: #00316f;
-  --color-terminal-blue-medium: #335a8c;
   --color-terminal-blue-light: #4d6f9a;
-  --color-terminal-blue-extra-light: #8098b7;
-  --color-terminal-blue-pale: #e6eaf1;
 
   --color-goldenrod: #c38c09;
-
-  --color-rose-pink: #dc1040;
-  --color-rose-pink-medium: #e34066;
-  --color-rose-pink-light: #ea708c;
-  --color-rose-pink-extra-light: #f19fb3;
-  --color-rose-pink-pale: #f8cfd9;
 
   --font-heading: "Courier Prime", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
@@ -66,6 +57,10 @@
   /* Global Styles */
   font-family: var(--font-body);
   color: var(--font-color-primary);
+
+  @media (--desktop) {
+    --spacing-lg: 8rem;
+  }
 }
 
 ::selection {
