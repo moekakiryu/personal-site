@@ -64,15 +64,6 @@ home directory:
 
 3. Make the file executable: `chmod u+x hooks/post-receive`
 
-4. Use volta to install the correct node versions (refer to package.json for current versions)
-
-    *Volta normally handles this automatically, but since `remote.git/` is a bare repository, we need to this by hand*
-
-    ```sh
-    volta install node@<version>
-    volta install yarn@<version>
-    ```
-
 #### Inside `deployment/`
 
 1. We do not need to make any changes to this folder, it will automatically be
