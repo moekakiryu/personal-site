@@ -41,6 +41,8 @@
   --color-terminal-blue-extra-light: #8098b7;
   --color-terminal-blue-pale: #e6eaf1;
 
+  --color-goldenrod: #c38c09;
+
   --color-rose-pink: #dc1040;
   --color-rose-pink-medium: #e34066;
   --color-rose-pink-light: #ea708c;
@@ -59,7 +61,7 @@
   --font-color-primary: var(--color-greyscale-medium);
   --font-color-secondary: var(--color-terminal-blue);
   --font-color-link: var(--color-greyscale-medium);
-  --font-color-link-hover: var(--color-rose-pink);
+  --font-color-link-hover: var(--color-goldenrod);
 
   /* Global Styles */
   font-family: var(--font-body);
