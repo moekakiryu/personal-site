@@ -15,8 +15,9 @@
   --spacing-md: 2rem;
   --spacing-lg: 4rem;
 
-  --shadow-md: 0 0 8px -4px;
-  --shadow-lg: 0 0 16px -4px ;
+  --shadow-sm: 0 0 8px -4px;
+  --shadow-md: 0 0 16px -4px;
+  --shadow-lg: 0 0 32px 16px;
 
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
@@ -52,7 +53,6 @@
   /* Site configuration */
   --max-container-width: 75rem;
   --max-content-width: 50rem;
-  --site-padding: 0 var(--spacing-sm);
   --content-padding: var(--spacing-md);
 
   /* Derived */
@@ -72,7 +72,6 @@
 
 body {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
 
   background-image: url(/static/root/assets/dots.png);
@@ -105,4 +104,19 @@ button {
   padding: 0;
   background-color: transparent;
   cursor: pointer;
+}
+
+.placeholder {
+  position: sticky;
+
+  margin: 0 auto;
+
+  top: 50%;
+  width: 100%;
+  max-width: 550px;
+
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-lg) var(--color-white);
+
+  fill: var(--color-terminal-blue);
 }

@@ -29,8 +29,19 @@
   {% include "root/header.html" %}
 
   <div class="main-content">
-    <div class="inner">
-      {% block content%}{% endblock content %}
+    <div class="section">
+      <div class="placeholder">
+        <h1>
+          {% include "root/icons/logo.svg" %}
+        </h1>
+      </div>
+    </div>
+    <div class="section">
+      <div class="panel">
+        <div style="width: 100%;">
+          {% block content%}{% endblock content %}
+        </div>
+      </div>
     </div>
   </div>
 

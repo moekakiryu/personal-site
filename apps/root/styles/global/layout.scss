@@ -1,21 +1,29 @@
 /* For main page layouts */
 .main-content {
   display: flex;
-  justify-content: center;
-  flex-grow: 1;
+  align-items: stretch;
+  gap: var(--spacing-md);
 
-  padding: var(--site-padding);
-
-  .inner {
+  width: 100%;
+  
+  padding: var(--spacing-md);
+  
+  .section {
     width: 100%;
     max-width: var(--max-container-width);
+  }
   
-    border-left: 1px solid;
-    border-right: 1px solid;
-    border-color: var(--color-greyscale-extra-light);
+  .panel {
+    display: flex;
+    align-items: center;
+
+    min-height: 100%;
+
     padding: var(--spacing-md) var(--spacing-sm);
-  
+    border-radius: var(--rounded-sm);
+    
     background-color: var(--color-white);
+    box-shadow: var(--shadow-lg) var(--color-white);
 
     @media (--tablet) {
       padding: var(--spacing-md);
@@ -23,9 +31,7 @@
   }
 }
 
-
 .container {
-  width: 100%;
   max-width: var(--max-content-width);
   margin: var(--spacing-md) auto 0 auto;
 
