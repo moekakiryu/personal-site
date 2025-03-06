@@ -8,6 +8,7 @@ __pycache__
 !.env.*.example
 
 # Production files
+apps/*/static/*/css
 db.sqlite3
 
 # Yarn
