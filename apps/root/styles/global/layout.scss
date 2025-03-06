@@ -34,8 +34,10 @@
       padding: var(--spacing-md);
     }
 
+    // A small element to allow us to center all children
     .inner {
       width: 100%;
+      height: 100%;
     }
   }
 }

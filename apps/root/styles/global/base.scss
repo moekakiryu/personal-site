@@ -81,6 +81,7 @@ body {
   position: relative;
   display: flex;
   min-height: 100vh;
+  background-color: white;
 
   &::before {
     content: "";
