@@ -1,12 +1,5 @@
 # Styling
 
-## A note on the current state
-
-For the moment, each set of styles is bundled into a separate CSS file to
-maintain sufficient abstraction and avoid intertwining classes. In the future
-this will likely to be updated to use PostCSS and/or a SCSS compiler. Until
-then, this project will match the CSS patterns seen in those frameworks.
-
 ## Guidelines
 
 For every rule there is an exception. The below should be helpful in guiding CSS
@@ -22,20 +15,31 @@ deviate anyway.
     Sub-classes may have non-unique names, however should always be styled as
     descendants of the main component class.
 
-    ```css
+    ```scss
     /* Yes */
     .component {/* ... */}
 
     .component .title {/* ... */}
 
     .component .description {/* ... */}
+    
+    /* (0r) */
+
+    .component {
+        /* ... */ 
+
+        .title {/* ... */}
+
+        .description {/* ... */}
+    }
+
 
     /* No */
     .component {/* ... */}
 
     .title {/* ... */}
 
-    /* Unnecessarily verbose */
+    /* Maybe - but very verbose */
     .component-description {/* ... */}
     ```
 
