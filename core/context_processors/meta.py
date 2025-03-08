@@ -42,6 +42,13 @@ class PageMeta:
   
     return display_name_or_func(**self._resolved.captured_kwargs)
 
+  def get_metadata(self):
+    return {
+      'display_name': self.display_name,
+      'is_home': self.is_home,
+      'path': self.path,
+    }
+
 # Helper function to ensure all metadata is formatted correctly in each url
 def url_meta(*, display_name):
   return {
@@ -54,32 +61,28 @@ def url_meta(*, display_name):
 def processor(request):
   current_resolved = resolve(request.path)
 
-  # Get nearest parent with an assigned view
-  # (assume '/' will always have a view)
-  parent_path = PageMeta.get_parent_path(request.path)
-  parent_resolved = None
-  old_path = None
-  while old_path != PATH_HOME and parent_resolved == None:
+  # Resolve views for all ancestors
+  # (note this could have a performance impact for deep url structures)
+  current_path = PageMeta.get_parent_path(request.path)
+  last_path = None
+  ancestors = {}
+  while last_path != PATH_HOME:
     try:
-      parent_resolved = resolve(parent_path)
+      ancestors[current_path] = resolve(current_path)
+    # If the path can't be resolved, don't add it to ancestor list
     except Resolver404:
-      old_path = parent_path
-      parent_path = PageMeta.get_parent_path(parent_path)
+      pass
+    finally:
+      last_path = current_path
+      current_path = PageMeta.get_parent_path(current_path)
   
   current_page = PageMeta(request.path, current_resolved)
-  parent_page = PageMeta(parent_path, parent_resolved)
   return {
     'meta': {
-      'current': {
-        'display_name': current_page.display_name,
-        'is_home': current_page.is_home,
-        'path': current_page.path,
-      },
-      'parent': {
-        'display_name': parent_page.display_name,
-        'is_home': parent_page.is_home,
-        'path': parent_page.path,
-      },
+      'current': current_page.get_metadata(),
+      'ancestors': [
+        PageMeta(path, resolved).get_metadata() for path, resolved in ancestors.items()
+      ]
     }
   }
 
