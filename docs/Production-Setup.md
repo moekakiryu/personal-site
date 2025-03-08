@@ -46,20 +46,20 @@ home directory:
     # Pull updates into deployment directory
     git --work-tree=$FILE_DIR --git-dir=$BARE_DIR checkout -f master
 
-    # Move into deployemnt directory
-    initialDir="$(pwd)"
-    cd $FILE_DIR
+    # Define steps to run in deployment directory
+    function runDeployment() {
+        # Check if deployment script exists
+        if [ ! -f ./scripts/deploy.sh ]; then
+                echo "Unable to find deployment script. Exiting without deployment"
+                exit 1
+        fi
 
-    # Run deployment script
-    if [ ! -f ./scripts/deploy.sh ]; then
-            echo "Unable to find deployment script. Exiting without deployment"
-            exit 1
-    fi
-    ./scripts/deploy.sh
+        # If so, run deployment script
+        ./scripts/deploy.sh
+    }
 
-    # Move into original directory
-    cd $intialDir
-    unset initialDir
+    # Run deployment steps from deployment directory
+    (cd $FILE_DIR; runDeployment)
     ```
 
 3. Make the file executable: `chmod u+x hooks/post-receive`
