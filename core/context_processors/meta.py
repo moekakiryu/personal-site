@@ -64,7 +64,7 @@ def processor(request):
   # Resolve views for all ancestors
   # (note this could have a performance impact for deep url structures)
   current_path = PageMeta.get_parent_path(request.path)
-  last_path = None
+  last_path = request.path
   ancestors = {}
   while last_path != PATH_HOME:
     try:
