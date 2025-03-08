@@ -104,10 +104,14 @@ TEMPLATES = [
               'rich_content': 'core.templatetags.rich_content',
             },
             'context_processors': [
+                # Django processors
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # Local processors
+                'core.context_processors.meta.processor',
             ],
         },
     },
