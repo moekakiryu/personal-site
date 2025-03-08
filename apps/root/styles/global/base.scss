@@ -13,11 +13,11 @@
   --spacing-xs: .5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
-  --spacing-lg: 5rem;
+  --spacing-lg: 6rem;
 
   --shadow-sm: 0 0 8px -4px;
   --shadow-md: 0 0 16px -4px;
-  --shadow-lg: 0 0 32px 24px;
+  --shadow-lg: 0 0 18px 24px;
 
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
@@ -59,7 +59,7 @@
   color: var(--font-color-primary);
 
   @media (--desktop) {
-    --spacing-lg: 8rem;
+    --spacing-lg: 4rem;
   }
 }
 
