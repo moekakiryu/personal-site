@@ -16,7 +16,7 @@ def rich_preview(value, arg):
         return value
 
     parsed = xml_parse(value, html_parser)
-    if not parsed:
+    if parsed is None:
         return value
     
     parent = parsed.find('body')
@@ -30,4 +30,5 @@ def rich_preview(value, arg):
 
     if len(words) < expected_length:
         return ' '.join(words)
+
     return ' '.join(words[:expected_length]).strip().strip(string.punctuation) + '...'
