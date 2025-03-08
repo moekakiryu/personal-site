@@ -23,4 +23,18 @@
       display: block;
     }
   }
+
+  @media (--large) {
+    &::after {
+      content: "";
+      position: fixed;
+
+      top: 5%;
+      left: 50%;
+      height: 90%;
+
+      border-left: 2px dashed var(--color-terminal-blue);
+      z-index: 1;
+    }
+  }
 }
