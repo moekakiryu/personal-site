@@ -53,6 +53,10 @@
     border-color: var(--color-goldenrod);
     color: var(--color-goldenrod)
   }
+
+  @media (--desktop) {
+    border: none;
+  }
 }
 
 .header-with-cta {
