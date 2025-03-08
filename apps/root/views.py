@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from apps.root.models import Article, Project
 
 
-def home(request):
+def home(request, **kwargs):
   article_count = 3
   project_count = 2
 
@@ -23,7 +23,7 @@ def home(request):
   })
 
 
-def articles(request):
+def articles(request, **kwargs):
   articles = Article.objects.all().order_by('-created')
 
   return render(request, 'root/articles/index.html', {
@@ -31,7 +31,7 @@ def articles(request):
   })
 
 
-def article(request, article_id):
+def article(request, article_id, **kwargs):
   article = Article.objects.get(slug=article_id)
 
   return render(request, 'root/article/index.html', {
@@ -39,7 +39,7 @@ def article(request, article_id):
   })
 
 
-def projects(request):
+def projects(request, **kwargs):
   projects = Project.objects.all().order_by('-id')
 
   return render(request, 'root/projects/index.html', {
@@ -47,5 +47,5 @@ def projects(request):
   })
 
 
-def sandbox(request):
+def sandbox(request, **kwargs):
   return render(request, 'root/sandbox/index.html')
