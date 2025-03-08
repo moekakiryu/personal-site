@@ -2,13 +2,11 @@
 
 {% load static %}
 
-{% block head.title %}
-  Home | Moeka Kiryu
-{% endblock head.title %}
+{% block head.title %}Who am I?{% endblock head.title %}
 
 {# Body #}
 {% block content %}
   {% include "root/home/about.html" %}
-  {% include "root/home/projects.html" %}  
+  {% include "root/home/projects.html" %}
   {% include "root/home/articles.html" %}
 {% endblock content %}
