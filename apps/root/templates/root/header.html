@@ -1,26 +1,36 @@
-{% with parent=meta.ancestors.0 current=meta.current %}
+{% with breadcrumb=meta.breadcrumb %}
 <nav class="header">
   <div class="inner">
     <a href="/" aria-label="Go Home">
       {% include "root/icons/logo.svg" %}
     </a>
-    
+
     {# If we are several layers deep, add a link to the parent page #}
-    {% if not current.is_home %}
+    {% if breadcrumb %}
       <div class="breadcrumbs">
-        <div class="breadcrumb">
-          {% if parent.display_name and not parent.is_home %}
-            {% include "root/icons/elbow.svg" %}
-            <a href="{{parent.path}}" aria-label="Go to parent page">
-              {{parent.display_name}}
-            </a>
-          {% elif current.display_name %}
-            {% include "root/icons/elbow.svg" %}
-            <a href="{{current.path}}" aria-current="page">
-              {{current.display_name}}
-            </a>
-          {% endif %}
-        </div>
+        {% if breadcrumb.is_current %}
+          <div class="breadcrumb">
+            <span class="desktop" aria-hidden="true">
+              {% include "root/icons/elbow-light.svg" %}
+            </span>
+            <span class="name">
+              {{breadcrumb.display_name}}
+            </span>
+          </div>
+        {% else %}
+          <a
+            href="{{breadcrumb.path}}"
+            class="breadcrumb"
+            aria-label="Go to parent page"
+          >
+            <span class="desktop" aria-hidden="true">
+              {% include "root/icons/elbow.svg" %}
+            </span>
+            <span class="name">
+              {{breadcrumb.display_name}}
+            </span>
+          </a>
+        {% endif %}
       </div>
     {% endif %}
   </div>

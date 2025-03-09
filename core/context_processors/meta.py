@@ -49,6 +49,7 @@ class PageMeta:
       'path': self.path,
     }
 
+
 # Helper function to ensure all metadata is formatted correctly in each url
 def url_meta(*, display_name):
   return {
@@ -56,6 +57,7 @@ def url_meta(*, display_name):
       'display_name': display_name
     }
   }
+
 
 # Context Processor
 def processor(request):
@@ -77,12 +79,34 @@ def processor(request):
       current_path = PageMeta.get_parent_path(current_path)
   
   current_page = PageMeta(request.path, current_resolved)
+  ancestor_pages = [
+    PageMeta(path, resolved) for path, resolved in ancestors.items()
+  ]
+  parent_page = ancestor_pages[0] if len(ancestors) > 0 else None
+
+  # Compute the parent needed for breadcrumbs
+  if parent_page:
+    if parent_page.display_name and not parent_page.is_home:
+      breadcrumb_page = parent_page
+    # TODO: Instead, this should walk up the ancestry list
+    elif current_page.display_name:
+      breadcrumb_page = current_page
+    else:
+      breadcrumb_page = None
+  else:
+    breadcrumb_page = None
+
+  print(breadcrumb_page, current_page, breadcrumb_page == current_page)
   return {
     'meta': {
       'current': current_page.get_metadata(),
-      'ancestors': [
-        PageMeta(path, resolved).get_metadata() for path, resolved in ancestors.items()
-      ]
+
+      'breadcrumb': {
+        **breadcrumb_page.get_metadata(),
+        'is_current': breadcrumb_page == current_page,
+       } if breadcrumb_page else None,
+
+      'ancestors': [page.get_metadata() for page in ancestor_pages]
     }
   }
 
