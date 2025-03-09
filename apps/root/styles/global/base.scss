@@ -83,6 +83,13 @@ body {
   min-height: 100vh;
   background-color: white;
 
+  // Hack to prevent horizontal jump when scrollbar is visible
+  // See: https://aykevl.nl/2014/09/fix-jumping-scrollbar
+  @media (--desktop) {
+    margin-right: calc(100% - 100vw);
+    overflow-x: hidden;
+  }
+
   &::before {
     content: "";
     position: fixed;
