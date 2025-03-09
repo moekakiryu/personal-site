@@ -127,10 +127,11 @@ a {
   color: var(--font-color-link);
   font-weight: bold;
   text-decoration: none;
-}
 
-a:hover, a:focus {
-  color: var(--font-color-link-hover);
+  &:hover,
+  &:focus {
+    color: var(--font-color-link-hover);
+  }
 }
 
 svg {
