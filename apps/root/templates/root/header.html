@@ -1,8 +1,9 @@
 {% with breadcrumb=meta.breadcrumb %}
 <nav class="header">
   <div class="inner">
-    <a href="/" aria-label="Go Home">
-      {% include "root/icons/logo.svg" %}
+    <a href="/" aria-label="Go Home" {% if meta.current.is_home %}aria-current="page"{% endif %}>
+      <span class="desktop">{% include "root/icons/logo.svg" %}</span>
+      <span class="mobile">{% include "root/icons/logo-small.svg" %}</span>
     </a>
 
     {# If we are several layers deep, add a link to the parent page #}

@@ -1,12 +1,12 @@
 /* Utility classes (CREATE SPARINGLY) */
-@media (--desktop) {
+@media (--large) {
   .mobile {
     display: none !important;
   }
 }
 
 /* NOTE: Use max-width here to hide on small screens */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1280px) {
   .desktop {
     display: none !important;
   }
