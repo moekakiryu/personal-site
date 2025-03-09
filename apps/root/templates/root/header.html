@@ -14,8 +14,9 @@
             <span class="desktop" aria-hidden="true">
               {% include "root/icons/elbow-light.svg" %}
             </span>
+
             <span class="name">
-              {{breadcrumb.display_name}}
+              <span class="mobile">$</span>{{breadcrumb.display_name}}
             </span>
           </div>
         {% else %}
@@ -28,7 +29,7 @@
               {% include "root/icons/elbow.svg" %}
             </span>
             <span class="name">
-              {{breadcrumb.display_name}}
+              <span class="mobile">$</span>{{breadcrumb.display_name}}
             </span>
           </a>
         {% endif %}

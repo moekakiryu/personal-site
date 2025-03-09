@@ -3,7 +3,7 @@
     <h2>Stuff I've written</h2>
 
     {% if articles.has_more %}
-      <div class="desktop">
+      <div class="tablet">
         <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
       </div>
     {% endif %}
@@ -12,7 +12,7 @@
   {% include "root/articles/list.html" with articles=articles.list %}
 
   {% if projects.has_more %}
-    <div class="mobile">
+    <div class="until-tablet">
       <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
     </div>
   {% endif %}
