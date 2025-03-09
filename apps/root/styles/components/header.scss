@@ -77,7 +77,7 @@
     }
 
     .name {
-      padding-left: var(--spacing-sm);
+      padding-left: 8px;
     }
   }
 
@@ -101,6 +101,14 @@
 
   .icon-logo-small {
     max-width: 90px;
+  }
+
+  .icon-logo {
+    max-width: 240px;
+
+    @media (--large) {
+      max-width: none;
+    }
   }
 
   .icon-elbow,
