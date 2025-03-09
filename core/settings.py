@@ -50,7 +50,7 @@ SECURE_SSL_REDIRECT = CURRENT_ENVIRONMENT == Env.PROD
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secure-hsts-seconds
 # See also: https://hstspreload.org/#deployment-recommendations
-SECURE_HSTS_SECONDS = 300
+SECURE_HSTS_SECONDS = 604800
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-SECURE_HSTS_INCLUDE_SUBDOMAINS
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
