@@ -18,6 +18,7 @@ urlpatterns = [
     ),
 
     path('articles/<uuid:article_id>/', views.article, name="root.article"),
+    path('projects/<uuid:article_id>/', views.article, name="root.project"),
 
     path("sandbox/", views.sandbox, name="root.sandbox"),
 ]
