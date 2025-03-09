@@ -96,7 +96,6 @@ def processor(request):
   else:
     breadcrumb_page = None
 
-  print(breadcrumb_page, current_page, breadcrumb_page == current_page)
   return {
     'meta': {
       'current': current_page.get_metadata(),
