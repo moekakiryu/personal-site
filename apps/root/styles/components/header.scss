@@ -56,6 +56,7 @@
       display: block;
     }
     svg {
+      display: block;
       fill: var(--color-terminal-blue);
     }
   }
@@ -66,10 +67,11 @@
 
     font-family: var(--font-heading );
     font-weight: bold;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
 
     @media (--large) {
       padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: 1.4rem;
     }
 
     span {
@@ -92,6 +94,11 @@
 
   a.breadcrumb {
     color: var(--font-color-secondary);
+    font-weight: normal;
+
+    @media (--large) {
+      font-weight: bold;
+    }
 
     &:hover,
     &:focus {
@@ -113,7 +120,7 @@
 
   .icon-elbow,
   .icon-elbow-light {
-    width: 2rem;
-    margin-bottom: 5px; // Manual alignment
+    width: 1rem;
+    margin-bottom: 4px; // Manual alignment
   }
 }
