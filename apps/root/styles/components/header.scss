@@ -61,6 +61,10 @@
     }
   }
 
+  .home-link {
+    width: 100%;
+  }
+
   .breadcrumb {
     display: flex;
     align-items: baseline;
@@ -71,7 +75,7 @@
 
     @media (--large) {
       padding: var(--spacing-xs) var(--spacing-sm);
-      font-size: 1.4rem;
+      font-size: 2.2rem;
     }
 
     span {
@@ -120,7 +124,6 @@
 
   .icon-elbow,
   .icon-elbow-light {
-    width: 1rem;
-    margin-bottom: 4px; // Manual alignment
+    width: 2rem;
   }
 }
