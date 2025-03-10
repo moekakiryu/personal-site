@@ -25,6 +25,7 @@ class ProjectAdmin(admin.ModelAdmin):
   fieldsets = (
       (None, {
           "fields": (
+              'title',
               'is_featured',
           ),
       }),
