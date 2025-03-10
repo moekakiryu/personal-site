@@ -106,6 +106,7 @@ TEMPLATES = [
             'context_processors': [
                 # Django processors
                 'django.template.context_processors.debug',
+                'django.template.context_processors.media',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -123,12 +124,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#static-root
 STATIC_ROOT = f"/var/www/{(get_environment('DJANGO_TARGET_DOMAIN') or 'default').strip('.')}/static"
 
+# https://docs.djangoproject.com/en/5.1/ref/settings/#media-url
+MEDIA_URL = 'media/'
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#media-root
+MEDIA_ROOT = f"/var/www/{(get_environment('DJANGO_TARGET_DOMAIN') or 'default').strip('.')}/media"
 
 
 # --- SECURITY --- #
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-age
-SESSION_COOKIE_AGE = 2 * 60 ^ 60 # (in seconds)
+SESSION_COOKIE_AGE = 24 * 60 ^ 60 # (in seconds)
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-name
 SESSION_COOKIE_NAME = 'session'

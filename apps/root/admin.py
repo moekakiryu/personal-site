@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from apps.root.models import Article, Project
 
-# Register your models here.
+
 class ArticleAdmin(admin.ModelAdmin):
   search_fields = ['title']
 
