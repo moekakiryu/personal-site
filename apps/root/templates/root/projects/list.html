@@ -2,7 +2,7 @@
   {% for project in projects %}
     <a class="card" href="{% url "root.project" project.article.slug %}">
       <div class="image">
-        <div class="mock-placeholder"></div>
+        <img src="{{ MEDIA_URL }}{{ project.thumbnail }}" alt="">
       </div>
       <div class="details">
         <h3 class="name">
