@@ -160,3 +160,13 @@ button {
   background-color: transparent;
   cursor: pointer;
 }
+
+blockquote {
+  border-left: 2px solid var(--color-greyscale-extra-light);
+  padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) var(--spacing-md);
+  margin: 0;
+
+  background-color: #eee;
+
+  font-style: italic;
+}
