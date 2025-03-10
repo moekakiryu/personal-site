@@ -32,7 +32,7 @@ def articles(request, **kwargs):
 
 
 def article(request, article_id, **kwargs):
-  article = Article.objects.get(slug=article_id)
+  article = Article.objects.get(slug = article_id)
 
   return render(request, 'root/article/index.html', {
     'article': article
@@ -44,6 +44,14 @@ def projects(request, **kwargs):
 
   return render(request, 'root/projects/index.html', {
     'projects': projects
+  })
+
+
+def project(request, project_id, **kwargs):
+  project = Project.objects.get(slug = project_id)
+
+  return render(request, 'root/project/index.html', {
+    'project': project
   })
 
 
