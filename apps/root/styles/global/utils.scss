@@ -27,7 +27,8 @@
 
 /* Generic Component Styles */
 .primary,
-.secondary {
+.secondary,
+.tertiary {
   display: block;
 
   margin: var(--spacing-md) 0;
@@ -65,9 +66,14 @@
     border-color: var(--color-goldenrod);
     color: var(--color-goldenrod)
   }
+}
 
-  @media (--desktop) {
-    border: none;
+.tertiary {
+  color: var(--color-terminal-blue);
+
+  &:hover,
+  &:focus {
+    color: var(--color-goldenrod);
   }
 }
 
