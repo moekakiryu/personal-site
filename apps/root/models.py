@@ -42,17 +42,24 @@ class Project(models.Model):
   )
 
   # Content Fields
-  project_url = models.URLField()
+  project_url = models.URLField(
+    blank=True
+  )
+  source_url = models.URLField()
+  is_featured = models.BooleanField()
   title = models.CharField(
     max_length=255,
   )
   thumbnail = models.ImageField(
     upload_to='root/projects/',
   )
+  hero = models.ImageField(
+    upload_to='root/projects/',
+  )
   blurb = models.TextField(
     max_length=120,
   )
-  article = models.ForeignKey(
+  article = models.OneToOneField(
     Article,
     on_delete=models.PROTECT,
   )
