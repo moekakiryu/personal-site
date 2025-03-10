@@ -46,8 +46,11 @@ class Project(models.Model):
   title = models.CharField(
     max_length=255,
   )
+  thumbnail = models.ImageField(
+    upload_to='root/projects/',
+  )
   blurb = models.TextField(
-    max_length=120
+    max_length=120,
   )
   article = models.ForeignKey(
     Article,
