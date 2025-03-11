@@ -12,7 +12,7 @@
   {% include "root/projects/list.html" with projects=projects.list%}
 
   {% if projects.has_more %}
-    <div class="until-tablet">
+    <div class="until-tablet cta-container">
       <a class="secondary" href="{% url "root.projects" %}">View all projects</a>
     </div>
   {% endif %}

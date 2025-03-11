@@ -1,5 +1,5 @@
 {% with breadcrumb=meta.breadcrumb %}
-<nav class="header">
+<div class="header">
   <div class="inner">
     <a class="home-link" href="/" aria-label="Go Home" {% if meta.current.is_home %}aria-current="page"{% endif %}>
       <span class="desktop">{% include "root/icons/logo.svg" %}</span>
@@ -11,36 +11,6 @@
         {% endif %}
       </span>
     </a>
-
-    {# If we are several layers deep, add a link to the parent page #}
-    {% if breadcrumb %}
-      <div class="breadcrumbs">
-        {% if breadcrumb.is_current %}
-          <div class="breadcrumb">
-            <span class="desktop" aria-hidden="true">
-              {% include "root/icons/elbow-light.svg" %}
-            </span>
-
-            <span class="name">
-              <span class="mobile">$</span>{{breadcrumb.display_name}}
-            </span>
-          </div>
-        {% else %}
-          <a
-            href="{{breadcrumb.path}}"
-            class="breadcrumb"
-            aria-label="Go to parent page"
-          >
-            <span class="desktop" aria-hidden="true">
-              {% include "root/icons/elbow.svg" %}
-            </span>
-            <span class="name">
-              <span class="mobile">$</span>{{breadcrumb.display_name}}
-            </span>
-          </a>
-        {% endif %}
-      </div>
-    {% endif %}
   </div>
-</nav>
+</div>
 {% endwith %}

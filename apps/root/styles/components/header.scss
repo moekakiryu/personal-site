@@ -47,9 +47,6 @@
 
       min-width: 250px;
       max-width: 500px;
-
-      background-color: var(--color-white);
-      box-shadow: var(--shadow-lg) var(--color-white);
     }
 
     a > span {
@@ -62,7 +59,9 @@
   }
 
   .home-link {
-    width: 100%;
+    @media (--large) {
+      width: 100%;
+    }
   }
 
   .breadcrumb {

@@ -26,33 +26,50 @@
 
 
 /* Generic Component Styles */
+.cta-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+
+  margin: var(--spacing-sm) 0;
+
+  @media (--desktop) {
+    flex-direction: row;
+  }
+
+  .primary,
+  .secondary,
+  .tertiary {
+    flex-grow: 1;
+  }
+}
+
 .primary,
 .secondary,
 .tertiary {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  margin: var(--spacing-md) 0;
   padding: var(--spacing-sm);
   border-radius: var(--rounded-sm);
 
   font-weight: bold;
   text-decoration: none;
   text-align: center;
+  user-select: none;
 
   cursor: pointer;
-
-  @media (--desktop) {
-    margin: var(--spacing-sm) 0;
-  }
 }
 
 .primary {
-  background-color: var(--color-terminal-blue-light);
+  background-color: var(--color-terminal-blue);
   color: var(--color-white);
 
   &:hover,
   &:focus {
     background-color: var(--color-goldenrod);
+    color: var(--color-white);
   }
 }
 
