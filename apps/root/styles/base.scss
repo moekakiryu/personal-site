@@ -2,11 +2,13 @@
 @import "external/normalize.scss";
 @import "external/google-fonts.scss";
 
+@import "global/breakpoints.scss";
+@import "global/variables.scss";
 @import "global/base.scss";
 @import "global/layout.scss";
-@import "global/utils.scss";
 
 /* Components */
-@import "components/header.scss";
-@import "components/project-list.scss";
-@import "components/article-list.scss";
+@import "fragments/header.scss";
+@import "fragments/cta.scss";
+@import "fragments/project-list.scss";
+@import "fragments/article-list.scss";

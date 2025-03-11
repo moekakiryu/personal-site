@@ -1,0 +1,29 @@
+/* --- Media Query Definitions --- */
+@custom-media --tablet screen and (min-width: 480px);
+@custom-media --desktop screen and (min-width: 768px);
+@custom-media --large screen and (min-width: 1280px);
+
+@media (--large) {
+  .mobile {
+    display: none !important;
+  }
+}
+
+@media (--desktop) {
+  .until-tablet {
+    display: none !important;
+  }
+}
+
+/* NOTE: Use max-width here to hide on small screens */
+@media screen and (max-width: 1280px) {
+  .desktop {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tablet {
+    display: none !important;
+  }
+}
