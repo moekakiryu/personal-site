@@ -1,7 +1,6 @@
-{% with breadcrumb=meta.breadcrumb %}
 <div class="header">
   <div class="inner">
-    <a class="home-link" href="/" aria-label="Go Home" {% if meta.current.is_home %}aria-current="page"{% endif %}>
+    <a href="/" aria-label="Go Home" {% if meta.current.is_home %}aria-current="page"{% endif %}>
       <span class="desktop">{% include "root/icons/logo.svg" %}</span>
       <span class="mobile">
         {% if meta.current.is_home %}
@@ -11,6 +10,8 @@
         {% endif %}
       </span>
     </a>
+    <div class="cta-container">
+      <button class="cta secondary">Menu</button>
+    </div>
   </div>
 </div>
-{% endwith %}
