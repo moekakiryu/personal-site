@@ -1,0 +1,31 @@
+.project-heading {
+  .hero {
+    width: 100%;
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: var(--spacing-sm) 0;
+    gap: var(--spacing-lg);
+
+    &.text-only {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+
+      @media (--desktop) {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .title > * {
+      margin: 0;
+    }
+
+    .links {
+      flex-shrink: 0;
+    }
+  }
+
+}

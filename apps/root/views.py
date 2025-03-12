@@ -51,7 +51,7 @@ def project(request, project_id, **kwargs):
   project = Project.objects.get(slug = project_id)
 
   return render(request, 'root/project/index.html', {
-    'project': project
+    'project': project,
   })
 
 

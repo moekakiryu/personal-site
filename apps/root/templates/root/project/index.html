@@ -5,21 +5,13 @@
 {% block head.title %}{{ project.title }}{% endblock head.title %}
 
 {% block head.styles %}
-  <link rel="stylesheet" type="text/css" href="{% static "root/css/project.min.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "root/css/article.min.css" %}">
   <script src="{% static "root/js/prism.min.js" %}"></script>
 {% endblock head.styles %}
 
 {% block content %}
   <div class="container project">
-    <img src="{{ MEDIA_URL }}{{ project.hero }}" alt="" class="hero">
-
-    <div class='cta-container'>
-      <a class="primary" href="{{ project.project_url }}" target="_blank">View project</a>
-      <a class="secondary" href="{{ project.source_url }}" target="_blank">View source</a>
-    </div>
-
-    <h1 class="title">{{ project.title }}</h1>
+    {% include "root/project/heading.html" %}
     {{project.article.content|safe}}
   </div>
 {% endblock content %}

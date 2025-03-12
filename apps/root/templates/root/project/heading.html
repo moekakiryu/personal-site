@@ -1,0 +1,16 @@
+<div class="project-heading">
+  {% if project.hero %}
+    {# @TODO: Alt text #}
+    <img src="{{ MEDIA_URL }}{{ project.hero }}" alt="" class="hero">
+  {% endif %}
+
+  <div class="heading{% if not project.hero %} text-only{% endif %}">
+    <div class="title">
+      <h1>{{ project.title }}</h1>
+    </div>
+    <div class="cta-container links">
+      <a class="cta primary" href="{{ project.project_url }}" target="_blank">View project</a>
+      <a class="cta secondary" href="{{ project.source_url }}" target="_blank">View source</a>
+    </div>
+  </div>
+</div>
