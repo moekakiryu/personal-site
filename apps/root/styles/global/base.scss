@@ -80,6 +80,10 @@ h1 {
   @media (--desktop) {
     font-size: 2rem;
   }
+
+  .breadcrumb + & {
+    margin-top: 0;
+  }
 }
 
 a {

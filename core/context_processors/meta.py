@@ -32,7 +32,7 @@ class PageMeta:
     return self._path
   
   @property
-  def display_name(self):
+  def name(self):
     display_name_or_func = self._meta.get('display_name')
 
     if isinstance(display_name_or_func, str):
@@ -44,9 +44,9 @@ class PageMeta:
 
   def get_metadata(self):
     return {
-      'display_name': self.display_name,
-      'is_home': self.is_home,
+      'name': self.name,
       'path': self.path,
+      'is_home': self.is_home,
     }
 
 
@@ -86,10 +86,10 @@ def processor(request):
 
   # Compute the parent needed for breadcrumbs
   if parent_page:
-    if parent_page.display_name and not parent_page.is_home:
+    if parent_page.name and not parent_page.is_home:
       breadcrumb_page = parent_page
     # TODO: Instead, this should walk up the ancestry list
-    elif current_page.display_name:
+    elif current_page.name:
       breadcrumb_page = current_page
     else:
       breadcrumb_page = None

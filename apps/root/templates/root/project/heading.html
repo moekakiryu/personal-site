@@ -6,6 +6,7 @@
 
   <div class="heading{% if not project.hero %} text-only{% endif %}">
     <div class="title">
+      {% include "root/breadcrumb.html" %}
       <h1>{{ project.title }}</h1>
     </div>
     <div class="cta-container links">
