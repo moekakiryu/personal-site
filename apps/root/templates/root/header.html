@@ -1,27 +1,29 @@
-<div class="header">
-  <div class="left">
-    <a href="/" aria-label="Go Home" {% if meta.current.view == 'root.home' %}aria-current="page"{% endif %}>
-      <div class="desktop">{% include "root/icons/logo.svg" %}</div>
-      <div class="mobile">{% include "root/icons/logo-small.svg" %}</div>
-    </a>
-  </div>
-  <div class="right">
-    <div class="desktop">
-      <div class="cta-container">
-        <button class="cta secondary js-nav-toggle">Menu</button>
+<div class="header-container">
+  <div class="header">
+    <div class="left">
+      <a href="/" aria-label="Go Home" {% if meta.current.view == 'root.home' %}aria-current="page"{% endif %}>
+        <div class="desktop">{% include "root/icons/logo.svg" %}</div>
+        <div class="mobile">{% include "root/icons/logo-small.svg" %}</div>
+      </a>
+    </div>
+    <div class="right">
+      <div class="desktop">
+        <div class="cta-container">
+          <button class="cta secondary js-nav-toggle">Menu</button>
+        </div>
+      </div>
+      <div class="mobile">
+        <div class="cta-container">
+          <button class="cta tertiary js-nav-toggle">Menu</button>
+        </div>
       </div>
     </div>
-    <div class="mobile">
-      <div class="cta-container">
-        <button class="cta tertiary js-nav-toggle">Menu</button>
-      </div>
-    </div>
   </div>
+  <nav class="mobile js-nav">
+    <ul>
+      <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
+      <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
+      <li><a href="{% url "root.sandbox" %}" {% if meta.current.view == 'root.sandbox' %}class="current"{% endif %}>Hire me!</a></li>
+    </ul>
+  </nav>
 </div>
-<nav class="hidden js-nav" style="display:none;">
-  <ul>
-    <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
-    <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
-    <li><a href="{% url "root.sandbox" %}" {% if meta.current.view == 'root.sandbox' %}class="current"{% endif %}>Hire me!</a></li>
-  </ul>
-</nav>

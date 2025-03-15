@@ -78,6 +78,8 @@ class Stateful {
 
 // TODO: Minify this
 class Nav extends Stateful {
+  ANIMATION_DURATION = 250; // ms
+
   elements = {
     nav: "js-nav",
     toggle: "js-nav-toggle",
@@ -112,41 +114,43 @@ class Nav extends Stateful {
   /* --- Actions --- */
 
   openNav() {
+    const breakpoint = BREAKPOINTS[getBreakpoint()];
+
     this.$nav.forEach((nav) => {
       nav.style.display = "";
 
-      setTimeout(() => {
-        nav.classList.remove(this.classes.hidden);
-      }, 1);
+      nav.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: this.ANIMATION_DURATION,
+      });
     });
 
     this.$toggle.forEach((toggle) => {
       toggle.innerText = "Close";
     });
 
-    document.body.style.overflow = "hidden";
+    if (breakpoint < BREAKPOINTS.desktop) {
+      document.body.style.overflow = "hidden";
+    }
   }
 
   closeNav() {
+    const breakpoint = BREAKPOINTS[getBreakpoint()];
+
     this.$nav.forEach((nav) => {
-      const isNavClosed = nav.classList.contains(this.classes.hidden);
-
-      const transitionListener = () => {
-        nav.style.display = "none";
-        nav.removeEventListener("transitionend", transitionListener);
-      };
-
-      if (!isNavClosed) {
-        nav.addEventListener("transitionend", transitionListener);
-        nav.classList.add(this.classes.hidden);
-      }
+      nav
+        .animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: this.ANIMATION_DURATION,
+        })
+        .finished.then(() => [(nav.style.display = "none")]);
     });
 
     this.$toggle.forEach((toggle) => {
       toggle.innerText = "Menu";
     });
 
-    document.body.style.overflow = "visible";
+    if (breakpoint < BREAKPOINTS.desktop) {
+      document.body.style.overflow = "visible";
+    }
   }
 
   /* --- Handlers --- */
@@ -167,8 +171,8 @@ class Nav extends Stateful {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
     if (
-      this.static.lastBreakpoint < BREAKPOINTS.desktop &&
-      breakpoint >= BREAKPOINTS.desktop
+      this.static.lastBreakpoint < BREAKPOINTS.large &&
+      breakpoint >= BREAKPOINTS.large
     ) {
       this.state.isOpen = false;
     }
@@ -179,10 +183,12 @@ class Nav extends Stateful {
   /* --- Main --- */
 
   mount() {
+    this.closeNav();
+
     this.$toggle.forEach((toggle) =>
-      toggle.addEventListener("click", () => this.onToggleClick())
+      toggle.addEventListener("click", this.onToggleClick.bind(this))
     );
-    window.addEventListener("resize", () => this.onWindowResize());
+    window.addEventListener("resize", this.onWindowResize.bind(this));
   }
 }
 
