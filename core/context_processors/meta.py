@@ -24,10 +24,6 @@ class PageMeta:
     return resolved.kwargs.get(META_KEY, {})
 
   @property
-  def is_home(self):
-    return self._path == PATH_HOME
-  
-  @property
   def path(self):
     return self._path
   
@@ -51,7 +47,6 @@ class PageMeta:
       'name': self.name,
       'path': self.path,
       'view': self.view_name,
-      'is_home': self.is_home,
     }
 
 
@@ -91,7 +86,7 @@ def processor(request):
 
   # Compute the parent needed for breadcrumbs
   if parent_page:
-    if parent_page.name and not parent_page.is_home:
+    if parent_page.name and not parent_page.path == PATH_HOME:
       breadcrumb_page = parent_page
     # TODO: Instead, this should walk up the ancestry list
     elif current_page.name:
@@ -104,12 +99,7 @@ def processor(request):
   return {
     'meta': {
       'current': current_page.get_metadata(),
-
-      'breadcrumb': {
-        **breadcrumb_page.get_metadata(),
-        'is_current': breadcrumb_page == current_page,
-       } if breadcrumb_page else None,
-
+      'breadcrumb': breadcrumb_page.get_metadata() if breadcrumb_page else None,
       'ancestors': [page.get_metadata() for page in ancestor_pages]
     }
   }
