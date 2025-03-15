@@ -32,6 +32,10 @@ class PageMeta:
     return self._path
   
   @property
+  def view_name(self):
+    return self._resolved.view_name
+  
+  @property
   def name(self):
     display_name_or_func = self._meta.get('display_name')
 
@@ -46,6 +50,7 @@ class PageMeta:
     return {
       'name': self.name,
       'path': self.path,
+      'view': self.view_name,
       'is_home': self.is_home,
     }
 

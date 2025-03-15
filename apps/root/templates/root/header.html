@@ -1,17 +1,27 @@
 <div class="header">
-  <div class="inner">
+  <div class="left">
     <a href="/" aria-label="Go Home" {% if meta.current.is_home %}aria-current="page"{% endif %}>
-      <span class="desktop">{% include "root/icons/logo.svg" %}</span>
-      <span class="mobile">
-        {% if meta.current.is_home %}
-          {% include "root/icons/logo.svg" %}
-        {% else %}
-          {% include "root/icons/logo-small.svg" %}
-        {% endif %}
-      </span>
+      <div class="desktop">{% include "root/icons/logo.svg" %}</div>
+      <div class="mobile">{% include "root/icons/logo-small.svg" %}</div>
     </a>
-    <div class="cta-container">
-      <button class="cta secondary">Menu</button>
+  </div>
+  <div class="right">
+    <div class="desktop">
+      <div class="cta-container">
+        <button class="cta secondary js-nav-toggle">Menu</button>
+      </div>
+    </div>
+    <div class="mobile">
+      <div class="cta-container">
+        <button class="cta tertiary js-nav-toggle">Menu</button>
+      </div>
     </div>
   </div>
 </div>
+<nav class="hidden js-nav" style="display:none;">
+  <ul>
+    <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
+    <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
+    <li><a href="{% url "root.sandbox" %}" {% if meta.current.view == 'root.sandbox' %}class="current"{% endif %}>Hire me!</a></li>
+  </ul>
+</nav>

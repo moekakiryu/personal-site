@@ -2,8 +2,6 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: stretch;
 
   width: 100%;
 
@@ -13,8 +11,11 @@
   
   .section {
     position: relative;
-    flex: 1 1 0;
     max-width: var(--max-container-width);
+
+    @media (--large) {
+      flex: 1 1 0;      
+    }
   }
   
   .panel {

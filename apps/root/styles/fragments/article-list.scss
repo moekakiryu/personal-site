@@ -2,10 +2,14 @@
   display: block;
 
   border-top: 1px dashed var(--color-terminal-blue);
-  padding: var(--spacing-sm) 0;
+  padding: var(--spacing-md) 0;
 
   font-weight: normal;
   color: var(--font-color-primary);
+
+  @media (--desktop) {
+    padding: var(--spacing-sm) 0;
+  }
 
   &:last-child {
     border-bottom: 1px dashed var(--color-terminal-blue);
@@ -48,7 +52,9 @@
   }
 
   .details {
-    padding-left: var(--spacing-sm);
+    @media (--desktop) {
+      padding-left: var(--spacing-sm);
+    }
   }
 
   .description {
