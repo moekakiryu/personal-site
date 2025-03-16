@@ -1,9 +1,11 @@
 <div class="card-container">
   {% for project in projects %}
     <a class="card" href="{% url "root.project" project.slug %}">
-      <div class="image">
-        <img src="{{ MEDIA_URL }}{{ project.thumbnail }}" alt="">
-      </div>
+      {% if project.thumbnail %}
+        <div class="image">
+          <img src="{{ MEDIA_URL }}{{ project.thumbnail }}" alt="">
+        </div>
+      {% endif %}
       <div class="details">
         <h3 class="name">
           {{ project.title }}

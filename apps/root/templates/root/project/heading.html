@@ -10,8 +10,12 @@
       <h1>{{ project.title }}</h1>
     </div>
     <div class="cta-container links">
-      <a class="cta primary" href="{{ project.project_url }}" target="_blank">View project</a>
-      <a class="cta secondary" href="{{ project.source_url }}" target="_blank">View source</a>
+      {% if project.project_url %}
+        <a class="cta primary" href="{{ project.project_url }}" target="_blank">View project</a>
+        <a class="cta secondary" href="{{ project.source_url }}" target="_blank">View source</a>
+      {% else %}
+        <a class="cta primary" href="{{ project.source_url }}" target="_blank">View source</a>
+      {% endif %}
     </div>
   </div>
 </div>
