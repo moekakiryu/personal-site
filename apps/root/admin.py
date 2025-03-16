@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.root.models import Article, Project
+from apps.root.models import Article, Project, Employer, Contract
 
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -51,5 +51,15 @@ class ProjectAdmin(admin.ModelAdmin):
   )
 
 
+class EmployerAdmin(admin.ModelAdmin):
+   pass
+
+
+class ContractAdmin(admin.ModelAdmin):
+   pass
+
+
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(Employer, EmployerAdmin)
+admin.site.register(Contract, ContractAdmin)

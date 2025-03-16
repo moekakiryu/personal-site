@@ -68,3 +68,36 @@ class Project(models.Model):
 
   def __str__(self):
     return self.title
+
+
+# --- Resume Models --- #
+
+class Employer(models.Model):
+  name = models.CharField(
+    max_length=30
+  )
+
+  def __str__(self):
+    return self.name
+
+
+class Contract(models.Model):
+  employer = models.ForeignKey(
+    to=Employer,
+    on_delete=models.PROTECT,
+    blank=False
+  )
+  name = models.CharField(
+    max_length=255,
+    blank=False
+  )
+  start = models.DateField(
+    blank=False
+  )
+  end = models.DateField(
+    blank=False
+  )
+  description = HTMLField()
+
+  def __str__(self):
+    return f'({self.employer.name}) {self.name}'
