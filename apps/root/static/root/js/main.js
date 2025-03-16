@@ -11,13 +11,14 @@ const BREAKPOINTS = {
 function getBreakpoint() {
   const screenSize = window.innerWidth;
 
-  const breakpoint = Object.entries(BREAKPOINTS)
-    .reduce((breakpoint, [name, size]) => {
+  const breakpoint = Object.entries(BREAKPOINTS).reduce(
+    (breakpoint, [name, size]) => {
       if (size < screenSize) {
         return [name, size];
       }
       return breakpoint;
-    });
+    }
+  );
 
   return breakpoint[0];
 }
@@ -32,6 +33,10 @@ function responsiveValue(mapping) {
   if (mapping.hasOwnProperty(currentBreakpoint)) {
     return mapping[currentBreakpoint];
   }
+}
+
+function bindEvents() {
+  console.log(this);
 }
 
 /**
@@ -89,7 +94,7 @@ class Nav extends Stateful {
   };
 
   static = {
-    lastBreakpoint: null,
+    wasDesktopLayout: null,
   };
 
   /* --- Elements --- */
@@ -147,19 +152,18 @@ class Nav extends Stateful {
             duration: this.ANIMATION_DURATION,
           })
           .finished.then(() => [(nav.style.display = "none")]);
-      } else {
-        // Use style instead of animation API to avoid jittery animations of max-height
-        nav.style.maxHeight = ''
-      
-        const transitionListener = () => {
-          // Check `isOpen` again to handle if state has changed during transition
-          if (!this.state.isOpen) {
-            nav.style.display = 'none'
-          }
-          nav.removeEventListener('transitionend', transitionListener)
-        }
-        nav.addEventListener('transitionend', transitionListener)
       }
+      // Use style instead of animation API to avoid jittery animations of max-height
+      nav.style.maxHeight = "";
+
+      const transitionListener = () => {
+        // Check `isOpen` again to handle if state has changed during transition
+        if (!this.state.isOpen) {
+          nav.style.display = "none";
+        }
+        nav.removeEventListener("transitionend", transitionListener);
+      };
+      nav.addEventListener("transitionend", transitionListener);
     });
 
     this.$toggle.forEach((toggle) => {
@@ -172,7 +176,7 @@ class Nav extends Stateful {
   }
 
   hideNav() {
-    this.$nav.forEach(nav => nav.style.display = 'none')
+    this.$nav.forEach((nav) => (nav.style.display = "none"));
 
     this.$toggle.forEach((toggle) => {
       toggle.innerText = "Menu";
@@ -195,14 +199,28 @@ class Nav extends Stateful {
     this.state.isOpen = !this.state.isOpen;
   }
 
+  onWindowResize() {
+    const breakpoint = BREAKPOINTS[getBreakpoint()];
+
+    const isDesktopLayout = breakpoint >= BREAKPOINTS.large;
+
+    if (this.static.wasDesktopLayout !== isDesktopLayout) {
+      this.state.isOpen = false;
+    }
+
+    this.static.wasDesktopLayout = isDesktopLayout;
+  }
+
   /* --- Main --- */
 
   mount() {
-    this.hideNav()
+    this.hideNav();
 
     this.$toggle.forEach((toggle) =>
       toggle.addEventListener("click", this.onToggleClick.bind(this))
     );
+
+    window.addEventListener("resize", this.onWindowResize.bind(this));
   }
 }
 
