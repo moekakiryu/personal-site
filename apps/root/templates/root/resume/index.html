@@ -1,7 +1,22 @@
 {% extends "root/base.html" %}
 
+{% load static %}
+
+{% block head.styles %}
+  <link rel="stylesheet" type="text/css" href="{% static "root/css/resume.min.css" %}">
+{% endblock head.styles %}
+
 {% block head.title %}Hire me!{% endblock head.title %}
 
 {% block content %}
   <h1>Hire me!</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit
+    tempor metus, ut mattis libero maximus iaculis. Donec sed auctor risus.
+    Aenean venenatis gravida nisi vitae pulvinar. Ut elementum et quam a
+    dapibus.
+  </p>
+  {% include "root/resume/resume.html" %}
+  {% include "root/resume/hire-me.html" %}
+  <div style="min-height: 200vh"></div>
 {% endblock content %}
