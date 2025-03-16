@@ -20,3 +20,8 @@ yarn build:css
 in the project root, then commit any changes. NOTE: This is NOT run
 automatically on deployment. As such, all files must be built manually
 beforehand.
+
+## Guidelines
+
+1. [CSS / Styling](./docs/Styling.md)
+1. [JS / Scripts](./docs/Scripts.md)

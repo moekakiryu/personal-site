@@ -41,5 +41,4 @@ yarn dev:css
 
 ## Guidelines
 
-1. [CSS / Styling](./docs/Styling.md)
-2. [Source Countrol](./docs/Source-Control.md)
+1. [Source Countrol](./docs/Source-Control.md)
