@@ -135,6 +135,7 @@ class Nav extends Stateful {
 
     this.$toggle.forEach((toggle) => {
       toggle.innerText = "Close";
+      toggle.setAttribute("aria-expanded", true);
     });
 
     if (breakpoint < BREAKPOINTS.large) {
@@ -168,6 +169,7 @@ class Nav extends Stateful {
 
     this.$toggle.forEach((toggle) => {
       toggle.innerText = "Menu";
+      toggle.setAttribute("aria-expanded", false);
     });
 
     if (breakpoint < BREAKPOINTS.large) {
@@ -176,10 +178,13 @@ class Nav extends Stateful {
   }
 
   hideNav() {
-    this.$nav.forEach((nav) => (nav.style.display = "none"));
+    this.$nav.forEach((nav) => {
+      nav.style.display = "none";
+    });
 
     this.$toggle.forEach((toggle) => {
       toggle.innerText = "Menu";
+      toggle.setAttribute("aria-expanded", false);
     });
 
     document.body.style.overflow = "";

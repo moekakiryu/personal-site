@@ -6,7 +6,12 @@
         <div class="mobile">{% include "root/icons/logo-small.svg" %}</div>
       </a>
     </div>
-    <nav class="desktop js-nav">
+    <nav
+      id="nav-desktop"
+      class="desktop js-nav"
+      aria-label="Main Menu"
+      role="navigation"
+    >
       <ul>
         <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
         <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
@@ -16,17 +21,34 @@
     <div class="right">
       <div class="desktop">
         <div class="cta-container">
-          <button class="cta secondary js-nav-toggle">Menu</button>
+          <button
+            id="nav-toggle-desktop"
+            aria-controls="nav-desktop"
+            class="cta secondary js-nav-toggle"
+          >
+            Menu
+          </button>
         </div>
       </div>
       <div class="mobile">
         <div class="cta-container">
-          <button class="cta tertiary js-nav-toggle">Menu</button>
+          <button
+            id="nav-toggle-mobile"
+            aria-controls="nav-mobile"
+            class="cta tertiary js-nav-toggle"
+          >
+            Menu
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <nav class="mobile js-nav">
+  <nav
+    id="nav-mobile"
+    class="mobile js-nav"
+    aria-label="Main Menu"
+    role="navigation"
+  >
     <ul>
       <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
       <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
