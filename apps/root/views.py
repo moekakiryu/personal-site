@@ -55,5 +55,5 @@ def project(request, project_id, **kwargs):
   })
 
 
-def sandbox(request, **kwargs):
-  return render(request, 'root/sandbox/index.html')
+def resume(request, **kwargs):
+  return render(request, 'root/resume/index.html')
