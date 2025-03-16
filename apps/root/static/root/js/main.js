@@ -94,7 +94,7 @@ class Nav extends Stateful {
   };
 
   static = {
-    wasDesktopLayout: null,
+    wasDesktopLayout: BREAKPOINTS[getBreakpoint()] >= BREAKPOINTS.large,
   };
 
   /* --- Elements --- */

@@ -70,29 +70,27 @@
 nav {
   position: fixed;
   display: flex;
-  align-items: center;
-  justify-content: center;
 
-  height: 100vh;
-  width: 100vw;
+  inset: 4rem 0 0 0;
 
   background-color: rgba(255,255,255,0.8);
   backdrop-filter: blur(5px);
 
-  overflow: hidden;
+  overflow-x: hidden;
   z-index: var(--z-nav);
 
   @media (--large) {
     position: relative;
     display: block;
 
-    height: auto;
-    width: auto;
+    inset: auto;
     max-height: 0;
 
     background-color: transparent;
     backdrop-filter: none;
     transition: max-height var(--duration-standard);
+
+    overflow: hidden;
   }
 
   ul, li {
@@ -103,7 +101,8 @@ nav {
 
   ul {
     position: relative;
-    padding-left: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    margin: auto;
 
     &::before {
       @media (--large) {
