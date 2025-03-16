@@ -57,13 +57,9 @@
     fill: var(--color-terminal-blue);
   }
 
-  .cta {
-    margin: 0;
-  
-    &.secondary {
-      background-color: transparent;
-      border-width: 3px;
-    }
+  .cta.secondary {
+    background-color: transparent;
+    border-width: 3px;
   }
 
   a {

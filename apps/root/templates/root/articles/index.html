@@ -2,10 +2,17 @@
 
 {% load static %}
 
+{% block head.title %}Articles{% endblock head.title %}
+
 {# Body #}
 {% block content %}
   <div class="container">
+    {% include "root/breadcrumb.html" %}
     <h1>All the stuff I've written</h1>
+    <p>
+      Mostly opinion pieces, but also write ups about anything and everything I
+      happen to find interesting at the time.
+    </p>
   </div>
   <div class="container">
     {% include "root/articles/list.html" %}

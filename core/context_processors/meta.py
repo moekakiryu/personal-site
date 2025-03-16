@@ -86,11 +86,9 @@ def processor(request):
 
   # Compute the parent needed for breadcrumbs
   if parent_page:
-    if parent_page.name and not parent_page.path == PATH_HOME:
+    if parent_page.name:
       breadcrumb_page = parent_page
     # TODO: Instead, this should walk up the ancestry list
-    elif current_page.name:
-      breadcrumb_page = current_page
     else:
       breadcrumb_page = None
   else:

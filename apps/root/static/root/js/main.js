@@ -171,7 +171,7 @@ class Nav extends Stateful {
     });
 
     if (breakpoint < BREAKPOINTS.large) {
-      document.body.style.overflow = "visible";
+      document.body.style.overflow = "";
     }
   }
 
@@ -182,7 +182,7 @@ class Nav extends Stateful {
       toggle.innerText = "Menu";
     });
 
-    document.body.style.overflow = "visible";
+    document.body.style.overflow = "";
   }
 
   /* --- Handlers --- */

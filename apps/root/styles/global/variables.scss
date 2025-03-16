@@ -48,8 +48,4 @@
   /* Global Styles */
   font-family: var(--font-body);
   color: var(--font-color-primary);
-
-  @media (--desktop) {
-    --spacing-lg: 4rem;
-  }
 }

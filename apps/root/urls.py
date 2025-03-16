@@ -6,7 +6,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="root.home",
-        kwargs=url_meta(display_name='Home')
+        kwargs=url_meta(display_name='Raymond Lewandowski')
     ),
 
     path('projects/', views.projects, name="root.projects",
