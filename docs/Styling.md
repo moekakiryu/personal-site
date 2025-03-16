@@ -67,23 +67,7 @@ deviate anyway.
     declarations per breakpoint, albeit at the cost of occasionally needing to
     clear mobile styles.
 
-4. **Avoid 'external' spacing when building components**
-
-    Avoid the following pattern:
-
-    ```scss
-    .container {
-        // Or any value
-        margin-top: 1rem;
-    }
-    ```
-
-    Using this pattern is useful to ensure components can be used as drop-ins on
-    a page but quickly complicate things if spacing needs to be different from
-    page to page. Instead of using this, let each consuming container decide how
-    far apart each container should be using `padding` and `gap`.
-
-5. **Put container definitions in the child**
+4. **Put container definitions in the child**
 
     Children often have more styles than containers, and are the heart of any
     component. Rather than putting the container at the top level of a file,
@@ -112,7 +96,7 @@ deviate anyway.
     }
     ```
 
-6. **Parent containers define horizontal spacing, children define vertical spacing**
+5. **Parent containers define horizontal spacing, children define vertical spacing**
 
     ```scss
     /* Yes */

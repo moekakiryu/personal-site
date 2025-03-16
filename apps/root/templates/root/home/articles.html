@@ -4,7 +4,7 @@
 
     {% if articles.has_more %}
       <div class="tablet">
-        <a class="tertiary" href="{% url "root.articles" %}">View all articles</a>
+        <a class="cta tertiary" href="{% url "root.articles" %}">View all articles</a>
       </div>
     {% endif %}
   </div>
@@ -13,7 +13,7 @@
 
   {% if projects.has_more %}
     <div class="until-tablet cta-container">
-      <a class="secondary" href="{% url "root.articles" %}">View all articles</a>
+      <a class="cta secondary" href="{% url "root.articles" %}">View all articles</a>
     </div>
   {% endif %}
 </div>
