@@ -1,4 +1,4 @@
-# Moeka Kiryu Personal Site
+# Moeka Kiryu Portfolio
 
 
 ## System Requisites
@@ -34,6 +34,10 @@ python manage.py runserver
 # (Optional) Start PostCSS build agent
 yarn dev:css
 ```
+
+## Project Index
+
+1. [Portfolio Website](./apps/root/README.md)
 
 ## Guidelines
 
