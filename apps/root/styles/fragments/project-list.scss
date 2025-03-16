@@ -3,6 +3,7 @@
 
   flex-wrap: wrap;
   align-items: flex-start;
+  align-content: flex-start;
   gap: var(--spacing-sm);
   flex: 1 1 0;
 
@@ -12,6 +13,10 @@
   padding: var(--spacing-sm);
 
   font-weight: normal;
+
+  @media (--large) {
+    flex-wrap: nowrap;
+  }
 
   &:hover,
   &:focus {
@@ -38,11 +43,15 @@
     position: relative;
     flex-shrink: 0;
     
-    width: 120px;
+    width: 80px;
     
     border-radius: var(--rounded-sm);
     overflow: hidden;
     transition: transform var(--duration-short);
+
+    @media (--tablet) {
+      width: 100px;
+    }
 
     &::before {
       content: "";
@@ -64,9 +73,11 @@
   .details {
     flex: 1 1 0;
     height: 100%;
-    min-width: 200px;
-    // Pointer events are handled at the card level
-    pointer-events: none;
+    min-width: 180px;
+
+    @media (--tablet) {
+      min-width: 200px;
+    }
   }
 
   .name {
