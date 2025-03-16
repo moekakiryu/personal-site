@@ -32,10 +32,15 @@
 
     min-height: 100%;
 
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-sm);
     
     background-color: var(--color-white);
     box-shadow: var(--shadow-lg) var(--color-white);
+
+    @media (--desktop) {
+        padding-top: 4rem;
+        padding-right: var(--spacing-md);
+    }
 
     // A small element to allow us to center all children
     .inner {
