@@ -5,6 +5,7 @@
   align-items: center;
 
   width: 100%;
+  left: 0;
 
   border-bottom: 1px solid var(--color-black);
   padding: var(--spacing-xs) var(--spacing-sm);
@@ -13,18 +14,57 @@
 
   z-index: var(--z-header);
 
+  @media (--large) {
+    position: sticky;
+    flex-direction: column;
+    align-items: stretch;
+    
+    top: 50%;
+    width: 50%;
+    border: none;
+
+    background-color: transparent;
+    transform: translateY(-50%);
+  }
+
+  &-container {
+    @at-root {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+  }
+
+  .left {
+    @media (--large) {
+      padding-bottom: var(--spacing-xs);
+    }
+  }
+
+  .right {
+    @media (--large) {
+      padding-top: var(--spacing-xs);
+    }
+  }
+
   .icon-logo-small {
     width: 90px;
     fill: var(--color-terminal-blue)
   }
 
+  .icon-logo {
+    fill: var(--color-terminal-blue);
+  }
+
+  .cta.secondary {
+    background-color: transparent;
+    border-width: 3px;
+  }
+
   a {
     display: block;
   }
-}
-
-.section:has(.header) + .section {
-  margin-top: 4rem;
 }
 
 nav {
@@ -39,13 +79,47 @@ nav {
   background-color: rgba(255,255,255,0.8);
   backdrop-filter: blur(5px);
 
+  overflow: hidden;
   z-index: var(--z-nav);
+
+  @media (--large) {
+    position: relative;
+    display: block;
+
+    height: auto;
+    width: auto;
+    max-height: 0;
+
+    background-color: transparent;
+    backdrop-filter: none;
+    transition: max-height var(--duration-standard);
+  }
 
   ul, li {
     display: block;
     margin: 0;
     padding: 0;
   }
+
+  ul {
+    position: relative;
+    padding-left: var(--spacing-sm);
+
+    &::before {
+      @media (--large) {
+        content: "";
+        position: absolute;
+  
+        width: 4px;
+        top: var(--spacing-sm);
+        bottom: var(--spacing-sm);
+        left: 0;
+   
+        background: var(--color-terminal-blue);
+      }
+    }
+  }
+
   
   a {
     position: relative;
@@ -56,7 +130,6 @@ nav {
     color: var(--font-color-secondary);
     font-family: var(--font-heading);
     font-size: 2rem;
-
 
     &.current::before {
       content: "";
@@ -71,6 +144,14 @@ nav {
 
       background-color: currentColor;
       transform: translateY(-75%);
+
+      @media (--large) {
+        left: -1rem;
+        width: 1rem;
+        height: .25rem;
+
+        background-color: var(--color-terminal-blue);
+      }
     }
   }
 }

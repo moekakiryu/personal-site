@@ -16,6 +16,14 @@
     @media (--large) {
       flex: 1 1 0;      
     }
+
+    &:has(.header) + .section {
+      margin-top: 4rem;
+    
+      @media (--large) {
+        margin-top: 0;
+      }
+    }
   }
   
   .panel {

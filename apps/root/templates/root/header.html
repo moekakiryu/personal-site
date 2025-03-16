@@ -6,6 +6,13 @@
         <div class="mobile">{% include "root/icons/logo-small.svg" %}</div>
       </a>
     </div>
+    <nav class="desktop js-nav">
+      <ul>
+        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
+        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
+        <li><a href="{% url "root.sandbox" %}" {% if meta.current.view == 'root.sandbox' %}class="current"{% endif %}>Hire me!</a></li>
+      </ul>
+    </nav>
     <div class="right">
       <div class="desktop">
         <div class="cta-container">
