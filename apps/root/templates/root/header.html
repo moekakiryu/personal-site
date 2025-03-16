@@ -50,6 +50,7 @@
     role="navigation"
   >
     <ul>
+      <li><a href="{% url "root.home" %}" {% if meta.current.view == 'root.home' %}class="current"{% endif %}>Home</a></li>
       <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
       <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
       <li><a href="{% url "root.sandbox" %}" {% if meta.current.view == 'root.sandbox' %}class="current"{% endif %}>Hire me!</a></li>
