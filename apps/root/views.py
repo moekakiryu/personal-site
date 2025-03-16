@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from apps.root.models import Article, Project
+from apps.root.models import Article, Project, Contract
 
 
 def home(request, **kwargs):
@@ -56,4 +56,33 @@ def project(request, project_id, **kwargs):
 
 
 def resume(request, **kwargs):
-  return render(request, 'root/resume/index.html')
+  contracts = Contract.objects.order_by('-start')
+
+  employers = []
+  contract_group = []
+  current_employer = contracts.first().employer
+
+  for contract in contracts:
+      is_new_employer = contract.employer != current_employer
+      
+      if is_new_employer:
+          employers.append({
+            'data': current_employer,
+            'contracts': contract_group,
+          })
+          contract_group = [contract]
+          current_employer = contract.employer
+      else:
+          contract_group.append(contract)
+      
+
+  # Append the last group if it exists
+  if contract_group:
+      employers.append({
+        'data': current_employer,
+        'contracts': contract_group,
+      })
+
+  return render(request, 'root/resume/index.html', {
+     'employers': employers
+  })

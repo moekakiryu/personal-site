@@ -1,47 +1,34 @@
 <div class="resume">
-  <div class="employer">
-    <h3 class="employer-name">AKQA</h3>
-    <div class="contract-list">
-      <div class="contract">
-        <div class="right">
-          <div class="content">
-            <h4>Project 1</h4>
-            <p>Lorem ipsum</p>
-          </div>	    			
-        </div>
-        <div class="left">
-          <div class="content">
-            <strong>2016-2017</strong>
+  {% for employer in employers %}
+    <div class="employer">
+      <h3 class="employer-name">{{ employer.data.name }}</h3>
+      <div class="contract-list">
+        {% for contract in employer.contracts %}
+          <div class="contract">
+            <div class="right">
+              <div class="content">
+                <h4>{{ contract.name }}</h4>
+                <div>
+                  {{ contract.description|safe }}
+                </div>
+              </div>	    			
+            </div>
+            <div class="left">
+              <div class="content">
+                <strong>
+                  {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
+                    {% if start_date == end_date %}
+                      {{ start_date }}
+                    {% else %}
+                      {{ start_date }}-{{ end_date }}
+                    {% endif %}
+                  {% endwith %}
+                </strong>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="contract">
-        <div class="right">
-          <div class="content">
-            <h4>Project 2</h4>
-            <p>Lorem ipsum</p>
-            <p>Lorem ipsum</p>
-            <p>Lorem ipsum</p>
-          </div>	    			
-        </div>
-        <div class="left">
-          <div class="content">
-            <strong>2016-2017</strong>
-          </div>
-        </div>
-      </div>
-      <div class="contract">
-        <div class="right">
-          <div class="content">
-            <p>Lorem ipsum</p>
-          </div>	    			
-        </div>   
-        <div class="left">
-          <div class="content">
-            <strong>2016-2017</strong>
-          </div>
-        </div>
-      </div>
-    </div>	
-  </div>
+        {% endfor %}
+      </div>	
+    </div>
+  {% endfor %}
 </div>
