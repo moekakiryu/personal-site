@@ -4,9 +4,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import TemplateView
 
+from utils.environment import Env, get_environment
+
+admin_url = get_environment('DJANGO_ADMIN_URL') or 'admin/'
+
 urlpatterns = [
     # Django
-    path('admin/', admin.site.urls),
+    path(admin_url, admin.site.urls),
 
     # Plugins
     path('tinymce/', include('tinymce.urls')),

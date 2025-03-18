@@ -22,6 +22,9 @@ VariableNames = Literal[
   # The public URL where the site will be hosted
   'DJANGO_TARGET_DOMAIN',
 
+  # The endpoint where the admin page lives
+  'DJANGO_ADMIN_URL',
+
   # The name of the PostgreSQL database
   'POSTGRESQL_DB',
 
@@ -60,7 +63,6 @@ _base_environment = {
   **dotenv_values('.env.local'),
   **dotenv_values('.env.dev'),
   **dotenv_values('.env.prod'),
-  **os.environ,
 }
 
 # Apply tranformations as needed

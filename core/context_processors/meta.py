@@ -61,7 +61,12 @@ def url_meta(*, display_name):
 
 # Context Processor
 def processor(request):
-  current_resolved = resolve(request.path)
+  try:
+    current_resolved = resolve(request.path)
+  except Resolver404:
+    return {
+      'meta': {}
+    }
 
   # Resolve views for all ancestors
   # (note this could have a performance impact for deep url structures)

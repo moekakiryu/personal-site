@@ -28,6 +28,10 @@ SILENCED_SYSTEM_CHECKS = [
     # DEBUG set to True - this is controlled by an environment variable and will
     # be False in deployed application
     'security.W018',
+
+    # SSL Redirect is set to False - this is controlled by an environment
+    # variable and will be True in deployed application
+    'security.W008',
 ]
 
 
@@ -74,6 +78,7 @@ INSTALLED_APPS = [
 
     # Plugins
     'tinymce',
+    'axes',
 
     # Local Applications
     'apps.root.apps.RootConfig',
@@ -88,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 
@@ -169,6 +175,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-AUTHENTICATION_BACKENDS
+AUTHENTICATION_BACKENDS = [
+  'axes.backends.AxesStandaloneBackend',
+  'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # --- DATABASE --- #
