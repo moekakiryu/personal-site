@@ -28,6 +28,10 @@ SILENCED_SYSTEM_CHECKS = [
     # DEBUG set to True - this is controlled by an environment variable and will
     # be False in deployed application
     'security.W018',
+
+    # SSL Redirect is set to False - this is controlled by an environment
+    # variable and will be True in deployed application
+    'security.W008',
 ]
 
 
