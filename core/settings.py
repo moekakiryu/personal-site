@@ -74,6 +74,7 @@ INSTALLED_APPS = [
 
     # Plugins
     'tinymce',
+    'axes',
 
     # Local Applications
     'apps.root.apps.RootConfig',
@@ -88,6 +89,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 
@@ -169,6 +171,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-AUTHENTICATION_BACKENDS
+AUTHENTICATION_BACKENDS = [
+  'axes.backends.AxesStandaloneBackend',
+  'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # --- DATABASE --- #
