@@ -63,7 +63,6 @@ _base_environment = {
   **dotenv_values('.env.local'),
   **dotenv_values('.env.dev'),
   **dotenv_values('.env.prod'),
-  **os.environ,
 }
 
 # Apply tranformations as needed
