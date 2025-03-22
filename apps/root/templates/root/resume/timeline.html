@@ -2,10 +2,10 @@
   <div class="timeline">
     {% for employer in employers %}
       <div class="employer">
-        <h3 class="employer-name">{{ employer.data.name }}</h3>
+        <h3 class="employer-name js-employer">{{ employer.data.name }}</h3>
         <div class="contract-list">
           {% for contract in employer.contracts %}
-            <div class="contract">
+            <div class="contract js-contract">
               <div class="right">
                 <div class="content">
                   <h4>{{ contract.name }}</h4>
@@ -15,7 +15,7 @@
                 </div>	    			
               </div>
               <div class="left">
-                <div class="content">
+                <div class="content js-date">
                   <strong>
                     {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
                       {% if start_date == end_date %}

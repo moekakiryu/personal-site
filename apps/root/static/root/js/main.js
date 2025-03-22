@@ -225,6 +225,52 @@ class Nav extends Stateful {
   }
 }
 
+class ResumeTimeline extends Stateful {
+  elements = {
+    contract: "js-contract",
+    date: "js-date",
+    heading: 'js-employer'
+  };
+
+  get $contract() {
+    return document.querySelectorAll(`.${this.elements.contract}`);
+  }
+
+  /* --- Actions --- */
+
+  clipDateOverlap(target) {}
+
+  clipContractOverlap(target) {
+    const nextSibling = target.nextElementSibling;
+
+    if (!nextSibling?.classList.contains(this.elements.contract)) {
+      return;
+    }
+
+    const targetBottom = target.offsetTop + target.offsetHeight;
+    const siblingTop = nextSibling.offsetTop;
+
+    if (targetBottom <= siblingTop) {
+      target.style.clipPath = "";
+      return;
+    }
+
+    target.style.clipPath = `inset(0 0 ${targetBottom - siblingTop}px 0)`;
+  }
+
+  /* --- Handlers --- */
+  onDocumentScroll() {
+    this.$contract.forEach((contract) => {
+      this.clipContractOverlap(contract);
+    });
+  }
+
+  mount() {
+    window.addEventListener("scroll", this.onDocumentScroll.bind(this));
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   new Nav().mount();
+  new ResumeTimeline().mount();
 });
