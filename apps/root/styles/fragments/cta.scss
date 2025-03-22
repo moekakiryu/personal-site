@@ -24,11 +24,24 @@
         flex-direction: row;
       }
     }
+
+    &.center {
+      justify-content: center;
+    }
+
+    &.left {
+      justify-content: flex-start;
+    }
   }
 
   &-container > & {
     flex-grow: 1;
     margin: 0;
+  }
+
+  &-container.left > &,
+  &-container.center > & {
+    flex-grow: 0;
   }
 
   &.primary {
