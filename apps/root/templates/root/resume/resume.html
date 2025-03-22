@@ -1,34 +1,36 @@
-<div class="resume">
-  {% for employer in employers %}
-    <div class="employer">
-      <h3 class="employer-name">{{ employer.data.name }}</h3>
-      <div class="contract-list">
-        {% for contract in employer.contracts %}
-          <div class="contract">
-            <div class="right">
-              <div class="content">
-                <h4>{{ contract.name }}</h4>
-                <div>
-                  {{ contract.description|safe }}
+<div class="container">
+  <div class="timeline">
+    {% for employer in employers %}
+      <div class="employer">
+        <h3 class="employer-name">{{ employer.data.name }}</h3>
+        <div class="contract-list">
+          {% for contract in employer.contracts %}
+            <div class="contract">
+              <div class="right">
+                <div class="content">
+                  <h4>{{ contract.name }}</h4>
+                  <div>
+                    {{ contract.description|safe }}
+                  </div>
+                </div>	    			
+              </div>
+              <div class="left">
+                <div class="content">
+                  <strong>
+                    {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
+                      {% if start_date == end_date %}
+                        {{ start_date }}
+                      {% else %}
+                        {{ start_date }}-{{ end_date }}
+                      {% endif %}
+                    {% endwith %}
+                  </strong>
                 </div>
-              </div>	    			
-            </div>
-            <div class="left">
-              <div class="content">
-                <strong>
-                  {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
-                    {% if start_date == end_date %}
-                      {{ start_date }}
-                    {% else %}
-                      {{ start_date }}-{{ end_date }}
-                    {% endif %}
-                  {% endwith %}
-                </strong>
               </div>
             </div>
-          </div>
-        {% endfor %}
-      </div>	
-    </div>
-  {% endfor %}
+          {% endfor %}
+        </div>	
+      </div>
+    {% endfor %}
+  </div>
 </div>
