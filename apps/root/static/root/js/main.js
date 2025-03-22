@@ -35,10 +35,6 @@ function responsiveValue(mapping) {
   }
 }
 
-function bindEvents() {
-  console.log(this);
-}
-
 /**
  * Poor man's reactive framework
  */
