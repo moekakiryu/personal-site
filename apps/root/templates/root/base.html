@@ -7,10 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {# Stylesheets #}
-  <link rel="preload" href="{% static 'root/css/base.min.css' %}" as="style">
-  <link rel="stylesheet" href="{% static 'root/css/base.min.css' %}">
+  {% block head.styles %}
+    <link rel="preload" href="{% static 'root/css/base.min.css' %}" as="style">
+    <link rel="stylesheet" href="{% static 'root/css/base.min.css' %}">
+  {% endblock head.styles %}
 
-  {% block head.styles %}{% endblock head.styles %}
 
   {# Javascript #}
   <script src="{% static "root/js/main.js" %}"></script>

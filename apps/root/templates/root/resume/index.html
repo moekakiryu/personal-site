@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block head.styles %}
+  <link rel="preload" href="{% static 'root/css/resume.min.css' %}" as="style">
   <link rel="stylesheet" type="text/css" href="{% static "root/css/resume.min.css" %}">
 {% endblock head.styles %}
 

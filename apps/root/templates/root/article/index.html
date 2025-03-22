@@ -5,6 +5,7 @@
 {% block head.title %}{{ article.title }}{% endblock head.title %}
 
 {% block head.styles %}
+  <link rel="preload" href="{% static 'root/css/article.min.css' %}" as="style">
   <link rel="stylesheet" type="text/css" href="{% static "root/css/article.min.css" %}">
   <script src="{% static "root/js/prism.min.js" %}"></script>
 {% endblock head.styles %}
