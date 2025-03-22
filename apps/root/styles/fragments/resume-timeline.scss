@@ -22,6 +22,7 @@
 
     margin: 0;
     padding-top: 16px;
+    padding-bottom: 8px;
 
     z-index: 1;
 
@@ -98,6 +99,9 @@
     }
   }
 
+  .left > .content {
+    padding-bottom: var(--spacing-xs);
+  }
   .right > .content {
     padding: 24px 20px 16px 20px;
   }

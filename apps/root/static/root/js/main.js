@@ -227,18 +227,51 @@ class Nav extends Stateful {
 
 class ResumeTimeline extends Stateful {
   elements = {
+    employer: 'js-employer',
     contract: "js-contract",
     date: "js-date",
-    heading: 'js-employer'
   };
+
+  get $employer() {
+    return document.querySelectorAll(`.${this.elements.employer}`)
+  }
 
   get $contract() {
     return document.querySelectorAll(`.${this.elements.contract}`);
   }
 
+  get $date() {
+    return document.querySelectorAll(`.${this.elements.date}`)
+  }
+
+
+  /* --- State --- */
+  initialState() {
+    return {
+      activeEmployer: null,
+    }
+  }
+
   /* --- Actions --- */
 
-  clipDateOverlap(target) {}
+  getActiveEmployer() {
+    return Array.from(this.$employer).reduce((active, current) => {
+      if (active) return active
+          
+      if (current.getBoundingClientRect().y > 0) return current
+  
+      return null
+    }, null)
+  }
+
+  clipDateOverlap(target) {
+    if (!this.state.activeEmployer) return
+
+    const employerBottom = this.state.activeEmployer.getBoundingClientRect().bottom
+    const targetTop = target.getBoundingClientRect().y;
+
+    target.style.clipPath = `inset(${employerBottom - targetTop}px 0 0 0)`
+  }
 
   clipContractOverlap(target) {
     const nextSibling = target.nextElementSibling;
@@ -263,6 +296,15 @@ class ResumeTimeline extends Stateful {
     this.$contract.forEach((contract) => {
       this.clipContractOverlap(contract);
     });
+
+    this.$date.forEach((date) => {
+      this.clipDateOverlap(date)
+    })
+
+    const activeEmployer = this.getActiveEmployer()
+    if (activeEmployer !== this.state.activeEmployer) {
+      this.state.activeEmployer = activeEmployer
+    }
   }
 
   mount() {
