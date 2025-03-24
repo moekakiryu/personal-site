@@ -1,8 +1,8 @@
 <div class="container">
   <div class="timeline">
     {% for employer in employers %}
-      <div class="employer">
-        <h3 class="employer-name js-employer">{{ employer.data.name }}</h3>
+      <div class="employer js-employer">
+        <h3 class="employer-name js-employer-name">{{ employer.data.name }}</h3>
         <div class="contract-list">
           {% for contract in employer.contracts %}
             <div class="contract js-contract">

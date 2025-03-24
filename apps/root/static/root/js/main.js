@@ -225,15 +225,22 @@ class Nav extends Stateful {
   }
 }
 
+// TODO:
+// 1. Fix mobile sizing
+//    a. Attach -ve margin top to .right
+//    b. Add top: calc() to date
+// 2. Snap scrolling to nearest contract
+
 class ResumeTimeline extends Stateful {
   elements = {
     employer: 'js-employer',
+    employerName: 'js-employer-name',
     contract: "js-contract",
     date: "js-date",
   };
 
-  get $employer() {
-    return document.querySelectorAll(`.${this.elements.employer}`)
+  get $employerName() {
+    return document.querySelectorAll(`.${this.elements.employerName}`)
   }
 
   get $contract() {
@@ -244,31 +251,23 @@ class ResumeTimeline extends Stateful {
     return document.querySelectorAll(`.${this.elements.date}`)
   }
 
-
-  /* --- State --- */
-  initialState() {
-    return {
-      activeEmployer: null,
-    }
+  $nearestEmployer(target) {
+    return target.closest(`.${this.elements.employer}`).querySelector(`.${this.elements.employerName}`)
   }
 
   /* --- Actions --- */
 
-  getActiveEmployer() {
-    return Array.from(this.$employer).reduce((active, current) => {
-      if (active) return active
-          
-      if (current.getBoundingClientRect().y > 0) return current
-  
-      return null
-    }, null)
-  }
-
   clipDateOverlap(target) {
-    if (!this.state.activeEmployer) return
+    const employer = this.$nearestEmployer(target)
+    if (!employer) return
 
-    const employerBottom = this.state.activeEmployer.getBoundingClientRect().bottom
+    const employerBottom = employer.getBoundingClientRect().bottom
     const targetTop = target.getBoundingClientRect().y;
+
+    if (employerBottom <= targetTop) {
+      target.style.clipPath = ''
+      return
+    }
 
     target.style.clipPath = `inset(${employerBottom - targetTop}px 0 0 0)`
   }
@@ -300,11 +299,6 @@ class ResumeTimeline extends Stateful {
     this.$date.forEach((date) => {
       this.clipDateOverlap(date)
     })
-
-    const activeEmployer = this.getActiveEmployer()
-    if (activeEmployer !== this.state.activeEmployer) {
-      this.state.activeEmployer = activeEmployer
-    }
   }
 
   mount() {
