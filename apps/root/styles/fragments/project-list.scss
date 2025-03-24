@@ -21,6 +21,7 @@
   &:hover,
   &:focus {
     color: var(--font-color-link);
+    border-color: var(--font-color-link-hover);
 
     .image {
       transform: translateY(-5px);

@@ -24,7 +24,7 @@ body {
   position: relative;
   display: flex;
   min-height: 100vh;
-  background-color: white;
+  background-color: var(--color-white);
 
   // Hack to prevent horizontal jump when scrollbar is visible
   // See: https://aykevl.nl/2014/09/fix-jumping-scrollbar
