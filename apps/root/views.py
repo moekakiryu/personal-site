@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.forms.models import model_to_dict
 
 from apps.root.models import Article, Project, Contract
 
@@ -67,7 +68,7 @@ def resume(request, **kwargs):
       
       if is_new_employer:
           employers.append({
-            'data': current_employer,
+            **model_to_dict(current_employer),
             'contracts': contract_group,
           })
           contract_group = [contract]
@@ -79,7 +80,7 @@ def resume(request, **kwargs):
   # Append the last group if it exists
   if contract_group:
       employers.append({
-        'data': current_employer,
+        **model_to_dict(current_employer),
         'contracts': contract_group,
       })
 

@@ -1,108 +1,104 @@
 .timeline {
   --top-offset: 5rem;
+  --timeline-width: 3px;
 
   @media (--large) {
     --top-offset: var(--spacing-md);
   }
 
-  .employer {
-    border-top: 1px solid;
-  }
-
-  .employer:first-child {
-    border-top: none;
-  }
-
-  .employer-name {
-    display: inline-block;
-    position: sticky;
-
-    top: var(--top-offset);
-    width: 150px;
-
+  h3, h4 {
     margin: 0;
-    padding-top: 16px;
-    padding-bottom: 8px;
-
-    z-index: 1;
-
-    font-size: 1.5rem;
-    font-family: var(--font-heading);
-    color: var(--font-color-secondary);
-  }
-
-  .contract-list {
-    display: grid;
-    grid-auto-rows: 1fr;
-    position: relative;
-    width: 100%;
-
-    margin-top: -2.7em;
   }
 
   .contract {
     display: flex;
-    position: sticky;
 
-    top: var(--top-offset);
-  }
+    .title {
+      flex: 0 0 40%;
+      padding: var(--spacing-sm) var(--spacing-md);
 
-  .left {
-    min-width: 125px;
+      @media (--desktop) {
+        flex-basis: 25%;
+      }
 
-    @media (--tablet) {
-      min-width: 200px;
+      .employer-title {
+        font-family: var(--font-heading);
+        font-size: 1.2rem;
+        color: var(--color-terminal-blue);
+        word-break: break-word;
+      }
+
+      .date {
+        display: inline-block;
+      }
     }
+
+    .line {
+      flex: 0 0 var(--timeline-width);
+      position: relative;
+
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+        
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-left: var(--timeline-width) dashed var(--color-greyscale-faded);
+      }
+      
+      
+      .fill {
+        position: absolute;
+        inset: 0;
+        background: var(--color-terminal-blue);
+      }
+    }
+
+    .description {
+      flex: 0 1 60%;
+      position: relative;
+
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-top: 1px dashed var(--color-black);
+
+      @media (--desktop) {
+        flex-basis: 75%;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+
+        border: var(--timeline-width) solid var(--color-terminal-blue);
+        border-radius: var(--rounded-full);
+
+        left: calc(-1.5*var(--timeline-width) - 3px);
+        height: 6px;
+        width: 6px;
+
+        background-color: var(--color-terminal-blue);
+
+        transition: border-color var(--duration-standard), background-color var(--color-greyscale-faded);
+      }
+
+      &.passed::before {
+        background-color: var(--color-white);
+        border-color: var(--color-greyscale-faded);
+      }
+
+      .contract-name {
+        font-size: 1.2rem;
+      }
+    }
+
   }
 
-  .right {
-    position: relative;
-    flex-grow: 1;
-    border-left: 3px solid var(--color-terminal-blue);
-    border-top: 1px dashed;
-    order: 1;
+  .contract:first-child .description {
+    border-top-style: solid;
   }
 
-  .contract:first-child .right {
+  .employer:first-child .contract:first-child .description {
     border-top: none;
-  }
-
-  .right::before {
-    content: "";
-
-    position: absolute;
-
-    top: 1.75em;
-    left: -9px;
-    width: 9px;
-    height: 9px;
-    
-    border-radius: 9999px;
-    border: 3px solid var(--color-terminal-blue);
-
-    background-color: var(--color-white);
-  }
-
-  .left > .content, .right > .content {
-    padding-top: 48px;
-    position: sticky;
-    top: var(--top-offset);
-    width: 100%;
-
-    & > :first-child {
-      margin-top: 0;
-    }
-
-    h3, h4 {
-      font-size: 1.2rem;
-      margin-bottom: .8rem;
-    }
-  }
-
-  .left > .content {
-    padding-bottom: var(--spacing-xs);
-  }
-  .right > .content {
-    padding: 24px 20px 16px 20px;
   }
 }

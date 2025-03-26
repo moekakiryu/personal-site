@@ -35,6 +35,12 @@ function responsiveValue(mapping) {
   }
 }
 
+function roundWithPrecision(value, { precision } = { precision: 2 }) {
+  const exponent = 10 ** precision;
+
+  return Math.round(value * exponent) / exponent;
+}
+
 /**
  * Poor man's reactive framework
  */
@@ -232,77 +238,78 @@ class Nav extends Stateful {
 // 2. Snap scrolling to nearest contract
 
 class ResumeTimeline extends Stateful {
+  REVEAL_HEIGHT = 200; // px
+  DOT_OFFSET = 18; // px
+
   elements = {
-    employer: 'js-employer',
-    employerName: 'js-employer-name',
     contract: "js-contract",
-    date: "js-date",
+    description: "js-description",
+    line: "js-line",
+    fill: "js-fill",
   };
 
-  get $employerName() {
-    return document.querySelectorAll(`.${this.elements.employerName}`)
-  }
+  classes = {
+    passed: "passed",
+  };
 
   get $contract() {
     return document.querySelectorAll(`.${this.elements.contract}`);
   }
 
-  get $date() {
-    return document.querySelectorAll(`.${this.elements.date}`)
+  $description(contract) {
+    return contract.querySelector(`.${this.elements.description}`);
   }
 
-  $nearestEmployer(target) {
-    return target.closest(`.${this.elements.employer}`).querySelector(`.${this.elements.employerName}`)
+  get $line() {
+    return document.querySelectorAll(`.${this.elements.line}`);
   }
 
-  /* --- Actions --- */
-
-  clipDateOverlap(target) {
-    const employer = this.$nearestEmployer(target)
-    if (!employer) return
-
-    const employerBottom = employer.getBoundingClientRect().bottom
-    const targetTop = target.getBoundingClientRect().y;
-
-    if (employerBottom <= targetTop) {
-      target.style.clipPath = ''
-      return
-    }
-
-    target.style.clipPath = `inset(${employerBottom - targetTop}px 0 0 0)`
+  $fill(line) {
+    return line.querySelector(`.${this.elements.fill}`);
   }
 
-  clipContractOverlap(target) {
-    const nextSibling = target.nextElementSibling;
+  getClipHeight(target) {
+    const boundingRect = target.getBoundingClientRect();
 
-    if (!nextSibling?.classList.contains(this.elements.contract)) {
-      return;
-    }
+    const offset = this.REVEAL_HEIGHT - boundingRect.y;
+    const asPercent = (offset * 100) / boundingRect.height;
 
-    const targetBottom = target.offsetTop + target.offsetHeight;
-    const siblingTop = nextSibling.offsetTop;
-
-    if (targetBottom <= siblingTop) {
-      target.style.clipPath = "";
-      return;
-    }
-
-    target.style.clipPath = `inset(0 0 ${targetBottom - siblingTop}px 0)`;
+    return roundWithPrecision(asPercent);
   }
 
-  /* --- Handlers --- */
-  onDocumentScroll() {
-    this.$contract.forEach((contract) => {
-      this.clipContractOverlap(contract);
+  setTimelineProgress() {
+    this.$line.forEach((line) => {
+      const fill = this.$fill(line);
+      const clipHeight = this.getClipHeight(line);
+
+      requestAnimationFrame(() => {
+        fill.style.clipPath = `inset(${clipHeight}% 0 0 0 round 20px)`;
+      });
     });
+  }
 
-    this.$date.forEach((date) => {
-      this.clipDateOverlap(date)
-    })
+  fillTimelineDots() {
+    this.$contract.forEach((contract) => {
+      const description = this.$description(contract);
+
+      if (
+        contract.getBoundingClientRect().y <=
+        this.REVEAL_HEIGHT - this.DOT_OFFSET
+      ) {
+        description.classList.add(this.classes.passed);
+      } else {
+        description.classList.remove(this.classes.passed);
+      }
+    });
+  }
+
+  onScroll() {
+    this.setTimelineProgress();
+    this.fillTimelineDots();
   }
 
   mount() {
-    window.addEventListener("scroll", this.onDocumentScroll.bind(this));
+    document.addEventListener("scroll", this.onScroll.bind(this));
   }
 }
 
