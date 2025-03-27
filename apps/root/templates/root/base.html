@@ -23,15 +23,11 @@
 <body class="line-numbers match-braces no-brace-select">
   
   <div class="main-content">
-    <div class="section">
+    <div class="floating">
       {% include "root/header.html" %}
     </div>
-    <div class="section">
-      <div class="panel">
-        <div class="inner">
-          {% block content%}{% endblock content %}
-        </div>
-      </div>
+    <div class="fixed">
+      {% block content%}{% endblock content %}
     </div>
   </div>
 </body>

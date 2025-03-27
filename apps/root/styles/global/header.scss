@@ -20,33 +20,22 @@
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    
-    top: 50%;
-    width: 50%;
+
+    // TODO: Refactor so this isn't needed, or replace with global variable
+    top: 20rem;
+    margin-top: -20rem;
+    max-width: 300px;
     border: none;
 
     background-color: transparent;
-    transform: translateY(-50%);
   }
 
   &-container {
     @at-root {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-end;
       height: 100%;
-    }
-  }
-
-  .left {
-    @media (--large) {
-      padding-bottom: var(--spacing-xs);
-    }
-  }
-
-  .right {
-    @media (--large) {
-      padding-top: var(--spacing-xs);
     }
   }
 
@@ -85,13 +74,15 @@ nav {
 
   overflow-x: hidden;
   z-index: var(--z-nav);
+  user-select: none;
+
 
   @media (--large) {
     position: relative;
     display: block;
 
     inset: auto;
-    max-height: 0;
+    // max-height: 0;
 
     background-color: transparent;
     backdrop-filter: none;
@@ -119,7 +110,7 @@ nav {
         width: 4px;
         top: var(--spacing-sm);
         bottom: var(--spacing-sm);
-        left: 0;
+        right: 0;
    
         background: var(--color-terminal-blue);
       }
@@ -139,27 +130,27 @@ nav {
     font-family: var(--font-heading);
     font-size: 2rem;
 
-    &.current::before {
-      content: "";
-      position: absolute;
+    // &.current::before {
+    //   content: "";
+    //   position: absolute;
 
-      top: 50%;
-      left: -.5rem;
-      width: .5rem;
-      height: .5rem;
+    //   top: 50%;
+    //   left: -.5rem;
+    //   width: .5rem;
+    //   height: .5rem;
 
-      border-radius: var(--rounded-full);
+    //   border-radius: var(--rounded-full);
 
-      background-color: currentColor;
-      transform: translateY(-75%);
+    //   background-color: currentColor;
+    //   transform: translateY(-75%);
 
-      @media (--large) {
-        left: -1rem;
-        width: 1rem;
-        height: .25rem;
+    //   @media (--large) {
+    //     left: -1rem;
+    //     width: 1rem;
+    //     height: .25rem;
 
-        background-color: var(--color-terminal-blue);
-      }
-    }
+    //     background-color: var(--color-terminal-blue);
+    //   }
+    // }
   }
 }

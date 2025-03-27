@@ -39,6 +39,8 @@
   --max-container-width: 75rem;
   --max-content-width: 50rem;
   --content-padding: var(--spacing-md);
+  --top-offset: 5rem;
+
 
   /* Derived */
   --font-color-primary: var(--color-greyscale-medium);
@@ -49,4 +51,8 @@
   /* Global Styles */
   font-family: var(--font-body);
   color: var(--font-color-primary);
+
+  @media (--large) {
+    --top-offset: 20rem;
+  }
 }

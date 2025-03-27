@@ -2,7 +2,7 @@ const BREAKPOINTS = {
   mobile: 0,
   tablet: 480,
   desktop: 768,
-  large: 1290,
+  large: 1280,
 };
 
 /**
@@ -113,7 +113,7 @@ class Nav extends Stateful {
 
   initialState() {
     return {
-      isOpen: false,
+      isOpen: BREAKPOINTS[getBreakpoint()] >= BREAKPOINTS.large,
     };
   }
 
@@ -211,7 +211,9 @@ class Nav extends Stateful {
 
     const isDesktopLayout = breakpoint >= BREAKPOINTS.large;
 
-    if (this.static.wasDesktopLayout !== isDesktopLayout) {
+    if (isDesktopLayout) {
+      this.state.isOpen = true
+    } else if (this.static.wasDesktopLayout !== isDesktopLayout) {
       this.state.isOpen = false;
     }
 
@@ -221,7 +223,9 @@ class Nav extends Stateful {
   /* --- Main --- */
 
   mount() {
-    this.hideNav();
+    if (!this.state.isOpen) {
+      this.hideNav();
+    }
 
     this.$toggle.forEach((toggle) =>
       toggle.addEventListener("click", this.onToggleClick.bind(this))
@@ -300,15 +304,13 @@ class ResumeTimeline extends Stateful {
 
   fillTimelineDots() {
     this.$contract.forEach((contract) => {
-      const description = this.$description(contract);
-
       if (
         contract.getBoundingClientRect().y <=
         this.REVEAL_HEIGHT - this.DOT_OFFSET
       ) {
-        description.classList.add(this.classes.passed);
+        contract.classList.add(this.classes.passed);
       } else {
-        description.classList.remove(this.classes.passed);
+        contract.classList.remove(this.classes.passed);
       }
     });
   }
