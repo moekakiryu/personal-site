@@ -51,7 +51,7 @@
     &:hover,
     &:focus {
       background-color: var(--color-goldenrod);
-      columns: var(--color-white);
+      color: var(--color-white);
     }
   }
 
@@ -72,7 +72,7 @@
 
     &:hover,
     &:focus {
-      columns: var(--color-goldenrod);
+      color: var(--color-goldenrod);
     }
   }
 }
