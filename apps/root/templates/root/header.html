@@ -2,7 +2,13 @@
   <div class="header">
     <div class="left">
       <a href="/" aria-label="Go Home" {% if meta.current.view == 'root.home' %}aria-current="page"{% endif %}>
-        {% include "root/icons/logo.svg" %}
+        <div class="desktop">
+          {% include "root/icons/logo-reversed.svg" %}
+        </div>
+        <div class="mobile">
+          {% include "root/icons/logo.svg" %}
+        </div>
+
       </a>
     </div>
     <nav
