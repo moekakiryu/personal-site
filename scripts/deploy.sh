@@ -32,10 +32,12 @@ fi
 source .venv/bin/activate
 
 echo -e "\n\n-- Installing new requirements --"
-# Disable yarn install until server-side CSS builds are fixed
-# yarn install --immutable
 
+yarn install --immutable
 python3 -m pip install -r requirements.txt
+
+echo -e "\n\n-- Compiling Static Files --"
+yarn build:css
 
 echo -e "\n\n-- Collecting Django Static Files --"
 python3 manage.py collectstatic --no-input

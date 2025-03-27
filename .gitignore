@@ -10,6 +10,9 @@ __pycache__
 # Production files
 db.sqlite3
 
+# Generated Files
+*.min.*
+
 # Yarn
 .pnp.*
 .yarn/*
