@@ -238,7 +238,7 @@ class Nav extends Stateful {
 // 2. Snap scrolling to nearest contract
 
 class ResumeTimeline extends Stateful {
-  REVEAL_HEIGHT = 200; // px
+  REVEAL_HEIGHT = 350; // px
   DOT_OFFSET = 18; // px
 
   elements = {
