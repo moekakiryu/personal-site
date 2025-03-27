@@ -2,7 +2,7 @@
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
 
   width: 100%;
 
@@ -41,7 +41,7 @@
 
 .container {
   flex-shrink: 1;
-  margin: 0 auto var(--spacing-lg) 0;
+  margin: 0 auto var(--spacing-md) 0;
   max-width: var(--max-content-width);
 
   & > :first-child {
