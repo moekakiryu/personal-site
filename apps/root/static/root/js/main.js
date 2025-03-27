@@ -252,6 +252,10 @@ class ResumeTimeline extends Stateful {
     passed: "passed",
   };
 
+  static = {
+    activeAnimations: []
+  }
+
   get $contract() {
     return document.querySelectorAll(`.${this.elements.contract}`);
   }
@@ -281,10 +285,16 @@ class ResumeTimeline extends Stateful {
     this.$line.forEach((line) => {
       const fill = this.$fill(line);
       const clipHeight = this.getClipHeight(line);
+      const animationIndex = this.static.activeAnimations.indexOf(line)
 
-      requestAnimationFrame(() => {
-        fill.style.clipPath = `inset(${clipHeight}% 0 0 0 round 20px)`;
-      });
+      if (animationIndex < 0) {
+        requestAnimationFrame(() => {
+          fill.style.clipPath = `inset(${clipHeight}% 0 0 0)`;
+          this.static.activeAnimations.splice(animationIndex, 1)
+        });
+
+        this.static.activeAnimations.push(line)
+      }
     });
   }
 
