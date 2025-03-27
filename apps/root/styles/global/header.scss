@@ -21,9 +21,7 @@
     align-items: stretch;
     gap: 0;
 
-    // TODO: Refactor so this isn't needed, or replace with global variable
-    top: 20rem;
-    margin-top: -20rem;
+    top: var(--top-offset);
     max-width: 300px;
     border: none;
 
