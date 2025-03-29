@@ -3,29 +3,36 @@
     {% for employer in employers %}
       <div class="employer">
         {% for contract in employer.contracts %}
-          <div class="contract js-contract">
-            <div class="title">
-              {% if forloop.first %}
-                <h3 class="employer-title">{{ employer.name }}</h3>
-              {% endif %}
-              <div>
-                {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
+          {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
+            <div class="contract js-contract">
+              <div class="title desktop">
+                {% if forloop.first %}
+                  <h3 class="employer-title">{{ employer.name }}</h3>
+                {% endif %}
+                <div>
                   {% if start_date == end_date %}
                     <span class="date">{{ start_date }}</span>
                   {% else %}
                     <span class="date">{{ start_date }}</span> - <span class="date">{{ end_date }}</span>
                   {% endif %}
-                {% endwith %}
+                </div>
+              </div>
+              <div class="line js-line">
+                <div class="fill js-fill"></div>
+              </div>
+              <div class="description js-description">
+                <h4 class="contract-name">{{contract.name}}</h4>
+                <span class="date mobile">
+                  {% if start_date == end_date %}
+                    <span class="date">{{ start_date }}</span>
+                  {% else %}
+                    <span class="date">{{ start_date }}</span> - <span class="date">{{ end_date }}</span>
+                  {% endif %}
+                </span>
+                {{ contract.description|safe }}
               </div>
             </div>
-            <div class="line js-line">
-              <div class="fill js-fill"></div>
-            </div>
-            <div class="description js-description">
-              <h4 class="contract-name">{{contract.name}}</h4>
-              {{ contract.description|safe }}
-            </div>
-          </div>
+          {% endwith %}
         {% endfor %}
       </div>
     {% endfor %}
