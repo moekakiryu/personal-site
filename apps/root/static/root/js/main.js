@@ -332,7 +332,16 @@ class ResumeTimeline extends Stateful {
     this.$floatingTitle.forEach((floatingTitle) => {
       const titleParent = floatingTitle.parentElement;
 
-      if (floatingTitle.offsetTop !== titleParent.offsetTop) {
+      const parentBottom = titleParent.offsetTop + titleParent.offsetHeight;
+      const floatingBottom =
+        floatingTitle.offsetTop + floatingTitle.offsetHeight;
+
+      // Compare against 5px to allow for any minor differences with border
+      // TODO: Fix CSS so this isn't necessary
+      const isTop = floatingTitle.offsetTop === titleParent.offsetTop;
+      const isBottom = parentBottom - floatingBottom < 5;
+
+      if (!isTop && !isBottom) {
         floatingTitle.classList.add(this.classes.floating);
       } else {
         floatingTitle.classList.remove(this.classes.floating);
