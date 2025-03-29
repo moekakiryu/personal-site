@@ -27,12 +27,21 @@ function getBreakpoint() {
  * Accept a mapping of breakpoint names (see `getBreakpoint` above) and return
  * the value corresponding to the current screen size
  */
-function responsiveValue(mapping) {
+function responsiveValue(defaultValue, mapping) {
   const currentBreakpoint = getBreakpoint();
 
-  if (mapping.hasOwnProperty(currentBreakpoint)) {
-    return mapping[currentBreakpoint];
-  }
+  // Find the largest mapped breakpoint smaller than the current breakpoint
+  const mappedKey = Object.entries(mapping).reduce((maxKey, [currentKey]) => {
+    if (maxKey && BREAKPOINTS[currentKey] <= BREAKPOINTS[maxKey]) {
+      return maxKey;
+    }
+    if (BREAKPOINTS[currentKey] > BREAKPOINTS[currentBreakpoint]) {
+      return maxKey;
+    }
+    return currentKey;
+  }, undefined);
+
+  return mappedKey ? mapping[mappedKey] : defaultValue;
 }
 
 function roundWithPrecision(value, { precision } = { precision: 2 }) {
@@ -212,7 +221,7 @@ class Nav extends Stateful {
     const isDesktopLayout = breakpoint >= BREAKPOINTS.large;
 
     if (isDesktopLayout) {
-      this.state.isOpen = true
+      this.state.isOpen = true;
     } else if (this.static.wasDesktopLayout !== isDesktopLayout) {
       this.state.isOpen = false;
     }
@@ -242,7 +251,6 @@ class Nav extends Stateful {
 // 2. Snap scrolling to nearest contract
 
 class ResumeTimeline extends Stateful {
-  REVEAL_HEIGHT = 350; // px
   DOT_OFFSET = 18; // px
 
   elements = {
@@ -257,7 +265,11 @@ class ResumeTimeline extends Stateful {
   };
 
   static = {
-    activeAnimations: []
+    activeAnimations: [],
+  };
+
+  get revealHeight() {
+    return responsiveValue(100, { large: 350 }); // px
   }
 
   get $contract() {
@@ -279,7 +291,7 @@ class ResumeTimeline extends Stateful {
   getClipHeight(target) {
     const boundingRect = target.getBoundingClientRect();
 
-    const offset = this.REVEAL_HEIGHT - boundingRect.y;
+    const offset = this.revealHeight - boundingRect.y;
     const asPercent = (offset * 100) / boundingRect.height;
 
     return roundWithPrecision(asPercent);
@@ -289,15 +301,15 @@ class ResumeTimeline extends Stateful {
     this.$line.forEach((line) => {
       const fill = this.$fill(line);
       const clipHeight = this.getClipHeight(line);
-      const animationIndex = this.static.activeAnimations.indexOf(line)
+      const animationIndex = this.static.activeAnimations.indexOf(line);
 
       if (animationIndex < 0) {
         requestAnimationFrame(() => {
           fill.style.clipPath = `inset(${clipHeight}% 0 0 0)`;
-          this.static.activeAnimations.splice(animationIndex, 1)
+          this.static.activeAnimations.splice(animationIndex, 1);
         });
 
-        this.static.activeAnimations.push(line)
+        this.static.activeAnimations.push(line);
       }
     });
   }
@@ -306,7 +318,7 @@ class ResumeTimeline extends Stateful {
     this.$contract.forEach((contract) => {
       if (
         contract.getBoundingClientRect().y <=
-        this.REVEAL_HEIGHT - this.DOT_OFFSET
+        this.revealHeight - this.DOT_OFFSET
       ) {
         contract.classList.add(this.classes.passed);
       } else {
@@ -321,6 +333,7 @@ class ResumeTimeline extends Stateful {
   }
 
   mount() {
+    window.addEventListener("resize", this.onScroll.bind(this));
     document.addEventListener("scroll", this.onScroll.bind(this));
   }
 }
