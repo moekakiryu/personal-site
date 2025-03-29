@@ -35,17 +35,22 @@ body {
     left: 0;
     right: 0;
 
+    background-size: 100%;
+    z-index: -1;
+
+    /*
+    TODO: Find performant implementation for this animated background.
+    It has been temporarily disabled due to very poor performance on firefox.
+    -------
     background-image: linear-gradient(110deg,
       #ccd6e2,
       #fff 90%
     );
-    background-size: 100%;
 
     mask-image: url(/static/root/assets/hex.png);
     mask-mode: luminance;
     mask-size: 250px;
 
-    z-index: -1;
     animation: cycle-gradient 5s ease-in-out infinite alternate;
 
     @media (--desktop) {
@@ -55,6 +60,7 @@ body {
       );
       animation: cycle-gradient 15s ease-in-out infinite alternate;
     }
+    */
   }
 }
 
