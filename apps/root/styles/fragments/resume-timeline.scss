@@ -10,6 +10,26 @@
     margin: 0;
   }
 
+  .floating-title {
+    position: sticky;
+
+    padding: var(--spacing-sm) 0 var(--spacing-xs) 0;
+    border-bottom: 2px solid var(--color-terminal-blue);
+
+    top: 4.2rem;
+
+    background: white;
+    z-index: 1;
+  }
+
+  .employer-title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-terminal-blue);
+    word-break: break-word;
+    font-weight: bold;
+  }
+
   .contract {
     display: flex;
 
@@ -40,13 +60,6 @@
 
       @media (--desktop) {
         flex-basis: 25%;
-      }
-
-      .employer-title {
-        font-family: var(--font-heading);
-        font-size: 1.2rem;
-        color: var(--color-terminal-blue);
-        word-break: break-word;
       }
 
       .date {

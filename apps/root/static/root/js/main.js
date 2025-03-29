@@ -269,7 +269,7 @@ class ResumeTimeline extends Stateful {
   };
 
   get revealHeight() {
-    return responsiveValue(100, { large: 350 }); // px
+    return responsiveValue(130, { large: 350 }); // px
   }
 
   get $contract() {
