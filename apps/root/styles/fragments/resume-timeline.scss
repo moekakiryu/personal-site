@@ -26,8 +26,10 @@
         border-color: var(--color-greyscale-extra-light);
 
         &::before {
-          background-color: var(--color-white);
+          background-color: var(--color-greyscale-faded);
           border-color: var(--color-greyscale-faded);
+          width: 0;
+          border-width: 0;
         }
       }
     }
@@ -92,13 +94,14 @@
         border: var(--timeline-width) solid var(--color-terminal-blue);
         border-radius: var(--rounded-full);
 
-        left: calc(-1.5*var(--timeline-width) - 3px);
+        left: calc(-1.5*var(--timeline-width) + 3px);
         height: 6px;
         width: 6px;
 
         background-color: var(--color-terminal-blue);
 
-        transition: border-color var(--duration-standard), background-color var(--color-greyscale-faded);
+        transform: translateX(-50%);
+        transition: border-color var(--duration-short), background-color var(--duration-short), width var(--duration-short), border-width var(--duration-short);
       }
 
       .contract-name {
