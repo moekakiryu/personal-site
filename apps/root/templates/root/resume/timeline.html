@@ -2,7 +2,7 @@
   <div class="timeline">
     {% for employer in employers %}
       <div class="employer">
-        <div class="mobile employer-title floating-title">{{ employer.name }}</div>
+        <div class="mobile employer-title floating-title js-floating-title">{{ employer.name }}</div>
         <div>
           {% for contract in employer.contracts %}
             {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}

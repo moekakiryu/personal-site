@@ -255,13 +255,14 @@ class ResumeTimeline extends Stateful {
 
   elements = {
     contract: "js-contract",
-    description: "js-description",
+    floatingTitle: "js-floating-title",
     line: "js-line",
     fill: "js-fill",
   };
 
   classes = {
     passed: "passed",
+    floating: "floating",
   };
 
   static = {
@@ -276,8 +277,8 @@ class ResumeTimeline extends Stateful {
     return document.querySelectorAll(`.${this.elements.contract}`);
   }
 
-  $description(contract) {
-    return contract.querySelector(`.${this.elements.description}`);
+  get $floatingTitle() {
+    return document.querySelectorAll(`.${this.elements.floatingTitle}`);
   }
 
   get $line() {
@@ -327,9 +328,22 @@ class ResumeTimeline extends Stateful {
     });
   }
 
+  addFloatingShadow() {
+    this.$floatingTitle.forEach((floatingTitle) => {
+      const titleParent = floatingTitle.parentElement;
+
+      if (floatingTitle.offsetTop !== titleParent.offsetTop) {
+        floatingTitle.classList.add(this.classes.floating);
+      } else {
+        floatingTitle.classList.remove(this.classes.floating);
+      }
+    });
+  }
+
   onScroll() {
     this.setTimelineProgress();
     this.fillTimelineDots();
+    this.addFloatingShadow();
   }
 
   mount() {
