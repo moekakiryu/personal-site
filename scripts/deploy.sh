@@ -37,7 +37,7 @@ yarn install --immutable
 python3 -m pip install -r requirements.txt
 
 echo -e "\n\n-- Compiling Static Files --"
-yarn build:css
+yarn build
 
 echo -e "\n\n-- Collecting Django Static Files --"
 python3 manage.py collectstatic --no-input
