@@ -120,6 +120,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@raymondlewandowski/core@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@raymondlewandowski/core@workspace:."
+  dependencies:
+    "@types/node": "npm:^22.13.9"
+    autoprefixer: "npm:^10.4.20"
+    cssnano: "npm:^7.0.6"
+    postcss: "npm:^8.5.3"
+    postcss-cli: "npm:^11.0.0"
+    postcss-custom-media: "npm:^11.0.5"
+    postcss-header: "npm:^3.0.3"
+    postcss-import: "npm:^16.1.0"
+    postcss-nested: "npm:^7.0.2"
+    postcss-prune-var: "npm:^1.1.2"
+    postcss-scss: "npm:^4.0.9"
+  languageName: unknown
+  linkType: soft
+
+"@raymondlewandowski/root@workspace:apps/root":
+  version: 0.0.0-use.local
+  resolution: "@raymondlewandowski/root@workspace:apps/root"
+  languageName: unknown
+  linkType: soft
+
 "@sindresorhus/merge-streams@npm:^2.1.0":
   version: 2.3.0
   resolution: "@sindresorhus/merge-streams@npm:2.3.0"
@@ -1261,24 +1285,6 @@ __metadata:
   checksum: 10c0/55baa8b1187d6dc683d5a9cfcc866168d6adff58e5db91126795376d818eee46391e00b2a4d53e44d844c7524a7d96aa68cc68f4f3e500d3d069a39e6535481c
   languageName: node
   linkType: hard
-
-"personal-site@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "personal-site@workspace:."
-  dependencies:
-    "@types/node": "npm:^22.13.9"
-    autoprefixer: "npm:^10.4.20"
-    cssnano: "npm:^7.0.6"
-    postcss: "npm:^8.5.3"
-    postcss-cli: "npm:^11.0.0"
-    postcss-custom-media: "npm:^11.0.5"
-    postcss-header: "npm:^3.0.3"
-    postcss-import: "npm:^16.1.0"
-    postcss-nested: "npm:^7.0.2"
-    postcss-prune-var: "npm:^1.1.2"
-    postcss-scss: "npm:^4.0.9"
-  languageName: unknown
-  linkType: soft
 
 "picocolors@npm:^1.0.0, picocolors@npm:^1.1.1":
   version: 1.1.1

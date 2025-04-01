@@ -1,10 +1,14 @@
 {
-  "name": "personal-site",
-  "packageManager": "yarn@4.7.0",
+  "name": "@raymondlewandowski/core",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "build:css": "postcss apps/root/styles/*.scss -d apps/root/static/root/css --ext .min.css --verbose",
     "dev:css": "yarn run build:css --watch"
   },
+  "packageManager": "yarn@4.7.0",
   "volta": {
     "node": "22.14.0",
     "yarn": "4.7.0"
