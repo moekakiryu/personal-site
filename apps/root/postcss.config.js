@@ -14,18 +14,27 @@ const generated_header = `/*
 */
 `
 
+const isDevelopEnvironment = process.env.DJANGO_ENV === 'dev'
+
 module.exports = {
   parser: 'postcss-scss',
-  map: process.env.DJANGO_ENV === 'dev',
+  map: isDevelopEnvironment,
   plugins: [
+    // Default Plugins
     require('postcss-import'),
     require('postcss-nested'),
     require('postcss-custom-media'),
-    require('autoprefixer'),
     require('postcss-prune-var'),
-    require('cssnano'),
-    require('postcss-header')({
-      header: generated_header
-    }),
+    
+    ...(isDevelopEnvironment ? [
+      // Development Plugins
+      require('postcss-header')({
+        header: generated_header
+      }),
+    ]: [
+      // Production Plugins
+      require('autoprefixer'),
+      require('cssnano'),
+    ])
   ]
 }
