@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "postcss styles/*.scss -d static/root/css --ext .min.css --verbose",
-    "dev": "yarn run build:css --watch"
+    "dev": "yarn run build --watch"
   },
   "devDependencies": {
     "@types/node": "^22.13.9",
