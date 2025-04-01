@@ -24,6 +24,6 @@ function killServer() {
 # (see `killServer` above)
 (trap killServer SIGINT;
   python3 manage.py runserver &
-  yarn dev:css
+  yarn dev
 )
 

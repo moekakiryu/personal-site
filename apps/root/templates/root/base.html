@@ -8,13 +8,13 @@
 
   {# Stylesheets #}
   {% block head.styles %}
-    <link rel="preload" href="{% static 'root/css/base.min.css' %}" as="style">
-    <link rel="stylesheet" href="{% static 'root/css/base.min.css' %}">
+    <link rel="preload" href="{% static 'root/css/main.min.css' %}" as="style">
+    <link rel="stylesheet" href="{% static 'root/css/main.min.css' %}">
   {% endblock head.styles %}
 
 
   {# Javascript #}
-  <script src="{% static "root/js/main.js" %}"></script>
+  <script src="{% static "root/js/main.min.js" %}"></script>
 
   {# Title #}
   <title>{% block head.title %} {{ meta.current.display_name|default:"Page" }} {% endblock head.title %} | Moeka Kiryu</title>

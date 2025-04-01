@@ -28,12 +28,28 @@ python -m pip install -r requirements.txt
 # Initialize development database
 python manage.py migrate
 
+# Compile all static assets
+yarn build
+
 # Start server
 python manage.py runserver
 
-# (Optional) Start PostCSS build agent
-yarn dev:css
+# (Optional) Run dev build agents
+yarn dev
 ```
+
+## Commands
+
+### Django Commands
+
+See: https://docs.djangoproject.com/en/5.1/ref/django-admin/#available-commands
+
+### Yarn Commands
+
+| Name                | Description 
+|---------------------|------------------
+| `build`             | Run build scripts for all applications
+| `dev`               | Run dev scripts for all applications
 
 ## Project Index
 
