@@ -2,6 +2,23 @@
   "name": "@raymondlewandowski/root",
   "packageManager": "yarn@4.7.0",
   "private": true,
+  "scripts": {
+    "build": "postcss styles/*.scss -d static/root/css --ext .min.css --verbose",
+    "dev": "yarn run build:css --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.0",
+    "postcss-custom-media": "^11.0.5",
+    "postcss-header": "^3.0.3",
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^7.0.2",
+    "postcss-prune-var": "^1.1.2",
+    "postcss-scss": "^4.0.9"
+  },
   "volta": {
     "extends": "../../package.json"
   }
