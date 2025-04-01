@@ -1,5 +1,7 @@
 /* For main page layouts */
 .main-content {
+  --sidebar-width: 300px;
+
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -16,6 +18,7 @@
   .floating {
     @media (--large) {
       position: sticky;
+      flex-basis: var(--sidebar-width);
 
       top: var(--top-offset);
 
@@ -31,7 +34,7 @@
 
     margin: var(--top-offset) auto 0;
     
-    max-width: var(--max-container-width);
+    max-width: calc(var(--max-content-width) + var(--sidebar-width));
 
     @media (--large) {
       margin-left: 0;
