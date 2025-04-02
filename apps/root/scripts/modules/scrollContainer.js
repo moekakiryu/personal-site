@@ -4,10 +4,17 @@ import { Stateful } from "../utils/stateful";
 export class ScrollContainer extends Stateful {
   static elements = {
     component: "js-scroll-container",
+    viewport: "js-viewport",
     content: "js-content",
     track: "js-track",
     thumb: "js-thumb",
   };
+
+  get $viewport() {
+    return this.$component.querySelector(
+      `.${ScrollContainer.elements.viewport}`
+    );
+  }
 
   get $content() {
     return this.$component.querySelector(
@@ -29,19 +36,20 @@ export class ScrollContainer extends Stateful {
 
     this.onWindowResize();
 
-    this._bindEvents(window, {
+    this.bindEvents(window, {
       resize: this.onWindowResize,
     });
 
-    this._bindEvents(component, {
+    this.bindEvents(this.$viewport, {
       wheel: this.onMouseWheel,
-
       mousedown: this.onContentMouseDown,
-      mousemove: this.onContentMouseMove,
-      mouseleave: this.onContentMouseLeave,
-
       touchstart: this.onContentTouchStart,
       touchmove: this.onContentTouchMove,
+    });
+
+    this.bindEvents(this.$track, {
+      wheel: this.onMouseWheel,
+      mousedown: this.onTrackMouseDown,
     });
   }
 
@@ -52,118 +60,131 @@ export class ScrollContainer extends Stateful {
     };
   }
 
-  persist = {
-    dragStart: null,
+  references = {
+    lastPageX: null,
     touchId: null,
   };
 
-  // --- Content Wheel events --- //
+  get availableContentWidth() {
+    return this.$content.scrollWidth - this.$viewport.clientWidth;
+  }
+
+  get availableTrackWidth() {
+    return this.$track.clientWidth - this.$thumb.clientWidth;
+  }
+
+  // --- Mouse Wheel Events --- //
 
   onMouseWheel({ shiftKey, deltaY }) {
     // Only accept wheel events if the user is trying to scroll horizontally
     if (!shiftKey) return;
 
-    const availableContentWidth =
-      this.$content.scrollWidth - this.$component.clientWidth;
     this.state.scrollOffset = clamp(
-      this.state.scrollOffset + deltaY / availableContentWidth,
+      this.state.scrollOffset + deltaY / this.availableContentWidth,
       {
         min: 0,
-        max: 1
+        max: 1,
       }
-    )
+    );
   }
 
-  // --- Content Mouse events --- //
+  // --- Scroll Content Events --- //
 
   onContentMouseDown({ pageX }) {
-    this.persist.dragStart = pageX;
+    this.references.lastPageX = pageX;
+    document.body.style.userSelect = "none";
 
-    const mouseUpListener = () => {
-      this.persist.dragStart = null;
-      window.removeEventListener("mouseup", mouseUpListener);
+    const mouseMoveListener = ({ pageX }) => {
+      // lastPageX shouldn't ever be null here, but unbind event listeners if it is
+      if (this.references.lastPageX === null) {
+        document.body.style.userSelect = '';
+
+        window.removeEventListener("mouseup", mouseUpListener);
+        window.removeEventListener("mousemove", mouseMoveListener);
+        return
+      };
+
+      const delta = this.references.lastPageX - pageX;
+
+      this.state.scrollOffset = clamp(
+        this.state.scrollOffset + delta / this.availableContentWidth,
+        { min: 0, max: 1 }
+      );
+
+      this.references.lastPageX = pageX;
     };
 
+    const mouseUpListener = () => {
+      this.references.lastPageX = null;
+      document.body.style.userSelect = "";
+
+      window.removeEventListener("mouseup", mouseUpListener);
+      window.removeEventListener("mousemove", mouseMoveListener);
+    };
+
+    // Attach listeners to window to allow mouse to leave scroll area
     window.addEventListener("mouseup", mouseUpListener);
+    window.addEventListener("mousemove", mouseMoveListener);
   }
-
-  onContentMouseMove({ pageX }) {
-    if (this.persist.dragStart === null) return;
-
-    const delta = this.persist.dragStart - pageX;
-    const availableContentWidth =
-      this.$content.scrollWidth - this.$component.clientWidth;
-
-    this.state.scrollOffset = clamp(
-      this.state.scrollOffset + delta / availableContentWidth,
-      { min: 0, max: 1 }
-    );
-
-    this.persist.dragStart = pageX;
-  }
-
-  onContentMouseLeave() {
-    this.persist.dragStart = null;
-  }
-
-  // --- Content Touch events --- //
 
   onContentTouchStart({ touches }) {
     const activeTouch = touches[0];
 
-    this.persist.dragStart = activeTouch.pageX;
-    this.persist.touchId = activeTouch.identifier;
-
-    const touchEndListener = () => {
-      this.persist.dragStart = null;
-      this.persist.touchId = null;
-      window.removeEventListener("touchend", touchEndListener);
-    };
-
-    window.addEventListener("touchend", touchEndListener);
+    this.references.lastPageX = activeTouch.pageX;
+    this.references.touchId = activeTouch.identifier;
   }
 
   onContentTouchMove(event) {
     const activeTouch = Array.from(event.touches).find(
-      (touch) => touch.identifier === this.persist.touchId
+      (touch) => touch.identifier === this.references.touchId
     );
 
     if (!activeTouch) {
-      this.persist.dragStart = null;
-      this.persist.touchId = null;
+      this.references.lastPageX = null;
+      this.references.touchId = null;
       return;
     }
 
     event.preventDefault();
 
-    const delta = this.persist.dragStart - activeTouch.pageX;
-    const availableContentWidth =
-      this.$content.scrollWidth - this.$component.clientWidth;
+    const delta = this.references.lastPageX - activeTouch.pageX;
 
     this.state.scrollOffset = clamp(
-      this.state.scrollOffset + delta / availableContentWidth,
+      this.state.scrollOffset + delta / this.availableContentWidth,
       { min: 0, max: 1 }
     );
 
-    this.persist.dragStart = activeTouch.pageX;
+    this.references.lastPageX = activeTouch.pageX;
+  }
+
+  // --- Scroll Track Events --- //
+
+  onTrackMouseDown({ pageX }) {
+    const relativeOffset = pageX - this.$track.offsetLeft;
+    const thumbCenter = this.$thumb.clientWidth / 2;
+
+    this.state.scrollOffset = clamp(
+      (relativeOffset - thumbCenter) / this.availableTrackWidth,
+      {
+        min: 0,
+        max: 1,
+      }
+    );
   }
 
   // --- Window events --- //
+
   onWindowResize() {
-    this.state.thumbWidth =
-      this.$track.clientWidth *
-      (this.$component.clientWidth / this.$content.scrollWidth);
+    const percentageShown =
+      this.$viewport.clientWidth / this.$content.scrollWidth;
+
+    this.state.thumbWidth = this.$track.clientWidth * percentageShown;
   }
 
   onStateUpdate() {
     // Compute px values from percentage offsets
-    const availableTrackWidth =
-      this.$track.clientWidth - this.$thumb.clientWidth;
-    const availableContentWidth =
-      this.$content.scrollWidth - this.$component.clientWidth;
-
-    const thumbOffset = this.state.scrollOffset * availableTrackWidth;
-    const contentOffset = this.state.scrollOffset * availableContentWidth;
+    const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
+    const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
     // Update element attributes
     this.$content.style.marginLeft = `-${contentOffset}px`;

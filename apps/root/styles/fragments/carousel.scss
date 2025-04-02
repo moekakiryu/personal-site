@@ -1,12 +1,12 @@
 .scroll-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: var(--spacing-sm);
-
-  width: 100%;
-  overflow: hidden;
+  
+  .viewport {
+    width: 100%;
+    overflow: hidden;
+  }
 
   .track {
     width: 100%;
@@ -15,6 +15,7 @@
 
     background-color: var(--color-greyscale-faded);
     overflow: hidden;
+    cursor: pointer;
 
     .thumb {
       width: 100%;

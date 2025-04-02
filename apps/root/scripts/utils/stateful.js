@@ -9,7 +9,7 @@ export class Stateful {
     return {};
   }
 
-  _bindEvents(element, eventMapping) {
+  bindEvents(element, eventMapping) {
     Object.entries(eventMapping).forEach(([eventType, handler]) => {
       element.addEventListener(eventType, handler.bind(this))
     })
