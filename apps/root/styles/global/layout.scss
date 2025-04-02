@@ -34,6 +34,7 @@
 
     margin: var(--top-offset) auto 0;
     
+    width: 100%;
     max-width: calc(var(--max-content-width) + var(--sidebar-width));
 
     @media (--large) {
@@ -44,10 +45,15 @@
 
 .container {
   flex-shrink: 1;
-  margin: 0 auto var(--spacing-md) 0;
+  margin: 0 auto var(--spacing-md) auto;
 
   width: 100%;
   max-width: var(--max-content-width);
+
+
+  @media (--large) {
+    margin-left: 0;
+  }
 
   & > :first-child {
     margin-top: 0;
