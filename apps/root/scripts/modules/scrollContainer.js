@@ -5,41 +5,8 @@ export class ScrollContainer extends Stateful {
   static elements = {
     component: "js-scroll-container",
     content: "js-content",
-  };
-
-  static mount() {
-    const components = document.querySelectorAll(`.${this.elements.component}`);
-
-    components.forEach((scrollContainer) => {
-      new this(scrollContainer);
-    });
-  }
-
-  constructor(component) {
-    super();
-    this.$component = component;
-
-    this._bindEvents(component, {
-      wheel: this.onMouseWheel,
-
-      mousedown: this.onMouseDown,
-      mousemove: this.onMouseMove,
-      mouseleave: this.onMouseLeave,
-
-      touchstart: this.onTouchStart,
-      touchmove: this.onTouchMove,
-    })
-  }
-  
-  initialState() {
-    return {
-      scrollOffset: 0,
-    };
-  }
-
-  persist = {
-    dragStart: null,
-    touchId: null,
+    track: "js-track",
+    thumb: "js-thumb",
   };
 
   get $content() {
@@ -48,12 +15,47 @@ export class ScrollContainer extends Stateful {
     );
   }
 
-  setScrollOffset(offset) {
-    this.state.scrollOffset = clamp(offset, {
-      min: 0,
-      max: this.$content.scrollWidth - this.$component.clientWidth,
+  get $track() {
+    return this.$component.querySelector(`.${ScrollContainer.elements.track}`);
+  }
+
+  get $thumb() {
+    return this.$component.querySelector(`.${ScrollContainer.elements.thumb}`);
+  }
+
+  constructor(component) {
+    super();
+    this.$component = component;
+
+    this.onWindowResize();
+
+    this._bindEvents(window, {
+      resize: this.onWindowResize,
+    });
+
+    this._bindEvents(component, {
+      wheel: this.onMouseWheel,
+
+      mousedown: this.onContentMouseDown,
+      mousemove: this.onContentMouseMove,
+      mouseleave: this.onContentMouseLeave,
+
+      touchstart: this.onContentTouchStart,
+      touchmove: this.onContentTouchMove,
     });
   }
+
+  initialState() {
+    return {
+      scrollOffset: 0,
+      thumbWidth: 0,
+    };
+  }
+
+  persist = {
+    dragStart: null,
+    touchId: null,
+  };
 
   // --- Content Wheel events --- //
 
@@ -61,12 +63,20 @@ export class ScrollContainer extends Stateful {
     // Only accept wheel events if the user is trying to scroll horizontally
     if (!shiftKey) return;
 
-    this.setScrollOffset(this.state.scrollOffset + deltaY);
+    const availableContentWidth =
+      this.$content.scrollWidth - this.$component.clientWidth;
+    this.state.scrollOffset = clamp(
+      this.state.scrollOffset + deltaY / availableContentWidth,
+      {
+        min: 0,
+        max: 1
+      }
+    )
   }
 
   // --- Content Mouse events --- //
 
-  onMouseDown({ pageX }) {
+  onContentMouseDown({ pageX }) {
     this.persist.dragStart = pageX;
 
     const mouseUpListener = () => {
@@ -77,22 +87,28 @@ export class ScrollContainer extends Stateful {
     window.addEventListener("mouseup", mouseUpListener);
   }
 
-  onMouseMove({ pageX }) {
+  onContentMouseMove({ pageX }) {
     if (this.persist.dragStart === null) return;
 
-    this.setScrollOffset(
-      this.state.scrollOffset + (this.persist.dragStart - pageX)
+    const delta = this.persist.dragStart - pageX;
+    const availableContentWidth =
+      this.$content.scrollWidth - this.$component.clientWidth;
+
+    this.state.scrollOffset = clamp(
+      this.state.scrollOffset + delta / availableContentWidth,
+      { min: 0, max: 1 }
     );
+
     this.persist.dragStart = pageX;
   }
 
-  onMouseLeave() {
+  onContentMouseLeave() {
     this.persist.dragStart = null;
   }
 
   // --- Content Touch events --- //
 
-  onTouchStart({ touches }) {
+  onContentTouchStart({ touches }) {
     const activeTouch = touches[0];
 
     this.persist.dragStart = activeTouch.pageX;
@@ -107,7 +123,7 @@ export class ScrollContainer extends Stateful {
     window.addEventListener("touchend", touchEndListener);
   }
 
-  onTouchMove(event) {
+  onContentTouchMove(event) {
     const activeTouch = Array.from(event.touches).find(
       (touch) => touch.identifier === this.persist.touchId
     );
@@ -119,13 +135,48 @@ export class ScrollContainer extends Stateful {
     }
 
     event.preventDefault();
-    this.setScrollOffset(
-      this.state.scrollOffset + (this.persist.dragStart - activeTouch.pageX)
+
+    const delta = this.persist.dragStart - activeTouch.pageX;
+    const availableContentWidth =
+      this.$content.scrollWidth - this.$component.clientWidth;
+
+    this.state.scrollOffset = clamp(
+      this.state.scrollOffset + delta / availableContentWidth,
+      { min: 0, max: 1 }
     );
+
     this.persist.dragStart = activeTouch.pageX;
   }
 
+  // --- Window events --- //
+  onWindowResize() {
+    this.state.thumbWidth =
+      this.$track.clientWidth *
+      (this.$component.clientWidth / this.$content.scrollWidth);
+  }
+
   onStateUpdate() {
-    this.$content.style.marginLeft = `-${this.state.scrollOffset}px`;
+    // Compute px values from percentage offsets
+    const availableTrackWidth =
+      this.$track.clientWidth - this.$thumb.clientWidth;
+    const availableContentWidth =
+      this.$content.scrollWidth - this.$component.clientWidth;
+
+    const thumbOffset = this.state.scrollOffset * availableTrackWidth;
+    const contentOffset = this.state.scrollOffset * availableContentWidth;
+
+    // Update element attributes
+    this.$content.style.marginLeft = `-${contentOffset}px`;
+
+    this.$thumb.style.marginLeft = `${thumbOffset}px`;
+    this.$thumb.style.width = `${this.state.thumbWidth}px`;
+  }
+
+  static mount() {
+    const components = document.querySelectorAll(`.${this.elements.component}`);
+
+    components.forEach((scrollContainer) => {
+      new this(scrollContainer);
+    });
   }
 }
