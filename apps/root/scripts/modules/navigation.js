@@ -1,5 +1,5 @@
-import { Stateful } from "./utils/stateful";
-import { BREAKPOINTS, getBreakpoint } from "./utils/breakpoints";
+import { Stateful } from "../utils/stateful";
+import { BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
 
 export class Navigation extends Stateful {
   ANIMATION_DURATION = 250; // ms

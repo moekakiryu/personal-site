@@ -1,0 +1,15 @@
+.slider {
+  &-container {
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+// TODO: Remove - This is for debugging only
+.extra-wide-element {
+  width: 2000px;
+  height: 200px;
+  border-left: 2px solid red;
+  border-right: 2px solid red;
+  background: linear-gradient(to right, #000, #fff);
+}
