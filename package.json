@@ -5,15 +5,12 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev"
+    "build": "yarn workspaces foreach -Apt run build",
+    "dev": "yarn workspaces foreach -Api run dev"
   },
   "packageManager": "yarn@4.7.0",
   "volta": {
     "node": "22.14.0",
     "yarn": "4.7.0"
-  },
-  "devDependencies": {
-    "turbo": "^2.4.4"
   }
 }
