@@ -36,15 +36,21 @@ export class ScrollContainer extends Stateful {
 
     this.onWindowResize();
 
+    // Note most of these events have an initial condition to skip if not active.
+    // This may be an easy place to refactor if performance becomes an issue,
+    // but I'll leave it in place for now as it creates a nice pattern for this
+    // component and shouldn't be used very often.
     this.bindEvents(window, {
       resize: this.onWindowResize,
+      mousemove: this.onWindowMouseMove,
+      mouseup: this.onWindowMoueUp,
+      touchmove: this.onWindowTouchMove,
     });
 
     this.bindEvents(this.$viewport, {
       wheel: this.onMouseWheel,
       mousedown: this.onContentMouseDown,
       touchstart: this.onContentTouchStart,
-      touchmove: this.onContentTouchMove,
     });
 
     this.bindEvents(this.$track, {
@@ -91,40 +97,8 @@ export class ScrollContainer extends Stateful {
   // --- Scroll Content Events --- //
 
   onContentMouseDown({ pageX }) {
-    this.references.lastPageX = pageX;
     document.body.style.userSelect = "none";
-
-    const mouseMoveListener = ({ pageX }) => {
-      // lastPageX shouldn't ever be null here, but unbind event listeners if it is
-      if (this.references.lastPageX === null) {
-        document.body.style.userSelect = '';
-
-        window.removeEventListener("mouseup", mouseUpListener);
-        window.removeEventListener("mousemove", mouseMoveListener);
-        return
-      };
-
-      const delta = this.references.lastPageX - pageX;
-
-      this.state.scrollOffset = clamp(
-        this.state.scrollOffset + delta / this.availableContentWidth,
-        { min: 0, max: 1 }
-      );
-
-      this.references.lastPageX = pageX;
-    };
-
-    const mouseUpListener = () => {
-      this.references.lastPageX = null;
-      document.body.style.userSelect = "";
-
-      window.removeEventListener("mouseup", mouseUpListener);
-      window.removeEventListener("mousemove", mouseMoveListener);
-    };
-
-    // Attach listeners to window to allow mouse to leave scroll area
-    window.addEventListener("mouseup", mouseUpListener);
-    window.addEventListener("mousemove", mouseMoveListener);
+    this.references.lastPageX = pageX;
   }
 
   onContentTouchStart({ touches }) {
@@ -132,29 +106,6 @@ export class ScrollContainer extends Stateful {
 
     this.references.lastPageX = activeTouch.pageX;
     this.references.touchId = activeTouch.identifier;
-  }
-
-  onContentTouchMove(event) {
-    const activeTouch = Array.from(event.touches).find(
-      (touch) => touch.identifier === this.references.touchId
-    );
-
-    if (!activeTouch) {
-      this.references.lastPageX = null;
-      this.references.touchId = null;
-      return;
-    }
-
-    event.preventDefault();
-
-    const delta = this.references.lastPageX - activeTouch.pageX;
-
-    this.state.scrollOffset = clamp(
-      this.state.scrollOffset + delta / this.availableContentWidth,
-      { min: 0, max: 1 }
-    );
-
-    this.references.lastPageX = activeTouch.pageX;
   }
 
   // --- Scroll Track Events --- //
@@ -179,6 +130,51 @@ export class ScrollContainer extends Stateful {
       this.$viewport.clientWidth / this.$content.scrollWidth;
 
     this.state.thumbWidth = this.$track.clientWidth * percentageShown;
+  }
+
+  onWindowMouseMove({ pageX }) {
+    if (this.references.lastPageX === null) return
+
+    const delta = this.references.lastPageX - pageX;
+
+    this.state.scrollOffset = clamp(
+      this.state.scrollOffset + delta / this.availableContentWidth,
+      { min: 0, max: 1 }
+    );
+
+    this.references.lastPageX = pageX;
+  }
+
+  onWindowMoueUp() {
+    if (this.references.lastPageX === null) return;
+
+    document.body.style.userSelect = "";
+    this.references.lastPageX = null;
+  }
+
+  onWindowTouchMove(event) {
+    if (this.references.touchId === null) return;
+
+    const activeTouch = Array.from(event.touches).find(
+      (touch) => touch.identifier === this.references.touchId
+    );
+
+    if (!activeTouch) {
+      this.references.lastPageX = null;
+      this.references.touchId = null;
+      return;
+    }
+
+    event.preventDefault();
+
+    const delta = this.references.lastPageX - activeTouch.pageX;
+
+    this.state.scrollOffset = clamp(
+      this.state.scrollOffset + delta / this.availableContentWidth,
+      { min: 0, max: 1 }
+    );
+
+    this.references.lastPageX = activeTouch.pageX;
   }
 
   onStateUpdate() {
