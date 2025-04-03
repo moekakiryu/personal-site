@@ -57,6 +57,10 @@ export class ScrollContainer extends Stateful {
       wheel: this.onMouseWheel,
       mousedown: this.onTrackMouseDown,
     });
+
+    this.bindEvents(this.$thumb, {
+      mousedown: this.onThumbMouseDown,
+    });
   }
 
   initialState() {
@@ -69,6 +73,7 @@ export class ScrollContainer extends Stateful {
   references = {
     lastPageX: null,
     touchId: null,
+    getOffset: null,
   };
 
   get availableContentWidth() {
@@ -98,7 +103,13 @@ export class ScrollContainer extends Stateful {
 
   onContentMouseDown({ pageX }) {
     document.body.style.userSelect = "none";
+
     this.references.lastPageX = pageX;
+    this.references.getOffset = (previousX, currentX) => {
+      const delta = previousX - currentX;
+
+      return this.state.scrollOffset + delta / this.availableContentWidth;
+    };
   }
 
   onContentTouchStart({ touches }) {
@@ -121,6 +132,26 @@ export class ScrollContainer extends Stateful {
         max: 1,
       }
     );
+
+    this.references.lastPageX = pageX;
+    this.references.getOffset = (previousX, currentX) => {
+      const delta = currentX - previousX;
+
+      return this.state.scrollOffset + delta / this.availableTrackWidth;
+    };
+  }
+
+  onThumbMouseDown(event) {
+    event.stopPropagation();
+
+    document.body.style.userSelect = "none";
+
+    this.references.lastPageX = event.pageX;
+    this.references.getOffset = (previousX, currentX) => {
+      const delta = currentX - previousX;
+
+      return this.state.scrollOffset + delta / this.availableTrackWidth;
+    };
   }
 
   // --- Window events --- //
@@ -133,12 +164,10 @@ export class ScrollContainer extends Stateful {
   }
 
   onWindowMouseMove({ pageX }) {
-    if (this.references.lastPageX === null) return
-
-    const delta = this.references.lastPageX - pageX;
+    if (this.references.lastPageX === null) return;
 
     this.state.scrollOffset = clamp(
-      this.state.scrollOffset + delta / this.availableContentWidth,
+      this.references.getOffset(this.references.lastPageX, pageX),
       { min: 0, max: 1 }
     );
 
@@ -149,7 +178,9 @@ export class ScrollContainer extends Stateful {
     if (this.references.lastPageX === null) return;
 
     document.body.style.userSelect = "";
+
     this.references.lastPageX = null;
+    this.references.getOffset = null;
   }
 
   onWindowTouchMove(event) {
@@ -162,6 +193,7 @@ export class ScrollContainer extends Stateful {
     if (!activeTouch) {
       this.references.lastPageX = null;
       this.references.touchId = null;
+      this.references.getOffset = null;
       return;
     }
 
