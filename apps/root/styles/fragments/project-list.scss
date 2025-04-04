@@ -15,7 +15,7 @@
   font-weight: normal;
 
   @media (--large) {
-    flex-wrap: nowrap;
+    // flex-wrap: nowrap;
   }
 
   &:hover,
@@ -34,8 +34,11 @@
 
   &-container {
     @at-root {
-      display: flex;
-      flex-wrap: wrap;
+      // display: flex;
+      // flex-wrap: wrap;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
       gap: var(--spacing-xs);
     }
   }

@@ -8,12 +8,25 @@
       </div>
     {% endif %}
   </div>
-
-  {% include "root/projects/list.html" with projects=projects.list%}
-
-  {% if projects.has_more %}
-    <div class="until-tablet">
-      <a class="cta secondary" href="{% url "root.projects" %}">View all projects</a>
+  <div class="scroll-container js-scroll-container">
+    <div class="viewport js-viewport">
+      <div class="content js-content">
+        {% include "root/projects/list.html" with projects=projects.list%}
+      </div>
     </div>
-  {% endif %}
+    <div class="controls">
+      <button aria-label="back" class="back-button js-back-button">
+        {% include "root/icons/arrow-left.svg" %}
+      </button>
+      <div class="track js-track">
+        <div class="thumb js-thumb"></div>
+      </div>
+      <button aria-label="forward" class="forward-button js-forward-button">
+        {% include "root/icons/arrow-right.svg" %}
+      </button>
+    </div>
+  </div>
+  <div class="until-tablet">
+    <a class="cta secondary" href="{% url "root.projects" %}">View all projects</a>
+  </div>
 </div>

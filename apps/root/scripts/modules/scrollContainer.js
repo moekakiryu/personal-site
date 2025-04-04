@@ -2,12 +2,16 @@ import { clamp } from "../utils/math";
 import { Stateful } from "../utils/stateful";
 
 export class ScrollContainer extends Stateful {
+  EPSILON = 5
+
   static elements = {
     component: "js-scroll-container",
     viewport: "js-viewport",
     content: "js-content",
     track: "js-track",
     thumb: "js-thumb",
+    backButton: "js-back-button",
+    forwardButton: "js-forward-button",
   };
 
   get $viewport() {
@@ -30,6 +34,18 @@ export class ScrollContainer extends Stateful {
     return this.$component.querySelector(`.${ScrollContainer.elements.thumb}`);
   }
 
+  get $backButton() {
+    return this.$component.querySelector(
+      `.${ScrollContainer.elements.backButton}`
+    );
+  }
+
+  get $forwardButton() {
+    return this.$component.querySelector(
+      `.${ScrollContainer.elements.forwardButton}`
+    );
+  }
+
   constructor(component) {
     super();
     this.$component = component;
@@ -45,6 +61,7 @@ export class ScrollContainer extends Stateful {
       mousemove: this.onWindowMouseMove,
       mouseup: this.onWindowMoueUp,
       touchmove: this.onWindowTouchMove,
+      click: this.onWindowClick,
     });
 
     this.bindEvents(this.$viewport, {
@@ -61,6 +78,14 @@ export class ScrollContainer extends Stateful {
     this.bindEvents(this.$thumb, {
       mousedown: this.onThumbMouseDown,
     });
+
+    this.bindEvents(this.$backButton, {
+      click: this.onBackButtonClick,
+    });
+
+    this.bindEvents(this.$forwardButton, {
+      click: this.onForwardButtonClick,
+    });
   }
 
   initialState() {
@@ -74,6 +99,7 @@ export class ScrollContainer extends Stateful {
     lastPageX: null,
     touchId: null,
     getOffset: null,
+    isClickCanceled: false,
   };
 
   get availableContentWidth() {
@@ -101,10 +127,11 @@ export class ScrollContainer extends Stateful {
 
   // --- Scroll Content Events --- //
 
-  onContentMouseDown({ pageX }) {
+  onContentMouseDown(event) {
+    event.preventDefault();
     document.body.style.userSelect = "none";
 
-    this.references.lastPageX = pageX;
+    this.references.lastPageX = event.pageX;
     this.references.getOffset = (previousX, currentX) => {
       const delta = previousX - currentX;
 
@@ -145,6 +172,7 @@ export class ScrollContainer extends Stateful {
     event.stopPropagation();
 
     document.body.style.userSelect = "none";
+    this.$track.classList.add('active')
 
     this.references.lastPageX = event.pageX;
     this.references.getOffset = (previousX, currentX) => {
@@ -152,6 +180,22 @@ export class ScrollContainer extends Stateful {
 
       return this.state.scrollOffset + delta / this.availableTrackWidth;
     };
+  }
+
+  // --- Button Events --- //
+
+  onBackButtonClick() {
+    this.state.scrollOffset = clamp(this.state.scrollOffset - 0.1, {
+      min: 0,
+      max: 1,
+    });
+  }
+
+  onForwardButtonClick() {
+    this.state.scrollOffset = clamp(this.state.scrollOffset + 0.1, {
+      min: 0,
+      max: 1,
+    });
   }
 
   // --- Window events --- //
@@ -163,28 +207,39 @@ export class ScrollContainer extends Stateful {
     this.state.thumbWidth = this.$track.clientWidth * percentageShown;
   }
 
-  onWindowMouseMove({ pageX }) {
+  onWindowMouseMove(event) {
     if (this.references.lastPageX === null) return;
 
+    event.preventDefault();
+
     this.state.scrollOffset = clamp(
-      this.references.getOffset(this.references.lastPageX, pageX),
+      this.references.getOffset(this.references.lastPageX, event.pageX),
       { min: 0, max: 1 }
     );
 
-    this.references.lastPageX = pageX;
+    this.references.isClickCanceled = true;
+    this.references.lastPageX = event.pageX;
   }
 
-  onWindowMoueUp() {
+  onWindowMoueUp(event) {
     if (this.references.lastPageX === null) return;
 
     document.body.style.userSelect = "";
+    this.$track.classList.remove('active')
 
     this.references.lastPageX = null;
     this.references.getOffset = null;
   }
 
+  onWindowClick(event) {
+    if (this.references.isClickCanceled) event.preventDefault();
+    this.references.isClickCanceled = false;
+  }
+
   onWindowTouchMove(event) {
     if (this.references.touchId === null) return;
+
+    event.preventDefault();
 
     const activeTouch = Array.from(event.touches).find(
       (touch) => touch.identifier === this.references.touchId
@@ -209,16 +264,46 @@ export class ScrollContainer extends Stateful {
     this.references.lastPageX = activeTouch.pageX;
   }
 
+  // TODO: Add accessibility
+  // TODO: Add snap to child
   onStateUpdate() {
+    const isStart = this.state.scrollOffset === 0;
+    const isEnd = this.state.scrollOffset === 1;
+
     // Compute px values from percentage offsets
     const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
+
+    // If a scroll event would place the scrollbar close the either end, update
+    // the state to exactly equal the end
+    if (!isStart && contentOffset < this.EPSILON) {
+      this.state.scrollOffset = 0
+      return
+    }
+
+    if (!isEnd && contentOffset > (this.availableContentWidth - this.EPSILON)) {
+      this.state.scrollOffset = 1
+      return
+    }
 
     // Update element attributes
     this.$content.style.marginLeft = `-${contentOffset}px`;
 
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
+
+    // TODO: Move these into classes object
+    this.$component.classList.toggle("scroll-start", isStart);
+    this.$component.classList.toggle("scroll-end", isEnd);
+
+    this.$backButton.removeAttribute("disabled");
+    this.$forwardButton.removeAttribute("disabled");
+    if (isStart) {
+      this.$backButton.setAttribute("disabled", true);
+    }
+    if (isEnd) {
+      this.$forwardButton.setAttribute("disabled", true);
+    }
   }
 
   static mount() {
