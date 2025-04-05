@@ -193,7 +193,9 @@ export class ScrollContainer extends Stateful {
     const viewportRight = this.$viewport.clientWidth;
 
     if (target.offsetLeft < 0) {
-      this.scrollBy(target.offsetLeft / this.availableContentWidth);
+      this.scrollBy(
+        (target.offsetLeft - contentPadding) / this.availableContentWidth
+      );
       return;
     }
     if (targetRight > viewportRight) {
