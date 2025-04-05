@@ -8,6 +8,7 @@ export class ScrollContainer extends Stateful {
     component: "js-scroll-container",
     viewport: "js-viewport",
     content: "js-content",
+    controls: "js-controls",
     track: "js-track",
     thumb: "js-thumb",
     backButton: "js-back-button",
@@ -23,6 +24,12 @@ export class ScrollContainer extends Stateful {
   get $content() {
     return this.$component.querySelector(
       `.${ScrollContainer.elements.content}`
+    );
+  }
+
+  get $controls() {
+    return this.$component.querySelector(
+      `.${ScrollContainer.elements.controls}`
     );
   }
 
@@ -68,6 +75,8 @@ export class ScrollContainer extends Stateful {
       wheel: this.onMouseWheel,
       mousedown: this.onContentMouseDown,
       touchstart: this.onContentTouchStart,
+      keydown: this.onContentKeyDown,
+      focusin: this.onContentFocusChange,
     });
 
     this.bindEvents(this.$track, {
@@ -133,6 +142,47 @@ export class ScrollContainer extends Stateful {
   onContentTouchStart(event) {
     event.preventDefault();
     this.state.scrollType = "touch";
+  }
+
+  onContentKeyDown({ key }) {
+    switch (key) {
+      case "ArrowRight":
+        this.state.scrollOffset = clamp(this.state.scrollOffset + 0.1, {
+          min: 0,
+          max: 1,
+        });
+        break;
+      case "ArrowLeft":
+        this.state.scrollOffset = clamp(this.state.scrollOffset - 0.1, {
+          min: 0,
+          max: 1,
+        });
+        break;
+    }
+  }
+
+  onContentFocusChange({ currentTarget, target }) {
+    if (target === currentTarget) return;
+
+    const targetRight = target.offsetLeft + target.offsetWidth;
+    const viewportRight = this.$viewport.clientWidth;
+
+    if (target.offsetLeft < 0) {
+      this.state.scrollOffset = clamp(
+        this.state.scrollOffset +
+          target.offsetLeft / this.availableContentWidth,
+        { min: 0, max: 1 }
+      );
+      return;
+    }
+    if (targetRight > viewportRight) {
+      this.state.scrollOffset = clamp(
+        this.state.scrollOffset +
+          (targetRight - viewportRight + 20) / this.availableContentWidth,
+        { min: 0, max: 1 }
+      );
+      return;
+    }
   }
 
   // --- Scroll Track Events --- //
@@ -276,7 +326,6 @@ export class ScrollContainer extends Stateful {
     };
   }
 
-  // TODO: Add accessibility
   // TODO: Add snap to child
   render(updatedState) {
     const isStart = this.state.scrollOffset === 0;
@@ -313,6 +362,11 @@ export class ScrollContainer extends Stateful {
 
     // Update element attributes
     this.$content.style.marginLeft = `-${contentOffset}px`;
+
+    this.$controls.setAttribute(
+      "aria-valuenow",
+      `${roundDecimal(this.state.scrollOffset * 100)}`
+    );
 
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;

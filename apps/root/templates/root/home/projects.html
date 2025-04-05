@@ -8,24 +8,33 @@
       </div>
     {% endif %}
   </div>
+
   <div class="scroll-container js-scroll-container">
-    <div class="viewport js-viewport">
+    <div class="viewport js-viewport" tabindex="0" id="project-scroll-container">
       <div class="content js-content">
         {% include "root/projects/list.html" with projects=projects.list%}
       </div>
     </div>
-    <div class="controls">
+    <div
+      class="controls js-controls"
+      role="scrollbar"
+      aria-controls="project-scroll-container"
+      aria-label="Scroll through highlighted projects"
+      aria-orientation="horizontal"
+      aria-valuenow="0"
+    >
       <button aria-label="back" class="back-button js-back-button">
         {% include "root/icons/arrow-left.svg" %}
       </button>
-      <div class="track js-track">
-        <div class="thumb js-thumb"></div>
+      <div class="track js-track" aria-label="track">
+        <div class="thumb js-thumb" aria-label="thumb"></div>
       </div>
       <button aria-label="forward" class="forward-button js-forward-button">
         {% include "root/icons/arrow-right.svg" %}
       </button>
     </div>
   </div>
+
   <div class="until-tablet">
     <a class="cta secondary" href="{% url "root.projects" %}">View all projects</a>
   </div>
