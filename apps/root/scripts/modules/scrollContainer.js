@@ -117,19 +117,43 @@ export class ScrollContainer extends Stateful {
     return this.$track.clientWidth - this.$thumb.clientWidth;
   }
 
+  // Actions
+
+  scrollNext() {
+    this.state.scrollOffset = clamp(this.state.scrollOffset + 0.1, {
+      min: 0,
+      max: 1,
+    });
+  }
+
+  scrollPrevious() {
+    this.state.scrollOffset = clamp(this.state.scrollOffset - 0.1, {
+      min: 0,
+      max: 1,
+    });
+  }
+
+  scrollBy(delta) {
+    this.state.scrollOffset = clamp(this.state.scrollOffset + delta, {
+      min: 0,
+      max: 1,
+    });
+  }
+
+  scrollTo(position) {
+    this.state.scrollOffset = clamp(position, {
+      min: 0,
+      max: 1,
+    });
+  }
+
   // --- Mouse Wheel Events --- //
 
   onMouseWheel({ shiftKey, deltaY }) {
     // Only accept wheel events if the user is trying to scroll horizontally
     if (!shiftKey) return;
 
-    this.state.scrollOffset = clamp(
-      this.state.scrollOffset + deltaY / this.availableContentWidth,
-      {
-        min: 0,
-        max: 1,
-      }
-    );
+    this.scrollBy(deltaY / this.availableContentWidth);
   }
 
   // --- Scroll Content Events --- //
@@ -147,16 +171,10 @@ export class ScrollContainer extends Stateful {
   onContentKeyDown({ key }) {
     switch (key) {
       case "ArrowRight":
-        this.state.scrollOffset = clamp(this.state.scrollOffset + 0.1, {
-          min: 0,
-          max: 1,
-        });
+        this.scrollNext();
         break;
       case "ArrowLeft":
-        this.state.scrollOffset = clamp(this.state.scrollOffset - 0.1, {
-          min: 0,
-          max: 1,
-        });
+        this.scrollPrevious();
         break;
     }
   }
@@ -168,18 +186,12 @@ export class ScrollContainer extends Stateful {
     const viewportRight = this.$viewport.clientWidth;
 
     if (target.offsetLeft < 0) {
-      this.state.scrollOffset = clamp(
-        this.state.scrollOffset +
-          target.offsetLeft / this.availableContentWidth,
-        { min: 0, max: 1 }
-      );
+      this.scrollBy(target.offsetLeft / this.availableContentWidth);
       return;
     }
     if (targetRight > viewportRight) {
-      this.state.scrollOffset = clamp(
-        this.state.scrollOffset +
-          (targetRight - viewportRight + 20) / this.availableContentWidth,
-        { min: 0, max: 1 }
+      this.scrollBy(
+        (targetRight - viewportRight + 20) / this.availableContentWidth
       );
       return;
     }
@@ -191,13 +203,7 @@ export class ScrollContainer extends Stateful {
     const relativeOffset = pageX - this.$track.offsetLeft;
     const thumbCenter = this.$thumb.clientWidth / 2;
 
-    this.state.scrollOffset = clamp(
-      (relativeOffset - thumbCenter) / this.availableTrackWidth,
-      {
-        min: 0,
-        max: 1,
-      }
-    );
+    this.scrollTo((relativeOffset - thumbCenter) / this.availableTrackWidth);
 
     // Manually set pageX to start dragging from the new thumb position (set above)
     this.state.scrollType = "scrollbar";
@@ -212,17 +218,11 @@ export class ScrollContainer extends Stateful {
   // --- Button Events --- //
 
   onBackButtonClick() {
-    this.state.scrollOffset = clamp(this.state.scrollOffset - 0.1, {
-      min: 0,
-      max: 1,
-    });
+    this.scrollPrevious();
   }
 
   onForwardButtonClick() {
-    this.state.scrollOffset = clamp(this.state.scrollOffset + 0.1, {
-      min: 0,
-      max: 1,
-    });
+    this.scrollNext();
   }
 
   // --- Window events --- //
@@ -250,16 +250,10 @@ export class ScrollContainer extends Stateful {
 
     switch (this.state.scrollType) {
       case "content":
-        this.state.scrollOffset = clamp(
-          this.state.scrollOffset - delta / this.availableContentWidth,
-          { min: 0, max: 1 }
-        );
+        this.scrollBy((-1 * delta) / this.availableContentWidth);
         break;
       case "scrollbar":
-        this.state.scrollOffset = clamp(
-          this.state.scrollOffset + delta / this.availableTrackWidth,
-          { min: 0, max: 1 }
-        );
+        this.scrollBy(delta / this.availableTrackWidth);
         break;
     }
 
@@ -287,10 +281,7 @@ export class ScrollContainer extends Stateful {
     const lastPageX = this.references.pageX ?? activeTouch.pageX;
     const delta = lastPageX - activeTouch.pageX;
 
-    this.state.scrollOffset = clamp(
-      this.state.scrollOffset + delta / this.availableContentWidth,
-      { min: 0, max: 1 }
-    );
+    this.scrollBy(delta / this.availableContentWidth);
 
     this.references.pageX = activeTouch.pageX;
   }
@@ -330,6 +321,7 @@ export class ScrollContainer extends Stateful {
   render(updatedState) {
     const isStart = this.state.scrollOffset === 0;
     const isEnd = this.state.scrollOffset === 1;
+    const progress = roundDecimal(this.state.scrollOffset * 100);
 
     // Compute px values from percentage offsets
     const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
@@ -363,10 +355,7 @@ export class ScrollContainer extends Stateful {
     // Update element attributes
     this.$content.style.marginLeft = `-${contentOffset}px`;
 
-    this.$controls.setAttribute(
-      "aria-valuenow",
-      `${roundDecimal(this.state.scrollOffset * 100)}`
-    );
+    this.$controls.setAttribute("aria-valuenow", progress);
 
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
