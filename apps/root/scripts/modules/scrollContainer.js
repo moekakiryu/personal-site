@@ -59,7 +59,6 @@ export class ScrollContainer extends Stateful {
     this.bindEvents(window, {
       resize: this.onWindowResize,
       mousemove: this.onWindowMouseMove,
-      mouseup: this.onWindowMoueUp,
       touchmove: this.onWindowTouchMove,
       click: this.onWindowClick,
     });
@@ -92,14 +91,13 @@ export class ScrollContainer extends Stateful {
     return {
       scrollOffset: 0,
       thumbWidth: 0,
+      scrollType: null, // 'content' | 'scrollbar'
     };
   }
 
   references = {
-    lastPageX: null,
+    pageX: null,
     touchId: null,
-    getOffset: null,
-    isClickCanceled: false,
   };
 
   get availableContentWidth() {
@@ -129,20 +127,11 @@ export class ScrollContainer extends Stateful {
 
   onContentMouseDown(event) {
     event.preventDefault();
-    document.body.style.userSelect = "none";
-
-    this.references.lastPageX = event.pageX;
-    this.references.getOffset = (previousX, currentX) => {
-      const delta = previousX - currentX;
-
-      return this.state.scrollOffset + delta / this.availableContentWidth;
-    };
+    this.state.scrollType = 'content'
   }
 
   onContentTouchStart({ touches }) {
     const activeTouch = touches[0];
-
-    this.references.lastPageX = activeTouch.pageX;
     this.references.touchId = activeTouch.identifier;
   }
 
@@ -160,26 +149,14 @@ export class ScrollContainer extends Stateful {
       }
     );
 
-    this.references.lastPageX = pageX;
-    this.references.getOffset = (previousX, currentX) => {
-      const delta = currentX - previousX;
-
-      return this.state.scrollOffset + delta / this.availableTrackWidth;
-    };
+    // Manually set pageX to start dragging from the new thumb position (set above)
+    this.state.scrollType = 'scrollbar'
+    this.references.pageX = pageX
   }
 
   onThumbMouseDown(event) {
     event.stopPropagation();
-
-    document.body.style.userSelect = "none";
-    this.$track.classList.add('active')
-
-    this.references.lastPageX = event.pageX;
-    this.references.getOffset = (previousX, currentX) => {
-      const delta = currentX - previousX;
-
-      return this.state.scrollOffset + delta / this.availableTrackWidth;
-    };
+    this.state.scrollType = 'scrollbar'
   }
 
   // --- Button Events --- //
@@ -201,67 +178,68 @@ export class ScrollContainer extends Stateful {
   // --- Window events --- //
 
   onWindowResize() {
-    const percentageShown =
+    const percentVisible =
       this.$viewport.clientWidth / this.$content.scrollWidth;
 
-    this.state.thumbWidth = this.$track.clientWidth * percentageShown;
+    this.state.thumbWidth = this.$track.clientWidth * percentVisible;
   }
 
   onWindowMouseMove(event) {
-    if (this.references.lastPageX === null) return;
+    if (this.state.scrollType === null) return;
 
     event.preventDefault();
 
-    this.state.scrollOffset = clamp(
-      this.references.getOffset(this.references.lastPageX, event.pageX),
-      { min: 0, max: 1 }
-    );
+    const delta = event.pageX - (this.references.pageX ?? event.pageX)
 
-    this.references.isClickCanceled = true;
-    this.references.lastPageX = event.pageX;
-  }
+    switch (this.state.scrollType) {
+      case 'content':
+        this.state.scrollOffset = clamp(
+          this.state.scrollOffset - delta / this.availableContentWidth,
+          { min: 0, max: 1 }
+        );
+        break
+      case 'scrollbar':
+        this.state.scrollOffset = clamp(
+          this.state.scrollOffset + delta / this.availableTrackWidth,
+          { min: 0, max: 1 }
+        );
+        break
+    }
 
-  onWindowMoueUp(event) {
-    if (this.references.lastPageX === null) return;
-
-    document.body.style.userSelect = "";
-    this.$track.classList.remove('active')
-
-    this.references.lastPageX = null;
-    this.references.getOffset = null;
+    this.references.pageX = event.pageX;
   }
 
   onWindowClick(event) {
-    if (this.references.isClickCanceled) event.preventDefault();
-    this.references.isClickCanceled = false;
+    // Has a scroll been initiated AND has the mouse moved since then
+    if (this.state.scrollType !== null && this.references.pageX !== null) event.preventDefault();
+    this.state.scrollType = null
+    this.references.pageX = null;
   }
 
   onWindowTouchMove(event) {
     if (this.references.touchId === null) return;
-
-    event.preventDefault();
 
     const activeTouch = Array.from(event.touches).find(
       (touch) => touch.identifier === this.references.touchId
     );
 
     if (!activeTouch) {
-      this.references.lastPageX = null;
+      this.references.pageX = null;
       this.references.touchId = null;
-      this.references.getOffset = null;
       return;
     }
 
     event.preventDefault();
 
-    const delta = this.references.lastPageX - activeTouch.pageX;
+    const lastPageX = this.references.pageX ?? activeTouch.pageX;
+    const delta = this.references.pageX - activeTouch.pageX;
 
     this.state.scrollOffset = clamp(
       this.state.scrollOffset + delta / this.availableContentWidth,
       { min: 0, max: 1 }
     );
 
-    this.references.lastPageX = activeTouch.pageX;
+    this.references.pageX = activeTouch.pageX;
   }
 
   // TODO: Add accessibility
@@ -291,6 +269,24 @@ export class ScrollContainer extends Stateful {
 
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
+
+    switch (this.state.scrollType) {
+      case 'content':
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "pointer";
+        break
+
+      case 'scrollbar':
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "pointer";
+        this.$track.classList.add('active')
+        break
+
+      default:
+        this.$track.classList.remove('active')
+        document.body.style.userSelect = ""; 
+        document.body.style.cursor = ""; 
+    }
 
     // TODO: Move these into classes object
     this.$component.classList.toggle("scroll-start", isStart);
