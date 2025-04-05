@@ -15,6 +15,12 @@ export class ScrollContainer extends Stateful {
     forwardButton: "js-forward-button",
   };
 
+  static classes = {
+    active: "active",
+    scrollStart: "scroll-start",
+    scrollEnd: "scroll-end",
+  };
+
   get $viewport() {
     return this.$component.querySelector(
       `.${ScrollContainer.elements.viewport}`
@@ -59,11 +65,11 @@ export class ScrollContainer extends Stateful {
 
     this.onWindowResize();
 
-    // Note most of these events have an initial condition to skip if not active.
-    // This may be an easy place to refactor if performance becomes an issue,
-    // but I'll leave it in place for now as it creates a nice pattern for this
-    // component and shouldn't be used very often.
     this.bindEvents(window, {
+      // Note most of these events have an initial condition to skip if not
+      // active.This may be an easy place to refactor if performance becomes an
+      // issue, but I'll leave it in place for now as it creates a nice pattern
+      // for this component and shouldn't be used very often.
       resize: this.onWindowResize,
       mousemove: this.onWindowMouseMove,
       touchmove: this.onWindowTouchMove,
@@ -105,7 +111,7 @@ export class ScrollContainer extends Stateful {
     };
   }
 
-  references = {
+  values = {
     pageX: null,
   };
 
@@ -182,6 +188,7 @@ export class ScrollContainer extends Stateful {
   onContentFocusChange({ currentTarget, target }) {
     if (target === currentTarget) return;
 
+    const contentPadding = 20;
     const targetRight = target.offsetLeft + target.offsetWidth;
     const viewportRight = this.$viewport.clientWidth;
 
@@ -191,7 +198,8 @@ export class ScrollContainer extends Stateful {
     }
     if (targetRight > viewportRight) {
       this.scrollBy(
-        (targetRight - viewportRight + 20) / this.availableContentWidth
+        (targetRight - viewportRight + contentPadding) /
+          this.availableContentWidth
       );
       return;
     }
@@ -207,7 +215,7 @@ export class ScrollContainer extends Stateful {
 
     // Manually set pageX to start dragging from the new thumb position (set above)
     this.state.scrollType = "scrollbar";
-    this.references.pageX = pageX;
+    this.values.pageX = pageX;
   }
 
   onThumbMouseDown(event) {
@@ -241,12 +249,12 @@ export class ScrollContainer extends Stateful {
     // (eg if it happened outside the viewport)
     if (event.buttons === 0) {
       this.state.scrollType = null;
-      this.references.pageX = null;
+      this.values.pageX = null;
+      return;
     }
 
     event.preventDefault();
-
-    const delta = event.pageX - (this.references.pageX ?? event.pageX);
+    const delta = event.pageX - (this.values.pageX ?? event.pageX);
 
     switch (this.state.scrollType) {
       case "content":
@@ -257,20 +265,19 @@ export class ScrollContainer extends Stateful {
         break;
     }
 
-    this.references.pageX = event.pageX;
+    this.values.pageX = event.pageX;
   }
 
   onWindowClick(event) {
     // If the user has not interacted with the component, do nothing
-    if (this.state.scrollType === null && this.references.pageX === null)
-      return;
+    if (this.state.scrollType === null && this.values.pageX === null) return;
 
     // Has a scroll been initiated AND has the mouse moved since then
-    if (this.state.scrollType !== null && this.references.pageX !== null)
+    if (this.state.scrollType !== null && this.values.pageX !== null)
       event.preventDefault();
 
     this.state.scrollType = null;
-    this.references.pageX = null;
+    this.values.pageX = null;
   }
 
   onWindowTouchMove({ touches }) {
@@ -278,17 +285,17 @@ export class ScrollContainer extends Stateful {
 
     const activeTouch = touches[0];
 
-    const lastPageX = this.references.pageX ?? activeTouch.pageX;
+    const lastPageX = this.values.pageX ?? activeTouch.pageX;
     const delta = lastPageX - activeTouch.pageX;
 
     this.scrollBy(delta / this.availableContentWidth);
 
-    this.references.pageX = activeTouch.pageX;
+    this.values.pageX = activeTouch.pageX;
   }
 
   onWindowTouchEnd() {
     this.state.scrollType = null;
-    this.references.pageX = null;
+    this.values.pageX = null;
   }
 
   onStateUpdate(_, updatedProp, updatedValue) {
@@ -341,11 +348,11 @@ export class ScrollContainer extends Stateful {
       case "scrollbar":
         document.body.style.userSelect = "none";
         document.body.style.cursor = "pointer";
-        this.$track.classList.add("active");
+        this.$track.classList.add(ScrollContainer.classes.active);
         break;
 
       default:
-        this.$track.classList.remove("active");
+        this.$track.classList.remove(ScrollContainer.classes.active);
         document.documentElement.style.overscrollBehaviorX = "";
         document.body.style.overscrollBehaviorX = "";
         document.body.style.userSelect = "";
@@ -360,9 +367,11 @@ export class ScrollContainer extends Stateful {
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
 
-    // TODO: Move these into classes object
-    this.$component.classList.toggle("scroll-start", isStart);
-    this.$component.classList.toggle("scroll-end", isEnd);
+    this.$component.classList.toggle(
+      ScrollContainer.classes.scrollStart,
+      isStart
+    );
+    this.$component.classList.toggle(ScrollContainer.classes.scrollEnd, isEnd);
 
     this.$backButton.removeAttribute("disabled");
     this.$forwardButton.removeAttribute("disabled");
