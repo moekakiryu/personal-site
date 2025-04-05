@@ -60,6 +60,7 @@ export class ScrollContainer extends Stateful {
       resize: this.onWindowResize,
       mousemove: this.onWindowMouseMove,
       touchmove: this.onWindowTouchMove,
+      touchend: this.onWindowTouchEnd,
       click: this.onWindowClick,
     });
 
@@ -91,13 +92,12 @@ export class ScrollContainer extends Stateful {
     return {
       scrollOffset: 0,
       thumbWidth: 0,
-      scrollType: null, // 'content' | 'scrollbar'
+      scrollType: null, // 'content' | 'scrollbar' | 'touch'
     };
   }
 
   references = {
     pageX: null,
-    touchId: null,
   };
 
   get availableContentWidth() {
@@ -130,9 +130,9 @@ export class ScrollContainer extends Stateful {
     this.state.scrollType = "content";
   }
 
-  onContentTouchStart({ touches }) {
-    const activeTouch = touches[0];
-    this.references.touchId = activeTouch.identifier;
+  onContentTouchStart(event) {
+    event.preventDefault();
+    this.state.scrollType = "touch";
   }
 
   // --- Scroll Track Events --- //
@@ -217,30 +217,25 @@ export class ScrollContainer extends Stateful {
   }
 
   onWindowClick(event) {
+    // If the user has not interacted with the component, do nothing
+    if (this.state.scrollType === null && this.references.pageX === null)
+      return;
+
     // Has a scroll been initiated AND has the mouse moved since then
     if (this.state.scrollType !== null && this.references.pageX !== null)
       event.preventDefault();
+
     this.state.scrollType = null;
     this.references.pageX = null;
   }
 
-  onWindowTouchMove(event) {
-    if (this.references.touchId === null) return;
+  onWindowTouchMove({ touches }) {
+    if (this.state.scrollType === null) return;
 
-    const activeTouch = Array.from(event.touches).find(
-      (touch) => touch.identifier === this.references.touchId
-    );
-
-    if (!activeTouch) {
-      this.references.pageX = null;
-      this.references.touchId = null;
-      return;
-    }
-
-    event.preventDefault();
+    const activeTouch = touches[0];
 
     const lastPageX = this.references.pageX ?? activeTouch.pageX;
-    const delta = this.references.pageX - activeTouch.pageX;
+    const delta = lastPageX - activeTouch.pageX;
 
     this.state.scrollOffset = clamp(
       this.state.scrollOffset + delta / this.availableContentWidth,
@@ -250,8 +245,14 @@ export class ScrollContainer extends Stateful {
     this.references.pageX = activeTouch.pageX;
   }
 
-  onStateUpdate(updatedState, updatedProp, updatedValue) {
+  onWindowTouchEnd() {
+    this.state.scrollType = null;
+    this.references.pageX = null;
+  }
+
+  onStateUpdate(_, updatedProp, updatedValue) {
     if (updatedProp !== "scrollOffset") return;
+
     const nearRadius = 5; // px
 
     const isStart = this.state.scrollOffset === 0;
@@ -286,6 +287,11 @@ export class ScrollContainer extends Stateful {
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
     switch (this.state.scrollType) {
+      case "touch":
+        document.body.style.overscrollBehaviorX = "none";
+        document.documentElement.style.overscrollBehaviorX = "none";
+        break;
+
       case "content":
         document.body.style.userSelect = "none";
         document.body.style.cursor = "pointer";
@@ -299,6 +305,8 @@ export class ScrollContainer extends Stateful {
 
       default:
         this.$track.classList.remove("active");
+        document.documentElement.style.overscrollBehaviorX = "";
+        document.body.style.overscrollBehaviorX = "";
         document.body.style.userSelect = "";
         document.body.style.cursor = "";
     }
