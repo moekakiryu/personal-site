@@ -1,8 +1,8 @@
-import { clamp } from "../utils/math";
+import { clamp, roundWithPrecision as roundDecimal } from "../utils/math";
 import { Stateful } from "../utils/stateful";
 
 export class ScrollContainer extends Stateful {
-  EPSILON = 5
+  EPSILON = 5;
 
   static elements = {
     component: "js-scroll-container",
@@ -127,7 +127,7 @@ export class ScrollContainer extends Stateful {
 
   onContentMouseDown(event) {
     event.preventDefault();
-    this.state.scrollType = 'content'
+    this.state.scrollType = "content";
   }
 
   onContentTouchStart({ touches }) {
@@ -150,13 +150,13 @@ export class ScrollContainer extends Stateful {
     );
 
     // Manually set pageX to start dragging from the new thumb position (set above)
-    this.state.scrollType = 'scrollbar'
-    this.references.pageX = pageX
+    this.state.scrollType = "scrollbar";
+    this.references.pageX = pageX;
   }
 
   onThumbMouseDown(event) {
     event.stopPropagation();
-    this.state.scrollType = 'scrollbar'
+    this.state.scrollType = "scrollbar";
   }
 
   // --- Button Events --- //
@@ -189,21 +189,21 @@ export class ScrollContainer extends Stateful {
 
     event.preventDefault();
 
-    const delta = event.pageX - (this.references.pageX ?? event.pageX)
+    const delta = event.pageX - (this.references.pageX ?? event.pageX);
 
     switch (this.state.scrollType) {
-      case 'content':
+      case "content":
         this.state.scrollOffset = clamp(
           this.state.scrollOffset - delta / this.availableContentWidth,
           { min: 0, max: 1 }
         );
-        break
-      case 'scrollbar':
+        break;
+      case "scrollbar":
         this.state.scrollOffset = clamp(
           this.state.scrollOffset + delta / this.availableTrackWidth,
           { min: 0, max: 1 }
         );
-        break
+        break;
     }
 
     this.references.pageX = event.pageX;
@@ -211,8 +211,9 @@ export class ScrollContainer extends Stateful {
 
   onWindowClick(event) {
     // Has a scroll been initiated AND has the mouse moved since then
-    if (this.state.scrollType !== null && this.references.pageX !== null) event.preventDefault();
-    this.state.scrollType = null
+    if (this.state.scrollType !== null && this.references.pageX !== null)
+      event.preventDefault();
+    this.state.scrollType = null;
     this.references.pageX = null;
   }
 
@@ -242,9 +243,34 @@ export class ScrollContainer extends Stateful {
     this.references.pageX = activeTouch.pageX;
   }
 
+  onStateUpdate(updatedState, updatedProp, updatedValue) {
+    if (updatedProp !== "scrollOffset") return;
+    const nearRadius = 5; // px
+
+    const isStart = this.state.scrollOffset === 0;
+    const isEnd = this.state.scrollOffset === 1;
+
+    // Compute px values from percentage offsets
+    const contentOffset = this.state.scrollOffset * this.availableContentWidth;
+
+    // If a scroll event would place the scrollbar close the either end, update
+    // the state to exactly equal the end
+    const isNearStart = !isStart && contentOffset < nearRadius;
+    const isNearEnd =
+      !isEnd && contentOffset > this.availableContentWidth - nearRadius;
+
+    return {
+      scrollOffset: isNearStart
+        ? 0
+        : isNearEnd
+        ? 1
+        : roundDecimal(updatedValue, { precision: this.EPSILON }),
+    };
+  }
+
   // TODO: Add accessibility
   // TODO: Add snap to child
-  onStateUpdate() {
+  render(updatedState) {
     const isStart = this.state.scrollOffset === 0;
     const isEnd = this.state.scrollOffset === 1;
 
@@ -252,16 +278,22 @@ export class ScrollContainer extends Stateful {
     const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
-    // If a scroll event would place the scrollbar close the either end, update
-    // the state to exactly equal the end
-    if (!isStart && contentOffset < this.EPSILON) {
-      this.state.scrollOffset = 0
-      return
-    }
+    switch (this.state.scrollType) {
+      case "content":
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "pointer";
+        break;
 
-    if (!isEnd && contentOffset > (this.availableContentWidth - this.EPSILON)) {
-      this.state.scrollOffset = 1
-      return
+      case "scrollbar":
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "pointer";
+        this.$track.classList.add("active");
+        break;
+
+      default:
+        this.$track.classList.remove("active");
+        document.body.style.userSelect = "";
+        document.body.style.cursor = "";
     }
 
     // Update element attributes
@@ -269,24 +301,6 @@ export class ScrollContainer extends Stateful {
 
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
-
-    switch (this.state.scrollType) {
-      case 'content':
-        document.body.style.userSelect = "none";
-        document.body.style.cursor = "pointer";
-        break
-
-      case 'scrollbar':
-        document.body.style.userSelect = "none";
-        document.body.style.cursor = "pointer";
-        this.$track.classList.add('active')
-        break
-
-      default:
-        this.$track.classList.remove('active')
-        document.body.style.userSelect = ""; 
-        document.body.style.cursor = ""; 
-    }
 
     // TODO: Move these into classes object
     this.$component.classList.toggle("scroll-start", isStart);

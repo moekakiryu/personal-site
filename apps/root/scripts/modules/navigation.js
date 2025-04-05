@@ -112,7 +112,7 @@ export class Navigation extends Stateful {
 
   /* --- Handlers --- */
 
-  onStateUpdate() {
+  render() {
     if (this.state.isOpen) {
       this.openNav();
     } else {

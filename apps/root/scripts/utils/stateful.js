@@ -18,7 +18,8 @@ export class Stateful {
   get state() {
     // const updateCallback = this.onStateUpdate;
     // const parentThis = this;
-    const updateCallback = (...args) => this.onStateUpdate?.(this, ...args);
+    const updateCallback = (...args) => this.onStateUpdate?.(...args);
+    const renderCallback = (...args) => this.render?.(...args);
 
     return new Proxy(this.#state, {
       get(target, prop) {
@@ -29,7 +30,19 @@ export class Stateful {
           throw new Error(`Unable to create new state property '${prop}'.`);
         }
         target[prop] = value;
-        updateCallback(prop);
+
+        const updatedState = updateCallback(target, prop, value)
+
+        if (updatedState) {
+          Object.keys(updatedState).forEach((prop) => {
+            if (!target.hasOwnProperty(prop)) {
+              throw new Error(`Unable to create new state property '${prop}'.`);
+            }
+            target[prop] = updatedState[prop]
+          })
+        }
+
+        renderCallback(target)
         return true;
       },
     });
