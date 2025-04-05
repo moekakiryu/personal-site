@@ -187,6 +187,13 @@ export class ScrollContainer extends Stateful {
   onWindowMouseMove(event) {
     if (this.state.scrollType === null) return;
 
+    // If buttons is 0, we probably didn't catch a mouseup event somewhere
+    // (eg if it happened outside the viewport)
+    if (event.buttons === 0) {
+      this.state.scrollType = null;
+      this.references.pageX = null;
+    }
+
     event.preventDefault();
 
     const delta = event.pageX - (this.references.pageX ?? event.pageX);
