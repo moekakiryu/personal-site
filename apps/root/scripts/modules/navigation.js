@@ -25,17 +25,35 @@ export class Navigation extends BaseComponent {
   }
 
   /* --- Elements --- */
-
-  get $desktopNav() {
-    return this.getElement("desktopNav");
-  }
-
   get $mobileNav() {
     return this.getElement("mobileNav");
   }
 
+  renderMobileNav() {
+    if (this.state.isOpen) {
+      this.$mobileNav.style.display = "";
+
+      this.$mobileNav.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: this.ANIMATION_DURATION,
+      });
+    } else {
+      this.$mobileNav
+        .animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: this.ANIMATION_DURATION,
+        })
+        .finished.then(() => {
+          this.$mobileNav.style.display = "none";
+        });
+    }
+  }
+
   get $toggle() {
     return this.getElement("toggle");
+  }
+
+  renderToggle() {
+    this.$toggle.innerText = this.state.isOpen ? "Close" : "Menu";
+    this.$toggle.setAttribute("aria-expanded", this.state.isOpen);
   }
 
   /* --- State --- */
@@ -63,47 +81,14 @@ export class Navigation extends BaseComponent {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
     if (breakpoint >= BREAKPOINTS.large) {
-      console.log("Close");
       this.state.isOpen = false;
     }
   }
 
   render() {
-    const breakpoint = BREAKPOINTS[getBreakpoint()];
+    document.body.style.overflow = this.state.isOpen ? "hidden" : "";
 
-    if (this.state.isOpen) {
-      document.body.style.overflow = "hidden";
-
-      this.$toggle.innerText = "Close";
-      this.$toggle.setAttribute("aria-expanded", true);
-
-      this.$mobileNav.style.display = "";
-
-      this.$mobileNav.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: this.ANIMATION_DURATION,
-      });
-    } else {
-      document.body.style.overflow = "";
-
-      this.$toggle.innerText = "Menu";
-      this.$toggle.setAttribute("aria-expanded", false);
-
-      this.$mobileNav
-        .animate([{ opacity: 1 }, { opacity: 0 }], {
-          duration: this.ANIMATION_DURATION,
-        })
-        .finished.then(() => {
-          this.$mobileNav.style.display = "none";
-        });
-    }
+    this.renderMobileNav();
+    this.renderToggle();
   }
-
-  /* --- Main --- */
-  // static mount() {
-  //   const components = document.querySelectorAll(`.${this.elements.component}`);
-
-  //   components.forEach((component) => {
-  //     new this(component);
-  //   });
-  // }
 }

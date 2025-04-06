@@ -60,28 +60,70 @@ export class ScrollContainer extends BaseComponent {
     return this.getElement("viewport");
   }
 
+  renderViewport(state) {
+    // No changes...
+  }
+
   get $content() {
     return this.getElement("content");
+  }
+
+  renderContent() {
+    const contentOffset = this.state.scrollOffset * this.availableContentWidth;
+
+    this.$content.style.marginLeft = `-${contentOffset}px`;
   }
 
   get $controls() {
     return this.getElement("controls");
   }
 
+  renderControls() {
+    const progress = roundDecimal(this.state.scrollOffset * 100);
+
+    this.$controls.setAttribute("aria-valuenow", progress);
+  }
+
   get $track() {
     return this.getElement("track");
+  }
+
+  renderTrack() {
+    if (this.state.dragType === "scrollbar") {
+      this.$track.classList.add(ScrollContainer.classes.active);
+    } else {
+      this.$track.classList.remove(ScrollContainer.classes.active);
+    }
   }
 
   get $thumb() {
     return this.getElement("thumb");
   }
 
+  renderThumb() {
+    const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
+
+    this.$thumb.style.marginLeft = `${thumbOffset}px`;
+    this.$thumb.style.width = `${this.state.thumbWidth}px`;
+  }
+
   get $backButton() {
     return this.getElement("backButton");
   }
 
+  renderBackButton() {
+    this.$backButton.toggleAttribute("disabled", this.state.scrollOffset === 0);
+  }
+
   get $forwardButton() {
     return this.getElement("forwardButton");
+  }
+
+  renderForwardButton() {
+    this.$forwardButton.toggleAttribute(
+      "disabled",
+      this.state.scrollOffset === 1
+    );
   }
 
   get $$snapTargets() {
@@ -350,14 +392,6 @@ export class ScrollContainer extends BaseComponent {
 
   // TODO: Add snap to child
   render() {
-    const isStart = this.state.scrollOffset === 0;
-    const isEnd = this.state.scrollOffset === 1;
-    const progress = roundDecimal(this.state.scrollOffset * 100);
-
-    // Compute px values from percentage offsets
-    const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
-    const contentOffset = this.state.scrollOffset * this.availableContentWidth;
-
     switch (this.state.dragType) {
       case "touch":
         document.body.style.overscrollBehaviorX = "none";
@@ -372,11 +406,9 @@ export class ScrollContainer extends BaseComponent {
       case "scrollbar":
         document.body.style.userSelect = "none";
         document.body.style.cursor = "pointer";
-        this.$track.classList.add(ScrollContainer.classes.active);
         break;
 
       default:
-        this.$track.classList.remove(ScrollContainer.classes.active);
         document.documentElement.style.overscrollBehaviorX = "";
         document.body.style.overscrollBehaviorX = "";
         document.body.style.userSelect = "";
@@ -384,26 +416,22 @@ export class ScrollContainer extends BaseComponent {
     }
 
     // Update element attributes
-    this.$content.style.marginLeft = `-${contentOffset}px`;
-
-    this.$controls.setAttribute("aria-valuenow", progress);
-
-    this.$thumb.style.marginLeft = `${thumbOffset}px`;
-    this.$thumb.style.width = `${this.state.thumbWidth}px`;
-
     this.$element.classList.toggle(
       ScrollContainer.classes.scrollStart,
-      isStart
+      this.state.scrollOffset === 0
     );
-    this.$element.classList.toggle(ScrollContainer.classes.scrollEnd, isEnd);
 
-    this.$backButton.removeAttribute("disabled");
-    this.$forwardButton.removeAttribute("disabled");
-    if (isStart) {
-      this.$backButton.setAttribute("disabled", true);
-    }
-    if (isEnd) {
-      this.$forwardButton.setAttribute("disabled", true);
-    }
+    this.$element.classList.toggle(
+      ScrollContainer.classes.scrollEnd,
+      this.state.scrollOffset === 1
+    );
+
+    this.renderViewport();
+    this.renderContent();
+    this.renderControls();
+    this.renderTrack();
+    this.renderThumb();
+    this.renderForwardButton();
+    this.renderBackButton();
   }
 }
