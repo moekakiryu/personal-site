@@ -3,7 +3,7 @@ import { Stateful } from "../utils/stateful";
 
 export class ScrollContainer extends Stateful {
   EPSILON = 5;
-  SNAP_PADDING = 50;
+  SNAP_PADDING = 0.05;
 
   static elements = {
     component: "js-scroll-container",
@@ -143,13 +143,10 @@ export class ScrollContainer extends Stateful {
         nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
       const viewportRight = this.$viewport.clientWidth;
 
-      const deltaRight = (targetRight - viewportRight) / this.availableContentWidth
-      const deltaLeft = nextSnapTarget.offsetLeft / this.availableContentWidth
-      const padding = (0.05 * this.availableContentWidth) / this.availableContentWidth
+      const delta = targetRight - viewportRight;
+      const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
-      console.log(nextSnapTarget, nextSnapTarget.offsetLeft, deltaLeft, deltaRight)
-
-      this.scrollBy(Math.min(deltaLeft, deltaRight + padding));
+      this.scrollBy((delta + padding) / this.availableContentWidth);
       return;
     }
 
@@ -167,10 +164,10 @@ export class ScrollContainer extends Stateful {
       });
 
     if (previousSnapTarget) {
-      this.scrollBy(
-        (previousSnapTarget.offsetLeft - this.SNAP_PADDING) /
-          this.availableContentWidth
-      );
+      const delta = previousSnapTarget.offsetLeft;
+      const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
+
+      this.scrollBy((delta - padding) / this.availableContentWidth);
       return;
     }
 
@@ -237,18 +234,19 @@ export class ScrollContainer extends Stateful {
 
     const targetRight = target.offsetLeft + target.offsetWidth;
     const viewportRight = this.$viewport.clientWidth;
+    const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
     if (target.offsetLeft < 0) {
-      this.scrollBy(
-        (target.offsetLeft - this.SNAP_PADDING) / this.availableContentWidth
-      );
+      const delta = target.offsetLeft;
+
+      this.scrollBy((delta - padding) / this.availableContentWidth);
       return;
     }
+
     if (targetRight > viewportRight) {
-      this.scrollBy(
-        (targetRight - viewportRight + this.SNAP_PADDING) /
-          this.availableContentWidth
-      );
+      const delta = targetRight - viewportRight;
+
+      this.scrollBy((delta + padding) / this.availableContentWidth);
       return;
     }
   }
@@ -324,13 +322,6 @@ export class ScrollContainer extends Stateful {
     if (this.state.scrollType !== null && this.values.pageX !== null)
       event.preventDefault();
 
-    console.log(this.values.direction);
-    if (this.values.direction < 0) {
-      this.scrollPrevious();
-    }
-    if (this.values.direction > 0) {
-      this.scrollNext();
-    }
     this.endScroll();
   }
 
@@ -345,16 +336,10 @@ export class ScrollContainer extends Stateful {
     this.scrollBy(delta / this.availableContentWidth);
 
     this.values.pageX = activeTouch.pageX;
-    this.values.direction = delta / Math.abs(delta)
+    this.values.direction = delta / Math.abs(delta);
   }
 
   onWindowTouchEnd() {
-    if (this.values.direction < 0) {
-      this.scrollPrevious();
-    }
-    if (this.values.direction > 0) {
-      this.scrollNext();
-    }
     this.endScroll();
   }
 
