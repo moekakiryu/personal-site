@@ -118,6 +118,7 @@ export class ScrollContainer extends Stateful {
 
   values = {
     pageX: null,
+    direction: 0,
   };
 
   get availableContentWidth() {
@@ -138,13 +139,17 @@ export class ScrollContainer extends Stateful {
     });
 
     if (nextSnapTarget) {
-      const targetRight = nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
+      const targetRight =
+        nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
       const viewportRight = this.$viewport.clientWidth;
 
-      this.scrollBy(
-        (targetRight - viewportRight + this.SNAP_PADDING) /
-          this.availableContentWidth
-      );
+      const deltaRight = (targetRight - viewportRight) / this.availableContentWidth
+      const deltaLeft = nextSnapTarget.offsetLeft / this.availableContentWidth
+      const padding = (0.05 * this.availableContentWidth) / this.availableContentWidth
+
+      console.log(nextSnapTarget, nextSnapTarget.offsetLeft, deltaLeft, deltaRight)
+
+      this.scrollBy(Math.min(deltaLeft, deltaRight + padding));
       return;
     }
 
@@ -187,6 +192,12 @@ export class ScrollContainer extends Stateful {
       min: 0,
       max: 1,
     });
+  }
+
+  endScroll() {
+    this.state.scrollType = null;
+    this.values.pageX = null;
+    this.values.direction = 0;
   }
 
   // --- Mouse Wheel Events --- //
@@ -285,8 +296,7 @@ export class ScrollContainer extends Stateful {
     // If buttons is 0, we probably didn't catch a mouseup event somewhere
     // (eg if it happened outside the viewport)
     if (event.buttons === 0) {
-      this.state.scrollType = null;
-      this.values.pageX = null;
+      this.endScroll();
       return;
     }
 
@@ -303,6 +313,7 @@ export class ScrollContainer extends Stateful {
     }
 
     this.values.pageX = event.pageX;
+    this.values.direction = (-1 * delta) / Math.abs(delta);
   }
 
   onWindowClick(event) {
@@ -313,8 +324,14 @@ export class ScrollContainer extends Stateful {
     if (this.state.scrollType !== null && this.values.pageX !== null)
       event.preventDefault();
 
-    this.state.scrollType = null;
-    this.values.pageX = null;
+    console.log(this.values.direction);
+    if (this.values.direction < 0) {
+      this.scrollPrevious();
+    }
+    if (this.values.direction > 0) {
+      this.scrollNext();
+    }
+    this.endScroll();
   }
 
   onWindowTouchMove({ touches }) {
@@ -331,8 +348,7 @@ export class ScrollContainer extends Stateful {
   }
 
   onWindowTouchEnd() {
-    this.state.scrollType = null;
-    this.values.pageX = null;
+    this.endScroll();
   }
 
   onStateUpdate(_, updatedProp, updatedValue) {
