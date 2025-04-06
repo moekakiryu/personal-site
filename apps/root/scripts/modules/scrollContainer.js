@@ -345,6 +345,7 @@ export class ScrollContainer extends Stateful {
     this.scrollBy(delta / this.availableContentWidth);
 
     this.values.pageX = activeTouch.pageX;
+    this.values.direction = delta / Math.abs(delta)
   }
 
   onWindowTouchEnd() {
