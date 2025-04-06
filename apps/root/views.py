@@ -7,7 +7,7 @@ from apps.root.models import Article, Project, Contract
 
 def home(request, **kwargs):
   article_count = 3
-  project_count = 2
+  project_count = 6
 
   projects = Project.objects.all().order_by('-id')
   articles = Article.objects.all().order_by('-created')

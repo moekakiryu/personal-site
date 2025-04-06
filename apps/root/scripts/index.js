@@ -1,7 +1,15 @@
-import { Navigation } from "./navigation";
-import { ResumeTimeline } from "./resume";
+import { Navigation } from "./modules/navigation";
+import { ResumeTimeline } from "./modules/resume";
+import { ScrollContainer } from './modules/scrollContainer';
+
+const mountables = [
+  Navigation,
+  ResumeTimeline,
+]
 
 document.addEventListener("DOMContentLoaded", () => {
-  new Navigation().mount();
-  new ResumeTimeline().mount();
+  mountables.forEach(mountable => {
+    new mountable().mount()
+  })
+  ScrollContainer.mount()
 });

@@ -1,6 +1,6 @@
-import { Stateful } from './utils/stateful'
-import { responsiveValue } from './utils/breakpoints'
-import { roundWithPrecision } from './utils/math'
+import { Stateful } from '../utils/stateful'
+import { responsiveValue } from '../utils/breakpoints'
+import { roundWithPrecision } from '../utils/math'
 
 export class ResumeTimeline extends Stateful {
   DOT_OFFSET = 18; // px
