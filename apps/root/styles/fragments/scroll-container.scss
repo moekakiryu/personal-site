@@ -141,6 +141,8 @@
         height: 100%;
         border-radius: var(--rounded-full);
         background-color: var(--color-terminal-blue);
+
+        transition: margin-left var(--duration-short) ease-out;
       }
     }
   }
