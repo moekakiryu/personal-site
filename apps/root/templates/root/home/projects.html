@@ -12,7 +12,28 @@
   <div class="scroll-container js-scroll-container">
     <div class="viewport js-viewport" tabindex="0" id="project-scroll-container">
       <div class="content js-content">
-        {% include "root/projects/list.html" with projects=projects.list%}
+        <div class="project-list">
+          {% for project in projects.list %}
+            <a class="card" href="{% url "root.project" project.slug %}" data-snap="true">
+              {% if project.thumbnail %}
+                <div class="image">
+                  <img src="{{ MEDIA_URL }}{{ project.thumbnail }}" alt="">
+                </div>
+              {% endif %}
+              <div class="details">
+                <h3 class="name">
+                  {{ project.title }}
+                </h3>
+                <p class="description">
+                  {{ project.blurb }}
+                </p>
+                <div class="read-more">
+                  + Read more
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <div

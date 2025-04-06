@@ -1,4 +1,4 @@
-<div class="card-container">
+<div class="project-grid">
   {% for project in projects %}
     <a class="card" href="{% url "root.project" project.slug %}" data-snap="true">
       {% if project.thumbnail %}
