@@ -77,7 +77,7 @@
     .back-button, .forward-button {
       position: relative;
       height: 40px; // [1]
-      fill: var(--color-greyscale-faded);
+      fill: var(--color-terminal-blue);
       transition: fill var(--duration-short), opacity var(--duration-short);
 
       &:hover {
