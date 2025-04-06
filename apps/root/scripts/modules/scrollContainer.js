@@ -396,6 +396,7 @@ export class ScrollContainer extends BaseComponent {
       case "touch":
         document.body.style.overscrollBehaviorX = "none";
         document.documentElement.style.overscrollBehaviorX = "none";
+        document.documentElement.style.overflowY = "hidden";
         break;
 
       case "content":
@@ -410,6 +411,7 @@ export class ScrollContainer extends BaseComponent {
 
       default:
         document.documentElement.style.overscrollBehaviorX = "";
+        document.documentElement.style.overflowY = "";
         document.body.style.overscrollBehaviorX = "";
         document.body.style.userSelect = "";
         document.body.style.cursor = "";
