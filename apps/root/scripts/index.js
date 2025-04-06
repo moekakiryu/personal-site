@@ -3,7 +3,7 @@ import { ResumeTimeline } from "./modules/resume";
 import { ScrollContainer } from './modules/scrollContainer';
 
 const mountables = [
-  Navigation,
+  // Navigation,
   ResumeTimeline,
 ]
 
@@ -12,4 +12,5 @@ document.addEventListener("DOMContentLoaded", () => {
     new mountable().mount()
   })
   ScrollContainer.mount()
+  Navigation.mount()
 });

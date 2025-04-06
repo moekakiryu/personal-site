@@ -4,27 +4,46 @@ import { BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
 export class Navigation extends Stateful {
   ANIMATION_DURATION = 250; // ms
 
-  elements = {
-    navigation: "js-nav",
+  static elements = {
+    component: "js-header",
+    desktopNav: "js-desktop-nav",
+    mobileNav: "js-mobile-nav",
     toggle: "js-nav-toggle",
   };
 
-  classes = {
+  static classes = {
     hidden: "hidden",
-  };
-
-  static = {
-    wasDesktopLayout: BREAKPOINTS[getBreakpoint()] >= BREAKPOINTS.large,
   };
 
   /* --- Elements --- */
 
-  get $navigation() {
-    return document.querySelectorAll(`.${this.elements.navigation}`);
+  get $desktopNav() {
+    return this.$component.querySelector(`.${Navigation.elements.desktopNav}`);
+  }
+
+  get $mobileNav() {
+    return this.$component.querySelector(`.${Navigation.elements.mobileNav}`);
   }
 
   get $toggle() {
-    return document.querySelectorAll(`.${this.elements.toggle}`);
+    return this.$component.querySelector(`.${Navigation.elements.toggle}`);
+  }
+
+  constructor(component) {
+    super();
+    this.$component = component;
+
+    this.bindEvents(window, {
+      resize: this.onWindowResize,
+    });
+
+    this.bindEvents(this.$toggle, {
+      click: this.onToggleClick,
+    });
+
+    if (!this.state.isOpen) {
+      this.hideNav();
+    }
   }
 
   /* --- State --- */
@@ -37,88 +56,12 @@ export class Navigation extends Stateful {
 
   /* --- Actions --- */
 
-  openNav() {
-    const breakpoint = BREAKPOINTS[getBreakpoint()];
-
-    this.$navigation.forEach((nav) => {
-      nav.style.display = "";
-
-      if (breakpoint < BREAKPOINTS.large) {
-        nav.animate([{ opacity: 0 }, { opacity: 1 }], {
-          duration: this.ANIMATION_DURATION,
-        });
-      } else {
-        // Use style instead of animation API to avoid jittery animations of max-height
-        nav.style.maxHeight = `${nav.scrollHeight}px`;
-      }
-    });
-
-    this.$toggle.forEach((toggle) => {
-      toggle.innerText = "Close";
-      toggle.setAttribute("aria-expanded", true);
-    });
-
-    if (breakpoint < BREAKPOINTS.large) {
-      document.body.style.overflow = "hidden";
-    }
-  }
-
-  closeNav() {
-    const breakpoint = BREAKPOINTS[getBreakpoint()];
-
-    this.$navigation.forEach((nav) => {
-      if (breakpoint < BREAKPOINTS.large) {
-        nav
-          .animate([{ opacity: 1 }, { opacity: 0 }], {
-            duration: this.ANIMATION_DURATION,
-          })
-          .finished.then(() => [(nav.style.display = "none")]);
-      }
-      // Use style instead of animation API to avoid jittery animations of max-height
-      nav.style.maxHeight = "";
-
-      const transitionListener = () => {
-        // Check `isOpen` again to handle if state has changed during transition
-        if (!this.state.isOpen) {
-          nav.style.display = "none";
-        }
-        nav.removeEventListener("transitionend", transitionListener);
-      };
-      nav.addEventListener("transitionend", transitionListener);
-    });
-
-    this.$toggle.forEach((toggle) => {
-      toggle.innerText = "Menu";
-      toggle.setAttribute("aria-expanded", false);
-    });
-
-    if (breakpoint < BREAKPOINTS.large) {
-      document.body.style.overflow = "";
-    }
-  }
-
   hideNav() {
-    this.$navigation.forEach((nav) => {
-      nav.style.display = "none";
-    });
-
-    this.$toggle.forEach((toggle) => {
-      toggle.innerText = "Menu";
-      toggle.setAttribute("aria-expanded", false);
-    });
-
-    document.body.style.overflow = "";
+    this.$mobileNav.style.display = "none";
+    this.state.isOpen = false;
   }
 
   /* --- Handlers --- */
-
-  render() {
-    if (this.state.isOpen) {
-      this.openNav();
-    } else {
-      this.closeNav();
-    }
-  }
 
   onToggleClick() {
     this.state.isOpen = !this.state.isOpen;
@@ -127,28 +70,48 @@ export class Navigation extends Stateful {
   onWindowResize() {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
-    const isDesktopLayout = breakpoint >= BREAKPOINTS.large;
-
-    if (isDesktopLayout) {
-      this.state.isOpen = true;
-    } else if (this.static.wasDesktopLayout !== isDesktopLayout) {
+    if (breakpoint >= BREAKPOINTS.large) {
+      console.log('Close')
       this.state.isOpen = false;
     }
+  }
 
-    this.static.wasDesktopLayout = isDesktopLayout;
+  render() {
+    const breakpoint = BREAKPOINTS[getBreakpoint()];
+
+    if (this.state.isOpen) {
+      document.body.style.overflow = "hidden";
+
+      this.$toggle.innerText = "Close";
+      this.$toggle.setAttribute("aria-expanded", true);
+
+      this.$mobileNav.style.display = "";
+
+      this.$mobileNav.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: this.ANIMATION_DURATION,
+      });
+    } else {
+      document.body.style.overflow = "";
+
+      this.$toggle.innerText = "Menu";
+      this.$toggle.setAttribute("aria-expanded", false);
+
+      this.$mobileNav
+        .animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: this.ANIMATION_DURATION,
+        })
+        .finished.then(() => {
+          this.$mobileNav.style.display = "none";
+        });
+    }
   }
 
   /* --- Main --- */
+  static mount() {
+    const components = document.querySelectorAll(`.${this.elements.component}`);
 
-  mount() {
-    if (!this.state.isOpen) {
-      this.hideNav();
-    }
-
-    this.$toggle.forEach((toggle) =>
-      toggle.addEventListener("click", this.onToggleClick.bind(this))
-    );
-
-    window.addEventListener("resize", this.onWindowResize.bind(this));
+    components.forEach((navElement) => {
+      new this(navElement);
+    });
   }
 }
