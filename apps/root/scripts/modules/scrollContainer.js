@@ -112,7 +112,7 @@ export class ScrollContainer extends Stateful {
     return {
       scrollOffset: 0,
       thumbWidth: 0,
-      scrollType: null, // 'content' | 'scrollbar' | 'touch'
+      dragType: null, // 'content' | 'scrollbar' | 'touch'
     };
   }
 
@@ -192,7 +192,7 @@ export class ScrollContainer extends Stateful {
   }
 
   endScroll() {
-    this.state.scrollType = null;
+    this.state.dragType = null;
     this.values.pageX = null;
     this.values.direction = 0;
   }
@@ -210,12 +210,11 @@ export class ScrollContainer extends Stateful {
 
   onContentMouseDown(event) {
     event.preventDefault();
-    this.state.scrollType = "content";
+    this.state.dragType = "content";
   }
 
-  onContentTouchStart(event) {
-    event.preventDefault();
-    this.state.scrollType = "touch";
+  onContentTouchStart() {
+    this.state.dragType = "touch";
   }
 
   onContentKeyDown({ key }) {
@@ -260,13 +259,13 @@ export class ScrollContainer extends Stateful {
     this.scrollTo((relativeOffset - thumbCenter) / this.availableTrackWidth);
 
     // Manually set pageX to start dragging from the new thumb position (set above)
-    this.state.scrollType = "scrollbar";
+    this.state.dragType = "scrollbar";
     this.values.pageX = pageX;
   }
 
   onThumbMouseDown(event) {
     event.stopPropagation();
-    this.state.scrollType = "scrollbar";
+    this.state.dragType = "scrollbar";
   }
 
   // --- Button Events --- //
@@ -289,7 +288,7 @@ export class ScrollContainer extends Stateful {
   }
 
   onWindowMouseMove(event) {
-    if (this.state.scrollType === null) return;
+    if (this.state.dragType === null) return;
 
     // If buttons is 0, we probably didn't catch a mouseup event somewhere
     // (eg if it happened outside the viewport)
@@ -301,7 +300,7 @@ export class ScrollContainer extends Stateful {
     event.preventDefault();
     const delta = event.pageX - (this.values.pageX ?? event.pageX);
 
-    switch (this.state.scrollType) {
+    switch (this.state.dragType) {
       case "content":
         this.scrollBy((-1 * delta) / this.availableContentWidth);
         break;
@@ -316,17 +315,17 @@ export class ScrollContainer extends Stateful {
 
   onWindowClick(event) {
     // If the user has not interacted with the component, do nothing
-    if (this.state.scrollType === null && this.values.pageX === null) return;
+    if (this.state.dragType === null && this.values.pageX === null) return;
 
     // Has a scroll been initiated AND has the mouse moved since then
-    if (this.state.scrollType !== null && this.values.pageX !== null)
+    if (this.state.dragType !== null && this.values.pageX !== null)
       event.preventDefault();
 
     this.endScroll();
   }
 
   onWindowTouchMove({ touches }) {
-    if (this.state.scrollType === null) return;
+    if (this.state.dragType === null) return;
 
     const activeTouch = touches[0];
 
@@ -370,7 +369,7 @@ export class ScrollContainer extends Stateful {
   }
 
   // TODO: Add snap to child
-  render(updatedState) {
+  render() {
     const isStart = this.state.scrollOffset === 0;
     const isEnd = this.state.scrollOffset === 1;
     const progress = roundDecimal(this.state.scrollOffset * 100);
@@ -379,7 +378,7 @@ export class ScrollContainer extends Stateful {
     const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
-    switch (this.state.scrollType) {
+    switch (this.state.dragType) {
       case "touch":
         document.body.style.overscrollBehaviorX = "none";
         document.documentElement.style.overscrollBehaviorX = "none";
