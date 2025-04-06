@@ -1,37 +1,23 @@
-import { Stateful } from "../utils/stateful";
+import { BaseComponent } from "../utils/BaseComponent";
 import { BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
 
-export class Navigation extends Stateful {
+export class Navigation extends BaseComponent {
   ANIMATION_DURATION = 250; // ms
 
+  static name = 'Navigation'
+
   static elements = {
-    component: "js-header",
-    desktopNav: "js-desktop-nav",
-    mobileNav: "js-mobile-nav",
-    toggle: "js-nav-toggle",
+    desktopNav: "desktopNav",
+    mobileNav: "mobileNav",
+    toggle: "navToggle",
   };
 
   static classes = {
     hidden: "hidden",
   };
 
-  /* --- Elements --- */
-
-  get $desktopNav() {
-    return this.$component.querySelector(`.${Navigation.elements.desktopNav}`);
-  }
-
-  get $mobileNav() {
-    return this.$component.querySelector(`.${Navigation.elements.mobileNav}`);
-  }
-
-  get $toggle() {
-    return this.$component.querySelector(`.${Navigation.elements.toggle}`);
-  }
-
-  constructor(component) {
-    super();
-    this.$component = component;
+  constructor(name, element) {
+    super(name, element);
 
     this.bindEvents(window, {
       resize: this.onWindowResize,
@@ -41,9 +27,21 @@ export class Navigation extends Stateful {
       click: this.onToggleClick,
     });
 
-    if (!this.state.isOpen) {
-      this.hideNav();
-    }
+    this.hideNav();
+  }
+
+  /* --- Elements --- */
+
+  get $desktopNav() {
+    return this.getElement(Navigation.elements.desktopNav)
+  }
+
+  get $mobileNav() {
+    return this.getElement(Navigation.elements.mobileNav);
+  }
+
+  get $toggle() {
+    return this.getElement(Navigation.elements.toggle);
   }
 
   /* --- State --- */
@@ -107,11 +105,11 @@ export class Navigation extends Stateful {
   }
 
   /* --- Main --- */
-  static mount() {
-    const components = document.querySelectorAll(`.${this.elements.component}`);
+  // static mount() {
+  //   const components = document.querySelectorAll(`.${this.elements.component}`);
 
-    components.forEach((component) => {
-      new this(component);
-    });
-  }
+  //   components.forEach((component) => {
+  //     new this(component);
+  //   });
+  // }
 }

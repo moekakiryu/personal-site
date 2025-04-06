@@ -9,12 +9,21 @@
     {% endif %}
   </div>
 
-  <div class="scroll-container js-scroll-container">
-    <div class="viewport js-viewport" tabindex="0" id="project-scroll-container">
-      <div class="content js-content">
+  <div class="scroll-container" data-component="ScrollContainer">
+    <div
+      id="project-scroll-container"
+      class="viewport"
+      tabindex="0"
+      data-element="ScrollContainer.viewport"
+    >
+      <div class="content" data-element="ScrollContainer.content">
         <div class="project-list">
           {% for project in projects.list %}
-            <a class="card" href="{% url "root.project" project.slug %}" data-snap="true">
+            <a
+              class="card"
+              href="{% url "root.project" project.slug %}"
+              data-snap="true"
+            >
               {% if project.thumbnail %}
                 <div class="image">
                   <img src="{{ MEDIA_URL }}{{ project.thumbnail }}" alt="">
@@ -37,20 +46,37 @@
       </div>
     </div>
     <div
-      class="controls js-controls"
+      class="controls"
       role="scrollbar"
       aria-controls="project-scroll-container"
       aria-label="Scroll through highlighted projects"
       aria-orientation="horizontal"
       aria-valuenow="0"
+      data-element="ScrollContainer.controls"
     >
-      <button aria-label="back" class="back-button js-back-button">
+      <button
+        class="back-button"
+        aria-label="back"
+        data-element="ScrollContainer.backButton"
+      >
         {% include "root/icons/arrow-left.svg" %}
       </button>
-      <div class="track js-track" aria-label="track">
-        <div class="thumb js-thumb" aria-label="thumb"></div>
+      <div
+        class="track"
+        aria-label="track"
+        data-element="ScrollContainer.track"
+      >
+        <div
+          class="thumb"
+          aria-label="thumb"
+          data-element="ScrollContainer.thumb"
+        ></div>
       </div>
-      <button aria-label="forward" class="forward-button js-forward-button">
+      <button
+        class="forward-button"
+        aria-label="forward"
+        data-element="ScrollContainer.forwardButton"
+      >
         {% include "root/icons/arrow-right.svg" %}
       </button>
     </div>

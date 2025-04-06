@@ -1,19 +1,20 @@
 import { clamp, roundWithPrecision as roundDecimal } from "../utils/math";
-import { Stateful } from "../utils/stateful";
+import { BaseComponent } from "../utils/BaseComponent";
 
-export class ScrollContainer extends Stateful {
+export class ScrollContainer extends BaseComponent {
   EPSILON = 5;
   SNAP_PADDING = 0.05;
 
+  static name = "ScrollContainer";
+
   static elements = {
-    component: "js-scroll-container",
-    viewport: "js-viewport",
-    content: "js-content",
-    controls: "js-controls",
-    track: "js-track",
-    thumb: "js-thumb",
-    backButton: "js-back-button",
-    forwardButton: "js-forward-button",
+    viewport: "viewport",
+    content: "content",
+    controls: "controls",
+    track: "track",
+    thumb: "thumb",
+    backButton: "backButton",
+    forwardButton: "forwardButton",
   };
 
   static classes = {
@@ -22,51 +23,8 @@ export class ScrollContainer extends Stateful {
     scrollEnd: "scroll-end",
   };
 
-  get $viewport() {
-    return this.$component.querySelector(
-      `.${ScrollContainer.elements.viewport}`
-    );
-  }
-
-  get $content() {
-    return this.$component.querySelector(
-      `.${ScrollContainer.elements.content}`
-    );
-  }
-
-  get $controls() {
-    return this.$component.querySelector(
-      `.${ScrollContainer.elements.controls}`
-    );
-  }
-
-  get $track() {
-    return this.$component.querySelector(`.${ScrollContainer.elements.track}`);
-  }
-
-  get $thumb() {
-    return this.$component.querySelector(`.${ScrollContainer.elements.thumb}`);
-  }
-
-  get $backButton() {
-    return this.$component.querySelector(
-      `.${ScrollContainer.elements.backButton}`
-    );
-  }
-
-  get $forwardButton() {
-    return this.$component.querySelector(
-      `.${ScrollContainer.elements.forwardButton}`
-    );
-  }
-
-  get $$snapTargets() {
-    return this.$component.querySelectorAll("[data-snap]");
-  }
-
-  constructor(component) {
-    super();
-    this.$component = component;
+  constructor(name, element) {
+    super(name, element);
 
     this.onWindowResize();
 
@@ -106,6 +64,38 @@ export class ScrollContainer extends Stateful {
     this.bindEvents(this.$forwardButton, {
       click: this.onForwardButtonClick,
     });
+  }
+
+  get $viewport() {
+    return this.getElement(ScrollContainer.elements.viewport);
+  }
+
+  get $content() {
+    return this.getElement(ScrollContainer.elements.content);
+  }
+
+  get $controls() {
+    return this.getElement(ScrollContainer.elements.controls);
+  }
+
+  get $track() {
+    return this.getElement(ScrollContainer.elements.track);
+  }
+
+  get $thumb() {
+    return this.getElement(ScrollContainer.elements.thumb);
+  }
+
+  get $backButton() {
+    return this.getElement(ScrollContainer.elements.backButton);
+  }
+
+  get $forwardButton() {
+    return this.getElement(ScrollContainer.elements.forwardButton);
+  }
+
+  get $$snapTargets() {
+    return this.$element.querySelectorAll("[data-snap]");
   }
 
   initialState() {
@@ -411,11 +401,11 @@ export class ScrollContainer extends Stateful {
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
 
-    this.$component.classList.toggle(
+    this.$element.classList.toggle(
       ScrollContainer.classes.scrollStart,
       isStart
     );
-    this.$component.classList.toggle(ScrollContainer.classes.scrollEnd, isEnd);
+    this.$element.classList.toggle(ScrollContainer.classes.scrollEnd, isEnd);
 
     this.$backButton.removeAttribute("disabled");
     this.$forwardButton.removeAttribute("disabled");
@@ -425,13 +415,5 @@ export class ScrollContainer extends Stateful {
     if (isEnd) {
       this.$forwardButton.setAttribute("disabled", true);
     }
-  }
-
-  static mount() {
-    const components = document.querySelectorAll(`.${this.elements.component}`);
-
-    components.forEach((component) => {
-      new this(component);
-    });
   }
 }

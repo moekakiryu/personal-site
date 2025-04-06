@@ -1,4 +1,4 @@
-<div class="header-container js-header">
+<div class="header-container" data-component="Navigation">
   <div class="header">
     <div class="left">
       <a href="/" aria-label="Go Home" {% if meta.current.view == 'root.home' %}aria-current="page"{% endif %}>
@@ -13,9 +13,10 @@
     </div>
     <nav
       id="nav-desktop"
-      class="desktop js-desktop-nav"
+      class="desktop"
       aria-label="Main Menu"
       role="navigation"
+      data-element="Navigation.desktopNav"
     >
       <ul>
         <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
@@ -29,7 +30,8 @@
           <button
             id="nav-toggle-mobile"
             aria-controls="nav-mobile"
-            class="cta tertiary js-nav-toggle"
+            class="cta tertiary"
+            data-element="Navigation.navToggle"
           >
             Menu
           </button>
@@ -39,9 +41,10 @@
   </div>
   <nav
     id="nav-mobile"
-    class="mobile js-mobile-nav"
+    class="mobile"
     aria-label="Main Menu"
     role="navigation"
+    data-element="Navigation.mobileNav"
   >
     <ul>
       <li><a href="{% url "root.home" %}" {% if meta.current.view == 'root.home' %}class="current"{% endif %}>Home</a></li>

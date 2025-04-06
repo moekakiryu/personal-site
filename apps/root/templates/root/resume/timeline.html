@@ -1,12 +1,15 @@
 <div class="container">
-  <div class="timeline js-timeline">
+  <div class="timeline" data-component="ResumeTimeline">
     {% for employer in employers %}
       <div class="employer">
-        <div class="mobile employer-title floating-title js-floating-title">{{ employer.name }}</div>
+        <div
+          class="mobile employer-title floating-title"
+          data-element="ResumeTimeline.floatingTitle"
+        >{{ employer.name }}</div>
         <div>
           {% for contract in employer.contracts %}
             {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
-              <div class="contract js-contract">
+              <div class="contract" data-element="ResumeTimeline.contract">
                 <div class="title desktop">
                   {% if forloop.first %}
                     <h3 class="employer-title">{{ employer.name }}</h3>
@@ -19,8 +22,8 @@
                     {% endif %}
                   </div>
                 </div>
-                <div class="line js-line">
-                  <div class="fill js-fill"></div>
+                <div class="line" data-element="ResumeTimeline.line">
+                  <div class="fill" data-element="ResumeTimeline.fill"></div>
                 </div>
                 <div class="description js-description">
                   <h4 class="contract-name">{{contract.name}}</h4>

@@ -1,16 +1,17 @@
-import { Stateful } from "../utils/stateful";
+import { BaseComponent } from "../utils/BaseComponent";
 import { responsiveValue } from "../utils/breakpoints";
 import { roundWithPrecision } from "../utils/math";
 
-export class ResumeTimeline extends Stateful {
+export class ResumeTimeline extends BaseComponent {
   DOT_OFFSET = 18; // px
 
+  static name="ResumeTimeline"
+
   static elements = {
-    component: "js-timeline",
-    contract: "js-contract",
-    floatingTitle: "js-floating-title",
-    line: "js-line",
-    fill: "js-fill",
+    contract: "contract",
+    floatingTitle: "floatingTitle",
+    line: "line",
+    fill: "fill",
   };
 
   static classes = {
@@ -18,33 +19,8 @@ export class ResumeTimeline extends Stateful {
     floating: "floating",
   };
 
-  get revealHeight() {
-    return responsiveValue(130, { large: 350 }); // px
-  }
-
-  get $$contracts() {
-    return this.$component.querySelectorAll(
-      `.${ResumeTimeline.elements.contract}`
-    );
-  }
-
-  get $$floatingTitles() {
-    return this.$component.querySelectorAll(
-      `.${ResumeTimeline.elements.floatingTitle}`
-    );
-  }
-
-  get $$lines() {
-    return this.$component.querySelectorAll(`.${ResumeTimeline.elements.line}`);
-  }
-
-  $fill(line) {
-    return line.querySelector(`.${ResumeTimeline.elements.fill}`);
-  }
-
-  constructor(component) {
-    super();
-    this.$component = component;
+  constructor(name, element) {
+    super(name, element);
 
     this.bindEvents(window, {
       resize: this.onScroll,
@@ -53,6 +29,26 @@ export class ResumeTimeline extends Stateful {
     this.bindEvents(document, {
       scroll: this.onScroll,
     });
+  }
+
+  get revealHeight() {
+    return responsiveValue(130, { large: 350 }); // px
+  }
+
+  get $$contracts() {
+    return this.getElements(ResumeTimeline.elements.contract)
+  }
+
+  get $$floatingTitles() {
+    return this.getElements(ResumeTimeline.elements.floatingTitle)
+  }
+
+  get $$lines() {
+    return this.getElements(ResumeTimeline.elements.line)
+  }
+
+  $fill(line) {
+    return this.getElement(ResumeTimeline.elements.fill, { parent: line })
   }
 
   getClipHeight(target) {
@@ -113,13 +109,5 @@ export class ResumeTimeline extends Stateful {
     this.setTimelineProgress();
     this.fillTimelineDots();
     this.addFloatingShadow();
-  }
-
-  static mount() {
-    const components = document.querySelectorAll(`.${this.elements.component}`);
-
-    components.forEach((component) => {
-      new this(component);
-    });
   }
 }
