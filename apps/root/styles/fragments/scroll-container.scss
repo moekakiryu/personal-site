@@ -64,9 +64,9 @@
       box-shadow: -12px 0 8px -14px inset;
     }
 
-    .content {
-      transition: margin-left var(--duration-short) ease-out;
-    }
+    // .content {
+    //   transition: margin-left var(--duration-short) ease-out;
+    // }
   }
 
   .controls {
@@ -142,7 +142,7 @@
         border-radius: var(--rounded-full);
         background-color: var(--color-terminal-blue);
 
-        transition: margin-left var(--duration-short) ease-out;
+        // transition: margin-left var(--duration-short) ease-out;
       }
     }
   }
