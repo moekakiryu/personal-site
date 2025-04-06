@@ -110,8 +110,8 @@ export class Navigation extends Stateful {
   static mount() {
     const components = document.querySelectorAll(`.${this.elements.component}`);
 
-    components.forEach((navElement) => {
-      new this(navElement);
+    components.forEach((component) => {
+      new this(component);
     });
   }
 }

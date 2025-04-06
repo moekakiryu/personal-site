@@ -430,8 +430,8 @@ export class ScrollContainer extends Stateful {
   static mount() {
     const components = document.querySelectorAll(`.${this.elements.component}`);
 
-    components.forEach((scrollContainer) => {
-      new this(scrollContainer);
+    components.forEach((component) => {
+      new this(component);
     });
   }
 }

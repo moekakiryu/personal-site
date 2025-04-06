@@ -1,44 +1,58 @@
-import { Stateful } from '../utils/stateful'
-import { responsiveValue } from '../utils/breakpoints'
-import { roundWithPrecision } from '../utils/math'
+import { Stateful } from "../utils/stateful";
+import { responsiveValue } from "../utils/breakpoints";
+import { roundWithPrecision } from "../utils/math";
 
 export class ResumeTimeline extends Stateful {
   DOT_OFFSET = 18; // px
 
-  elements = {
+  static elements = {
+    component: "js-timeline",
     contract: "js-contract",
     floatingTitle: "js-floating-title",
     line: "js-line",
     fill: "js-fill",
   };
 
-  classes = {
+  static classes = {
     passed: "passed",
     floating: "floating",
-  };
-
-  static = {
-    activeAnimations: [],
   };
 
   get revealHeight() {
     return responsiveValue(130, { large: 350 }); // px
   }
 
-  get $contract() {
-    return document.querySelectorAll(`.${this.elements.contract}`);
+  get $$contracts() {
+    return this.$component.querySelectorAll(
+      `.${ResumeTimeline.elements.contract}`
+    );
   }
 
-  get $floatingTitle() {
-    return document.querySelectorAll(`.${this.elements.floatingTitle}`);
+  get $$floatingTitles() {
+    return this.$component.querySelectorAll(
+      `.${ResumeTimeline.elements.floatingTitle}`
+    );
   }
 
-  get $line() {
-    return document.querySelectorAll(`.${this.elements.line}`);
+  get $$lines() {
+    return this.$component.querySelectorAll(`.${ResumeTimeline.elements.line}`);
   }
 
   $fill(line) {
-    return line.querySelector(`.${this.elements.fill}`);
+    return line.querySelector(`.${ResumeTimeline.elements.fill}`);
+  }
+
+  constructor(component) {
+    super();
+    this.$component = component;
+
+    this.bindEvents(window, {
+      resize: this.onScroll,
+    });
+
+    this.bindEvents(document, {
+      scroll: this.onScroll,
+    });
   }
 
   getClipHeight(target) {
@@ -51,37 +65,31 @@ export class ResumeTimeline extends Stateful {
   }
 
   setTimelineProgress() {
-    this.$line.forEach((line) => {
+    this.$$lines.forEach((line) => {
       const fill = this.$fill(line);
       const clipHeight = this.getClipHeight(line);
-      const animationIndex = this.static.activeAnimations.indexOf(line);
 
-      if (animationIndex < 0) {
-        requestAnimationFrame(() => {
-          fill.style.clipPath = `inset(${clipHeight}% 0 0 0)`;
-          this.static.activeAnimations.splice(animationIndex, 1);
-        });
-
-        this.static.activeAnimations.push(line);
-      }
+      requestAnimationFrame(() => {
+        fill.style.clipPath = `inset(${clipHeight}% 0 0 0)`;
+      });
     });
   }
 
   fillTimelineDots() {
-    this.$contract.forEach((contract) => {
+    this.$$contracts.forEach((contract) => {
       if (
         contract.getBoundingClientRect().y <=
         this.revealHeight - this.DOT_OFFSET
       ) {
-        contract.classList.add(this.classes.passed);
+        contract.classList.add(ResumeTimeline.classes.passed);
       } else {
-        contract.classList.remove(this.classes.passed);
+        contract.classList.remove(ResumeTimeline.classes.passed);
       }
     });
   }
 
   addFloatingShadow() {
-    this.$floatingTitle.forEach((floatingTitle) => {
+    this.$$floatingTitles.forEach((floatingTitle) => {
       const titleParent = floatingTitle.parentElement;
 
       const parentBottom = titleParent.offsetTop + titleParent.offsetHeight;
@@ -94,9 +102,9 @@ export class ResumeTimeline extends Stateful {
       const isBottom = parentBottom - floatingBottom < 5;
 
       if (!isTop && !isBottom) {
-        floatingTitle.classList.add(this.classes.floating);
+        floatingTitle.classList.add(ResumeTimeline.classes.floating);
       } else {
-        floatingTitle.classList.remove(this.classes.floating);
+        floatingTitle.classList.remove(ResumeTimeline.classes.floating);
       }
     });
   }
@@ -107,8 +115,11 @@ export class ResumeTimeline extends Stateful {
     this.addFloatingShadow();
   }
 
-  mount() {
-    window.addEventListener("resize", this.onScroll.bind(this));
-    document.addEventListener("scroll", this.onScroll.bind(this));
+  static mount() {
+    const components = document.querySelectorAll(`.${this.elements.component}`);
+
+    components.forEach((component) => {
+      new this(component);
+    });
   }
 }
