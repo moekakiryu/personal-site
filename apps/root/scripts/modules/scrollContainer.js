@@ -3,6 +3,7 @@ import { Stateful } from "../utils/stateful";
 
 export class ScrollContainer extends Stateful {
   EPSILON = 5;
+  SNAP_PADDING = 50;
 
   static elements = {
     component: "js-scroll-container",
@@ -57,6 +58,10 @@ export class ScrollContainer extends Stateful {
     return this.$component.querySelector(
       `.${ScrollContainer.elements.forwardButton}`
     );
+  }
+
+  get $$snapTargets() {
+    return this.$component.querySelectorAll("[data-snap]");
   }
 
   constructor(component) {
@@ -126,6 +131,23 @@ export class ScrollContainer extends Stateful {
   // Actions
 
   scrollNext() {
+    const nextSnapTarget = Array.from(this.$$snapTargets).find((target) => {
+      return (
+        target.offsetLeft + target.offsetWidth > this.$viewport.clientWidth
+      );
+    });
+
+    if (nextSnapTarget) {
+      const targetRight = nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
+      const viewportRight = this.$viewport.clientWidth;
+
+      this.scrollBy(
+        (targetRight - viewportRight + this.SNAP_PADDING) /
+          this.availableContentWidth
+      );
+      return;
+    }
+
     this.state.scrollOffset = clamp(this.state.scrollOffset + 0.1, {
       min: 0,
       max: 1,
@@ -133,6 +155,20 @@ export class ScrollContainer extends Stateful {
   }
 
   scrollPrevious() {
+    const previousSnapTarget = Array.from(this.$$snapTargets)
+      .reverse()
+      .find((target) => {
+        return target.offsetLeft < 0;
+      });
+
+    if (previousSnapTarget) {
+      this.scrollBy(
+        (previousSnapTarget.offsetLeft - this.SNAP_PADDING) /
+          this.availableContentWidth
+      );
+      return;
+    }
+
     this.state.scrollOffset = clamp(this.state.scrollOffset - 0.1, {
       min: 0,
       max: 1,
@@ -188,19 +224,18 @@ export class ScrollContainer extends Stateful {
   onContentFocusChange({ currentTarget, target }) {
     if (target === currentTarget) return;
 
-    const contentPadding = 20;
     const targetRight = target.offsetLeft + target.offsetWidth;
     const viewportRight = this.$viewport.clientWidth;
 
     if (target.offsetLeft < 0) {
       this.scrollBy(
-        (target.offsetLeft - contentPadding) / this.availableContentWidth
+        (target.offsetLeft - this.SNAP_PADDING) / this.availableContentWidth
       );
       return;
     }
     if (targetRight > viewportRight) {
       this.scrollBy(
-        (targetRight - viewportRight + contentPadding) /
+        (targetRight - viewportRight + this.SNAP_PADDING) /
           this.availableContentWidth
       );
       return;
