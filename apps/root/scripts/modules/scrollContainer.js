@@ -7,16 +7,6 @@ export class ScrollContainer extends BaseComponent {
 
   static name = "ScrollContainer";
 
-  static elements = {
-    viewport: "viewport",
-    content: "content",
-    controls: "controls",
-    track: "track",
-    thumb: "thumb",
-    backButton: "backButton",
-    forwardButton: "forwardButton",
-  };
-
   static classes = {
     active: "active",
     scrollStart: "scroll-start",
@@ -67,31 +57,31 @@ export class ScrollContainer extends BaseComponent {
   }
 
   get $viewport() {
-    return this.getElement(ScrollContainer.elements.viewport);
+    return this.getElement("viewport");
   }
 
   get $content() {
-    return this.getElement(ScrollContainer.elements.content);
+    return this.getElement("content");
   }
 
   get $controls() {
-    return this.getElement(ScrollContainer.elements.controls);
+    return this.getElement("controls");
   }
 
   get $track() {
-    return this.getElement(ScrollContainer.elements.track);
+    return this.getElement("track");
   }
 
   get $thumb() {
-    return this.getElement(ScrollContainer.elements.thumb);
+    return this.getElement("thumb");
   }
 
   get $backButton() {
-    return this.getElement(ScrollContainer.elements.backButton);
+    return this.getElement("backButton");
   }
 
   get $forwardButton() {
-    return this.getElement(ScrollContainer.elements.forwardButton);
+    return this.getElement("forwardButton");
   }
 
   get $$snapTargets() {

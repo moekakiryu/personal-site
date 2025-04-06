@@ -4,13 +4,7 @@ import { BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
 export class Navigation extends BaseComponent {
   ANIMATION_DURATION = 250; // ms
 
-  static name = 'Navigation'
-
-  static elements = {
-    desktopNav: "desktopNav",
-    mobileNav: "mobileNav",
-    toggle: "navToggle",
-  };
+  static name = "Navigation";
 
   static classes = {
     hidden: "hidden",
@@ -33,15 +27,15 @@ export class Navigation extends BaseComponent {
   /* --- Elements --- */
 
   get $desktopNav() {
-    return this.getElement(Navigation.elements.desktopNav)
+    return this.getElement("desktopNav");
   }
 
   get $mobileNav() {
-    return this.getElement(Navigation.elements.mobileNav);
+    return this.getElement("mobileNav");
   }
 
   get $toggle() {
-    return this.getElement(Navigation.elements.toggle);
+    return this.getElement("toggle");
   }
 
   /* --- State --- */
@@ -69,7 +63,7 @@ export class Navigation extends BaseComponent {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
     if (breakpoint >= BREAKPOINTS.large) {
-      console.log('Close')
+      console.log("Close");
       this.state.isOpen = false;
     }
   }

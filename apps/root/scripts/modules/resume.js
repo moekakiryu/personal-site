@@ -5,14 +5,7 @@ import { roundWithPrecision } from "../utils/math";
 export class ResumeTimeline extends BaseComponent {
   DOT_OFFSET = 18; // px
 
-  static name="ResumeTimeline"
-
-  static elements = {
-    contract: "contract",
-    floatingTitle: "floatingTitle",
-    line: "line",
-    fill: "fill",
-  };
+  static name = "ResumeTimeline";
 
   static classes = {
     passed: "passed",
@@ -36,19 +29,19 @@ export class ResumeTimeline extends BaseComponent {
   }
 
   get $$contracts() {
-    return this.getElements(ResumeTimeline.elements.contract)
+    return this.getElements("contract");
   }
 
   get $$floatingTitles() {
-    return this.getElements(ResumeTimeline.elements.floatingTitle)
+    return this.getElements("floatingTitle");
   }
 
   get $$lines() {
-    return this.getElements(ResumeTimeline.elements.line)
+    return this.getElements("line");
   }
 
   $fill(line) {
-    return this.getElement(ResumeTimeline.elements.fill, { parent: line })
+    return this.getElement("fill", { parent: line });
   }
 
   getClipHeight(target) {
