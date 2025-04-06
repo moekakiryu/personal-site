@@ -348,6 +348,12 @@ export class ScrollContainer extends Stateful {
   }
 
   onWindowTouchEnd() {
+    if (this.values.direction < 0) {
+      this.scrollPrevious();
+    }
+    if (this.values.direction > 0) {
+      this.scrollNext();
+    }
     this.endScroll();
   }
 
