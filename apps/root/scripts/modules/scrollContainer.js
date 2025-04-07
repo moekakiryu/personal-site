@@ -10,7 +10,7 @@ export class ScrollContainer extends BaseComponent {
   EPSILON = 5; // Decimal places
   SNAP_PADDING = 0.05; // Percent (of viewport width)
   SCROLL_SPEED = 1.5;
-  MAXIMUM_VERTICAL_SCROLL = 35; // degrees
+  MAXIMUM_VERTICAL_SCROLL = 55; // degrees
 
   static name = "ScrollContainer";
 
