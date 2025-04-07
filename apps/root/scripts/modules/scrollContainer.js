@@ -345,15 +345,16 @@ export class ScrollContainer extends BaseComponent {
 
     switch (this.state.dragType) {
       case "content":
+        this.values.direction = -1 * Math.sign(delta)
         this.scrollBy((-1 * delta) / this.availableContentWidth);
         break;
       case "scrollbar":
+        this.values.direction = Math.sign(delta)
         this.scrollBy(delta / this.availableTrackWidth);
         break;
     }
 
     this.values.pageX = event.pageX;
-    this.values.direction = (-1 * delta) / Math.abs(delta);
   }
 
   onWindowClick(event) {
@@ -363,6 +364,12 @@ export class ScrollContainer extends BaseComponent {
     // Has a scroll been initiated AND has the mouse moved since then
     if (this.state.dragType !== null && this.values.pageX !== null)
       event.preventDefault();
+
+    if (this.values.direction < 1) {
+      this.scrollPrevious()
+    } else {
+      this.scrollNext();
+    }
 
     this.endScroll();
   }
@@ -378,10 +385,16 @@ export class ScrollContainer extends BaseComponent {
     this.scrollBy(delta / this.availableContentWidth);
 
     this.values.pageX = activeTouch.pageX;
-    this.values.direction = delta / Math.abs(delta);
+    this.values.direction = Math.sign(delta);
   }
 
   onWindowTouchEnd() {
+    if (this.values.direction < 1) {
+      this.scrollPrevious()
+    } else {
+      this.scrollNext();
+    }
+
     this.endScroll();
   }
 
