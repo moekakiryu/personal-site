@@ -129,10 +129,15 @@
 
       overflow: hidden;
       z-index: 1;
-      cursor: pointer;
+
+      @media (--desktop) {
+        cursor: pointer;
+      }
 
       &:hover, &.active {
-        height: 8px;
+        @media (--desktop) {
+          height: 8px;
+        }
       }
 
       .thumb {

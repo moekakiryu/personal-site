@@ -1,10 +1,16 @@
 import { clamp, roundWithPrecision as roundDecimal } from "../utils/math";
+import { getBreakpoint, BREAKPOINTS } from "../utils/breakpoints";
 import { BaseComponent } from "../utils/BaseComponent";
 
+const absoluteAngle = (x, y) => {
+  return (180 * Math.atan(Math.abs(x) / Math.abs(y))) / Math.PI;
+};
+
 export class ScrollContainer extends BaseComponent {
-  EPSILON = 5;
-  SNAP_PADDING = 0.05;
+  EPSILON = 5; // Decimal places
+  SNAP_PADDING = 0.05; // Percent (of viewport width)
   SCROLL_SPEED = 1.5;
+  MAXIMUM_VERTICAL_SCROLL = 35; // degrees
 
   static name = "ScrollContainer";
 
@@ -32,7 +38,7 @@ export class ScrollContainer extends BaseComponent {
     });
 
     this.bindEvents(this.$viewport, {
-      wheel: this.onMouseWheel,
+      wheel: this.onContentMouseWheel,
       mousedown: this.onContentMouseDown,
       touchstart: this.onContentTouchStart,
       keydown: this.onContentKeyDown,
@@ -40,7 +46,6 @@ export class ScrollContainer extends BaseComponent {
     });
 
     this.bindEvents(this.$track, {
-      wheel: this.onMouseWheel,
       mousedown: this.onTrackMouseDown,
     });
 
@@ -141,7 +146,9 @@ export class ScrollContainer extends BaseComponent {
 
   values = {
     pageX: null,
-    direction: 0,
+    dragDirection: 0,
+    isTouchEnabled: true,
+    lastTouch: null,
   };
 
   get availableContentWidth() {
@@ -158,7 +165,7 @@ export class ScrollContainer extends BaseComponent {
 
     const progress = delta / (initial ?? delta);
     const direction = Math.sign(delta);
-    
+
     // CREDIT: https://easings.net
     const easedSpeed =
       direction *
@@ -170,9 +177,7 @@ export class ScrollContainer extends BaseComponent {
     }
 
     this.scrollBy(easedSpeed / this.availableContentWidth);
-    requestAnimationFrame(() =>
-      this.animateScroll(delta - easedSpeed, delta)
-    );
+    requestAnimationFrame(() => this.animateScroll(delta - easedSpeed, delta));
   }
 
   scrollNext() {
@@ -181,11 +186,12 @@ export class ScrollContainer extends BaseComponent {
         target.offsetLeft + target.offsetWidth > this.$viewport.clientWidth
       );
     });
-    
+
     if (nextSnapTarget) {
       const targetRight =
-      nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
+        nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
       const viewportRight = this.$viewport.clientWidth;
+
       const delta = targetRight - viewportRight;
       const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
@@ -236,13 +242,15 @@ export class ScrollContainer extends BaseComponent {
 
   endScroll() {
     this.state.dragType = null;
+    this.values.dragDirection = 0;
+    this.values.isTouchEnabled = true;
     this.values.pageX = null;
-    this.values.direction = 0;
+    this.values.lastTouch = null;
   }
 
   // --- Mouse Wheel Events --- //
 
-  onMouseWheel({ shiftKey, deltaY }) {
+  onContentMouseWheel({ shiftKey, deltaY }) {
     // Only accept wheel events if the user is trying to scroll horizontally
     if (!shiftKey) return;
 
@@ -256,7 +264,13 @@ export class ScrollContainer extends BaseComponent {
     this.state.dragType = "content";
   }
 
-  onContentTouchStart() {
+  onContentTouchStart(event) {
+    const activeTouch = event.touches[0];
+
+    this.values.lastTouch = {
+      pageX: activeTouch.pageX,
+      pageY: activeTouch.pageY,
+    };
     this.state.dragType = "touch";
   }
 
@@ -296,6 +310,8 @@ export class ScrollContainer extends BaseComponent {
   // --- Scroll Track Events --- //
 
   onTrackMouseDown({ pageX }) {
+    if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
+
     const relativeOffset = pageX - this.$track.offsetLeft;
     const thumbCenter = this.$thumb.clientWidth / 2;
 
@@ -307,6 +323,8 @@ export class ScrollContainer extends BaseComponent {
   }
 
   onThumbMouseDown(event) {
+    if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
+
     event.stopPropagation();
     this.state.dragType = "scrollbar";
   }
@@ -345,11 +363,11 @@ export class ScrollContainer extends BaseComponent {
 
     switch (this.state.dragType) {
       case "content":
-        this.values.direction = -1 * Math.sign(delta)
+        this.values.dragDirection = -1 * Math.sign(delta);
         this.scrollBy((-1 * delta) / this.availableContentWidth);
         break;
       case "scrollbar":
-        this.values.direction = Math.sign(delta)
+        this.values.dragDirection = Math.sign(delta);
         this.scrollBy(delta / this.availableTrackWidth);
         break;
     }
@@ -365,8 +383,8 @@ export class ScrollContainer extends BaseComponent {
     if (this.state.dragType !== null && this.values.pageX !== null)
       event.preventDefault();
 
-    if (this.values.direction < 1) {
-      this.scrollPrevious()
+    if (this.values.dragDirection < 1) {
+      this.scrollPrevious();
     } else {
       this.scrollNext();
     }
@@ -374,10 +392,32 @@ export class ScrollContainer extends BaseComponent {
     this.endScroll();
   }
 
-  onWindowTouchMove({ touches }) {
+  onWindowTouchMove(event) {
     if (this.state.dragType === null) return;
+    if (!this.values.isTouchEnabled) return;
 
+    const { touches } = event;
     const activeTouch = touches[0];
+
+    // Check if user is trying to scroll vertically past container, or horizontally within it
+    if (this.values.lastTouch) {
+      const { pageX: currentPageX, pageY: currentPageY } = activeTouch;
+
+      const touchAngle = absoluteAngle(
+        currentPageX - this.values.lastTouch.pageX,
+        currentPageY - this.values.lastTouch.pageY
+      );
+
+      // We only need to check touch direction on the first event
+      this.values.lastTouch = null;
+
+      if (touchAngle < this.MAXIMUM_VERTICAL_SCROLL) {
+        this.values.isTouchEnabled = false;
+        this.values.lastTouch = null;
+        this.endScroll();
+        return;
+      }
+    }
 
     const lastPageX = this.values.pageX ?? activeTouch.pageX;
     const delta = lastPageX - activeTouch.pageX;
@@ -385,14 +425,14 @@ export class ScrollContainer extends BaseComponent {
     this.scrollBy(delta / this.availableContentWidth);
 
     this.values.pageX = activeTouch.pageX;
-    this.values.direction = Math.sign(delta);
+    this.values.dragDirection = Math.sign(delta);
   }
 
   onWindowTouchEnd() {
     if (this.state.dragType === null) return;
 
-    if (this.values.direction < 1) {
-      this.scrollPrevious()
+    if (this.values.dragDirection < 1) {
+      this.scrollPrevious();
     } else {
       this.scrollNext();
     }
