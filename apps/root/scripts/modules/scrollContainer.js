@@ -181,10 +181,10 @@ export class ScrollContainer extends BaseComponent {
         target.offsetLeft + target.offsetWidth > this.$viewport.clientWidth
       );
     });
-
+    
     if (nextSnapTarget) {
       const targetRight =
-        nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
+      nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
       const viewportRight = this.$viewport.clientWidth;
       const delta = targetRight - viewportRight;
       const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
@@ -389,6 +389,8 @@ export class ScrollContainer extends BaseComponent {
   }
 
   onWindowTouchEnd() {
+    if (this.state.dragType === null) return;
+
     if (this.values.direction < 1) {
       this.scrollPrevious()
     } else {
