@@ -4,6 +4,7 @@ import { BaseComponent } from "../utils/BaseComponent";
 export class ScrollContainer extends BaseComponent {
   EPSILON = 5;
   SNAP_PADDING = 0.05;
+  SCROLL_SPEED = 1.5;
 
   static name = "ScrollContainer";
 
@@ -152,6 +153,27 @@ export class ScrollContainer extends BaseComponent {
   }
 
   // Actions
+  animateScroll(delta, initial) {
+    if (Math.abs(delta) < 1) return;
+
+    const progress = delta / (initial ?? delta);
+    const direction = Math.sign(delta);
+    
+    // CREDIT: https://easings.net
+    const easedSpeed =
+      direction *
+      (Math.pow(1 - progress, 3) + Math.pow(progress + this.SCROLL_SPEED, 3));
+
+    if (Math.abs(easedSpeed) >= Math.abs(delta)) {
+      this.scrollBy(delta / this.availableContentWidth);
+      return;
+    }
+
+    this.scrollBy(easedSpeed / this.availableContentWidth);
+    requestAnimationFrame(() =>
+      this.animateScroll(delta - easedSpeed, delta)
+    );
+  }
 
   scrollNext() {
     const nextSnapTarget = Array.from(this.$$snapTargets).find((target) => {
@@ -164,11 +186,10 @@ export class ScrollContainer extends BaseComponent {
       const targetRight =
         nextSnapTarget.offsetLeft + nextSnapTarget.offsetWidth;
       const viewportRight = this.$viewport.clientWidth;
-
       const delta = targetRight - viewportRight;
       const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
-      this.scrollBy((delta + padding) / this.availableContentWidth);
+      requestAnimationFrame(() => this.animateScroll(delta + padding));
       return;
     }
 
@@ -189,7 +210,7 @@ export class ScrollContainer extends BaseComponent {
       const delta = previousSnapTarget.offsetLeft;
       const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
-      this.scrollBy((delta - padding) / this.availableContentWidth);
+      requestAnimationFrame(() => this.animateScroll(delta - padding));
       return;
     }
 
@@ -396,6 +417,7 @@ export class ScrollContainer extends BaseComponent {
       case "touch":
         document.body.style.overscrollBehaviorX = "none";
         document.documentElement.style.overscrollBehaviorX = "none";
+        // TODO: Only disable vertical scrolling if user is moving in a horizontal direction
         document.documentElement.style.overflowY = "hidden";
         break;
 
