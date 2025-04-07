@@ -63,10 +63,6 @@
     &::after {
       box-shadow: -12px 0 8px -14px inset;
     }
-
-    // .content {
-    //   transition: margin-left var(--duration-short) ease-out;
-    // }
   }
 
   .controls {
@@ -146,18 +142,7 @@
         height: 100%;
         border-radius: var(--rounded-full);
         background-color: var(--color-terminal-blue);
-
-        // transition: margin-left var(--duration-short) ease-out;
       }
     }
   }
-}
-
-// TODO: Remove - This is for debugging only
-.extra-wide-element {
-  width: 2000px;
-  height: 200px;
-  border-left: 2px solid red;
-  border-right: 2px solid red;
-  background: linear-gradient(to right, #000, #fff);
 }

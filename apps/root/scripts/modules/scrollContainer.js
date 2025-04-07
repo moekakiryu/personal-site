@@ -466,13 +466,11 @@ export class ScrollContainer extends BaseComponent {
     };
   }
 
-  // TODO: Add snap to child
   render() {
     switch (this.state.dragType) {
       case "touch":
         document.body.style.overscrollBehaviorX = "none";
         document.documentElement.style.overscrollBehaviorX = "none";
-        // TODO: Only disable vertical scrolling if user is moving in a horizontal direction
         document.documentElement.style.overflowY = "hidden";
         break;
 
