@@ -9,7 +9,11 @@
     {% endif %}
   </div>
 
-  {% include "root/articles/list.html" with articles=articles.list %}
+  <div>
+    {% for article in articles.list %}
+      {% include "root/article/crosslink.html" %}
+    {% endfor %}
+  </div>
 
   {% if projects.has_more %}
     <div class="until-tablet">

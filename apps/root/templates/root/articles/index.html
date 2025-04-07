@@ -14,7 +14,10 @@
       happen to find interesting at the time.
     </p>
   </div>
+
   <div class="container">
-    {% include "root/articles/list.html" %}
+    {% for article in articles %}
+      {% include "root/article/crosslink.html" %}
+    {% endfor %}
   </div>
 {% endblock content %}
