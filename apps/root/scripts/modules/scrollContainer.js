@@ -141,13 +141,13 @@ export class ScrollContainer extends BaseComponent {
       scrollOffset: 0,
       thumbWidth: 0,
       dragType: null, // 'content' | 'scrollbar' | 'touch'
+      isTouchEnabled: true,
     };
   }
 
   values = {
     pageX: null,
     dragDirection: 0,
-    isTouchEnabled: true,
     lastTouch: null,
   };
 
@@ -242,8 +242,9 @@ export class ScrollContainer extends BaseComponent {
 
   endScroll() {
     this.state.dragType = null;
+    this.state.isTouchEnabled = true;
+
     this.values.dragDirection = 0;
-    this.values.isTouchEnabled = true;
     this.values.pageX = null;
     this.values.lastTouch = null;
   }
@@ -271,7 +272,6 @@ export class ScrollContainer extends BaseComponent {
       pageX: activeTouch.pageX,
       pageY: activeTouch.pageY,
     };
-    this.state.dragType = "touch";
   }
 
   onContentKeyDown({ key }) {
@@ -383,24 +383,25 @@ export class ScrollContainer extends BaseComponent {
     if (this.state.dragType !== null && this.values.pageX !== null)
       event.preventDefault();
 
-    if (this.values.dragDirection < 1) {
-      this.scrollPrevious();
-    } else {
-      this.scrollNext();
+    if (this.state.dragType === 'content') {
+      if (this.values.dragDirection < 1) {
+        this.scrollPrevious();
+      } else {
+        this.scrollNext();
+      }
     }
 
     this.endScroll();
   }
 
   onWindowTouchMove(event) {
-    if (this.state.dragType === null) return;
-    if (!this.values.isTouchEnabled) return;
+    if (!this.state.isTouchEnabled) return;
 
     const { touches } = event;
     const activeTouch = touches[0];
 
     // Check if user is trying to scroll vertically past container, or horizontally within it
-    if (this.values.lastTouch) {
+    if (this.state.dragType === null && this.values.lastTouch) {  
       const { pageX: currentPageX, pageY: currentPageY } = activeTouch;
 
       const touchAngle = absoluteAngle(
@@ -412,12 +413,13 @@ export class ScrollContainer extends BaseComponent {
       this.values.lastTouch = null;
 
       if (touchAngle < this.MAXIMUM_VERTICAL_SCROLL) {
-        this.values.isTouchEnabled = false;
-        this.values.lastTouch = null;
         this.endScroll();
+        this.state.isTouchEnabled = false;
+        this.values.lastTouch = null;
         return;
       }
-    }
+      this.state.dragType = 'touch';
+    };
 
     const lastPageX = this.values.pageX ?? activeTouch.pageX;
     const delta = lastPageX - activeTouch.pageX;
@@ -429,12 +431,14 @@ export class ScrollContainer extends BaseComponent {
   }
 
   onWindowTouchEnd() {
-    if (this.state.dragType === null) return;
+    if (this.state.dragType === null && this.state.isTouchEnabled === true) return;
 
-    if (this.values.dragDirection < 1) {
-      this.scrollPrevious();
-    } else {
-      this.scrollNext();
+    if (this.state.dragType === 'touch') {
+      if (this.values.dragDirection < 1) {
+        this.scrollPrevious();
+      } else {
+        this.scrollNext();
+      }
     }
 
     this.endScroll();
