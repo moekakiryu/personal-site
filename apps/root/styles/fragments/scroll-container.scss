@@ -129,6 +129,9 @@
       }
 
       &:hover, &.active {
+        .thumb {
+          background-color: var(--color-accent);
+        }
         @media (--desktop) {
           height: calc(var(--line-width) * 2);
         }
