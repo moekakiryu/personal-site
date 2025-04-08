@@ -8,8 +8,6 @@
   flex: 1 1 0;
 
 
-  border: 1px solid var(--color-greyscale-extra-light);
-  border-radius: var(--rounded-sm);
   padding: var(--spacing-sm);
 
   font-weight: normal;
@@ -38,7 +36,6 @@
     
     width: 80px;
     
-    border-radius: var(--rounded-sm);
     overflow: hidden;
     transition: transform var(--duration-short);
 

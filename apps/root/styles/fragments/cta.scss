@@ -45,34 +45,34 @@
   }
 
   &.primary {
-    background-color: var(--color-terminal-blue);
+    background-color: var(--color-primary);
     color: var(--color-white);
 
     &:hover,
     &:focus {
-      background-color: var(--color-goldenrod);
+      background-color: var(--color-accent);
       color: var(--color-white);
     }
   }
 
   &.secondary {
-    border: 2px solid var(--color-terminal-blue);
+    border: var(--line-width) solid var(--color-primary);
     background-color: var(--color-white);
-    color: var(--color-terminal-blue);
+    color: var(--color-primary);
 
     &:hover,
     &:focus {
-      border-color: var(--color-goldenrod);
-      color: var(--color-goldenrod);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
     }
   }
 
   &.tertiary {
-    color: var(--color-terminal-blue);
+    color: var(--color-primary);
 
     &:hover,
     &:focus {
-      color: var(--color-goldenrod);
+      color: var(--color-accent);
     }
   }
 }

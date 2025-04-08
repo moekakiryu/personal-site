@@ -8,7 +8,6 @@
   width: 100%;
   left: 0;
 
-  border-bottom: 1px solid var(--color-black);
   padding: var(--spacing-xs) var(--spacing-sm);
 
   background-color: var(--color-white);
@@ -22,8 +21,6 @@
     gap: 0;
 
     top: var(--top-offset);
-    // max-width: 300px;
-    border: none;
 
     background-color: transparent;
   }
@@ -38,13 +35,12 @@
   }
 
   .icon-logo-reversed {
-    // width: 90px;
-    fill: var(--color-terminal-blue)
+    fill: var(--color-primary)
   }
 
   .icon-logo {
     max-width: 220px;
-    fill: var(--color-terminal-blue);
+    fill: var(--color-primary);
 
     @media (--large) {
       max-width: none;
@@ -53,11 +49,7 @@
 
   .cta.secondary {
     background-color: transparent;
-    border-width: 3px;
-  }
-
-  a {
-    display: block;
+    border-width: var(--line-width);
   }
 }
 
@@ -67,7 +59,7 @@ nav {
 
   inset: 4rem 0 0 0;
 
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgb(from var(--color-white) r g b / 0.8);
   backdrop-filter: blur(5px);
 
   overflow-x: hidden;
@@ -110,7 +102,6 @@ nav {
 
     padding: var(--spacing-xs) var(--spacing-sm);
 
-    color: var(--font-color-secondary);
     font-family: var(--font-heading);
     font-size: 2rem;
 
@@ -119,16 +110,22 @@ nav {
       text-align: right;
     }
 
+    &:focus, &:hover {
+      &::before {
+        background-color: var(--font-color-primary);
+      }
+    }
+
     &::before {
       @media (--large) {
         content: "";
         position: absolute;
   
-        width: 3px;
+        width: var(--line-width);
         top: 0;
         bottom: 0;
         right: 0;
-   
+
         background: currentColor;
       }
     }

@@ -317,7 +317,6 @@ __metadata:
     postcss-header: "npm:^3.0.3"
     postcss-import: "npm:^16.1.0"
     postcss-nested: "npm:^7.0.2"
-    postcss-prune-var: "npm:^1.1.2"
     postcss-scss: "npm:^4.0.9"
   languageName: unknown
   linkType: soft
@@ -2060,7 +2059,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^9.0.3, minimatch@npm:^9.0.4":
+"minimatch@npm:^9.0.4":
   version: 9.0.5
   resolution: "minimatch@npm:9.0.5"
   dependencies:
@@ -2783,15 +2782,6 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.31
   checksum: 10c0/9fc62e9039c7d4fa417d165678b065fc577a7232aa41a94a4e9208ad7db2268e1ce003aaad7c6a569afdf890a43416b0bf21047461505b4e3a16eec311a6eb63
-  languageName: node
-  linkType: hard
-
-"postcss-prune-var@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "postcss-prune-var@npm:1.1.2"
-  dependencies:
-    minimatch: "npm:^9.0.3"
-  checksum: 10c0/c792b53a4f3720826b8060a3e8409b330bffe697c3790bed87e3f8c771de7c14e2e94245dd4aac4bd2a14ba5ffd9eac13e5d44094908351085da959f5fb6a105
   languageName: node
   linkType: hard
 

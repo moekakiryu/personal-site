@@ -1,7 +1,7 @@
 .article {
   display: block;
 
-  border-top: 1px dashed var(--color-terminal-blue);
+  border-top: 1px dashed var(--color-primary);
   padding: var(--spacing-md) 0;
 
   font-weight: normal;
@@ -12,7 +12,7 @@
   }
 
   &:last-child {
-    border-bottom: 1px dashed var(--color-terminal-blue);
+    border-bottom: 1px dashed var(--color-primary);
   }
 
   &:hover,

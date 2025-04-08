@@ -1,13 +1,14 @@
+/* --- Media Query Definitions --- */
+@custom-media --tablet screen and (min-width: 480px);
+@custom-media --desktop screen and (min-width: 768px);
+@custom-media --large screen and (min-width: 1280px);
+
 :root {
   /* Useful values */
   --spacing-xs: .5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 3rem;
-
-  --shadow-sm: 0 0 8px -4px;
-  --shadow-md: 0 0 16px -4px;
-  --shadow-lg: 0 0 18px 24px;
 
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
@@ -19,40 +20,57 @@
   --duration-standard: .5s;
 
   /* Colors */
-  /* TODO: Refine and/or remove these */
   --color-black: #000;
-  --color-greyscale-medium: #383838;
-  --color-greyscale-light: #858585;
-  --color-greyscale-extra-light: #b9b9b9;
-  --color-greyscale-faded: #e8e8e8;
-  --color-white: #fff;
+  --color-white: #f0f0f0;
 
-  --color-terminal-blue: #00316f;
-  --color-terminal-blue-light: #4d6f9a;
-
-  --color-goldenrod: #c38c09;
+  --color-primary: #4b4b4b;
+  --color-accent: #68ce14;
 
   --font-heading: "Courier Prime", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
 
+  --line-width: 3px;
+
   /* Site configuration */
-  // --max-container-width: 75rem;
   --max-content-width: 50rem;
   --content-padding: var(--spacing-md);
   --top-offset: 5rem;
 
-
   /* Derived */
-  --font-color-primary: var(--color-greyscale-medium);
-  --font-color-secondary: var(--color-terminal-blue);
-  --font-color-link: var(--color-greyscale-medium);
-  --font-color-link-hover: var(--color-goldenrod);
+  --font-color-primary: var(--color-primary);
+  --font-color-link: var(--color-primary);
+  --font-color-link-hover: var(--color-accent);
 
   /* Global Styles */
   font-family: var(--font-body);
   color: var(--font-color-primary);
 
   @media (--large) {
-    --top-offset: 20rem;
+    --top-offset: 10rem;
+  }
+}
+
+@media (--large) {
+  .mobile {
+    display: none !important;
+  }
+}
+
+@media (--desktop) {
+  .until-tablet {
+    display: none !important;
+  }
+}
+
+/* NOTE: Use max-width here to hide on small screens */
+@media screen and (max-width: 1280px) {
+  .desktop {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .tablet {
+    display: none !important;
   }
 }

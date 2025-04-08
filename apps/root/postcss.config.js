@@ -24,7 +24,6 @@ module.exports = {
     require('postcss-import'),
     require('postcss-nested'),
     require('postcss-custom-media'),
-    require('postcss-prune-var'),
     
     ...(isDevelopEnvironment ? [
       // Development Plugins

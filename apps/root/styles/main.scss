@@ -2,7 +2,6 @@
 @import "external/normalize.scss";
 @import "external/google-fonts.scss";
 
-@import "global/breakpoints.scss";
 @import "global/variables.scss";
 @import "global/base.scss";
 @import "global/layout.scss";
@@ -10,6 +9,7 @@
 
 /* Components */
 @import "fragments/cta.scss";
+@import "fragments/hero.scss";
 @import "fragments/card.scss";
 @import "fragments/breadcrumb.scss";
 @import "fragments/project-heading.scss";

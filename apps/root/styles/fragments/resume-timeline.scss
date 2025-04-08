@@ -1,6 +1,9 @@
 .timeline {
+  // TODO: Fix name clash with global variables
   --top-offset: 5rem;
-  --timeline-width: 3px;
+  --timeline-width: var(--line-width);
+  --faded-content-opacity: 0.4;
+  --faded-timeline-opacity: 0.15;
 
   @media (--large) {
     --top-offset: var(--spacing-md);
@@ -28,7 +31,7 @@
   .employer-title {
     font-family: var(--font-heading);
     font-size: 1.3rem;
-    color: var(--color-terminal-blue);
+    color: var(--color-primary);
     word-break: break-word;
     font-weight: bold;
   }
@@ -37,22 +40,20 @@
     display: flex;
 
     &.passed {
-      color: var(--color-greyscale-extra-light);
-
       .title {
-          .employer-title {
-          color: var(--color-greyscale-light);
+        opacity: var(--faded-content-opacity);
+
+        .employer-title {
+          color: var(--color-black);
         }
       }
 
       .description {
-        border-color: var(--color-greyscale-extra-light);
+        opacity: var(--faded-content-opacity);
 
         &::before {
-          background-color: var(--color-greyscale-faded);
-          border-color: var(--color-greyscale-faded);
+          background-color: rgb(from var(--color-primary) r g b / var(--faded-timeline-opacity));
           width: 0;
-          border-width: 0;
         }
       }
     }
@@ -81,14 +82,14 @@
         content: "";
         position: absolute;
         inset: 0;
-        border-left: var(--timeline-width) dashed var(--color-greyscale-faded);
+        border-left: var(--timeline-width) dashed rgb(from var(--color-primary) r g b / var(--faded-timeline-opacity));
       }
       
       
       .fill {
         position: absolute;
         inset: 0;
-        background: var(--color-terminal-blue);
+        background: var(--color-primary);
       }
     }
 
@@ -107,17 +108,16 @@
         content: "";
         position: absolute;
 
-        border: var(--timeline-width) solid var(--color-terminal-blue);
         border-radius: var(--rounded-full);
 
-        left: calc(-1.5*var(--timeline-width) + 3px);
-        height: 6px;
-        width: 6px;
+        left: calc(-0.5 * var(--timeline-width));
+        height: 12px;
+        width: 12px;
 
-        background-color: var(--color-terminal-blue);
+        background-color: var(--color-primary);
 
         transform: translateX(-50%);
-        transition: border-color var(--duration-short), background-color var(--duration-short), width var(--duration-short), border-width var(--duration-short);
+        transition: background-color var(--duration-short), width var(--duration-short);
       }
 
       .contract-name {

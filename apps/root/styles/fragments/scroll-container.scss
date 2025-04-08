@@ -73,11 +73,11 @@
     .back-button, .forward-button {
       position: relative;
       height: 40px; // [1]
-      fill: var(--color-terminal-blue);
-      transition: fill var(--duration-short), opacity var(--duration-short);
+      fill: var(--color-primary);
+      transition: opacity var(--duration-short);
 
       &:hover {
-        fill: var(--color-terminal-blue);
+        fill: var(--color-accent);
       }
 
       &:disabled {
@@ -91,9 +91,9 @@
         left: 0;
         right: 0;
         top: 50%;
-        height: 3px;
+        height: var(--line-width);
 
-        background-color: var(--color-terminal-blue);
+        background-color: var(--color-primary);
         opacity: 0;
         z-index: 1;
 
@@ -118,10 +118,8 @@
 
     .track {
       width: 100%;
-      height: 3px;
+      height: var(--line-width);
       border-radius: var(--rounded-full);
-
-      background-color: var(--color-greyscale-faded);
 
       overflow: hidden;
       z-index: 1;
@@ -132,7 +130,7 @@
 
       &:hover, &.active {
         @media (--desktop) {
-          height: 8px;
+          height: calc(var(--line-width) * 2);
         }
       }
 
@@ -141,7 +139,7 @@
         min-width: 85px;
         height: 100%;
         border-radius: var(--rounded-full);
-        background-color: var(--color-terminal-blue);
+        background-color: var(--color-primary);
       }
     }
   }
