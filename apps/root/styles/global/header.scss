@@ -26,15 +26,6 @@
     background-color: transparent;
   }
 
-  &-container {
-    @at-root {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      height: 100%;
-    }
-  }
-
   .icon-logo-reversed {
     fill: var(--color-primary)
   }
