@@ -24,13 +24,6 @@
     }
   }
 
-  &-container {
-    @at-root {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
   .name {
     display: inline-block;
     margin: 0;

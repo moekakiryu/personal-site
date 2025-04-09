@@ -76,17 +76,3 @@
     }
   }
 }
-
-.header-with-cta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h2, h3, h4, h5, h6 {
-    margin: var(--spacing-xs) 0;
-  }
-
-  .cta {
-    margin: 0;
-  }
-}

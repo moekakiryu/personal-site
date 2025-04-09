@@ -1,7 +1,7 @@
 <div class="project-heading">
   {% if project.hero %}
     {# @TODO: Alt text #}
-    <img src="{{ MEDIA_URL }}{{ project.hero }}" alt="" class="hero">
+    <img src="{{ MEDIA_URL }}{{ project.hero }}" alt="" class="image">
   {% endif %}
 
   <div class="heading{% if not project.hero %} text-only{% endif %}">
