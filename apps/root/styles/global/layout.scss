@@ -19,11 +19,32 @@
     @media (--large) {
       position: sticky;
       flex-basis: var(--sidebar-width);
+      flex-shrink: 0;
 
-      top: var(--top-offset);
+      top: 0;
+      max-height: 100vh;
 
       margin-left: auto;
-      margin-top: var(--top-offset);
+      padding-top: var(--top-offset);
+      border-left: 1px solid var(--color-black);
+      border-right: 1px solid var(--color-black);
+    }
+
+    // 1. Hard code color of grid lines since this is not a theme colour
+    &::before {
+      @media (--large) {   
+        content: "";
+        position: absolute;
+        
+        inset: 0;
+        
+        background: #bababa; // [1]
+        
+        mask-image: url(/static/root/assets/grid.png);
+        mask-mode: luminance;
+        mask-position: center center;
+        mask-size: 88px;
+      }
     }
   }
 
@@ -49,7 +70,6 @@
 
   width: 100%;
   max-width: var(--max-content-width);
-
 
   @media (--large) {
     margin-left: 0;

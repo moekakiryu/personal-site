@@ -129,6 +129,7 @@
 
   .contract:first-child .description {
     border-top-style: none;
+
     @media (--desktop) {
       border-top-style: solid;
     }

@@ -1,7 +1,12 @@
 /* --- Media Query Definitions --- */
 @custom-media --tablet screen and (min-width: 480px);
+@custom-media --until-tablet screen and (max-width: 479px);
+
 @custom-media --desktop screen and (min-width: 768px);
+@custom-media --until-desktop screen and (max-width: 767px);
+
 @custom-media --large screen and (min-width: 1280px);
+@custom-media --until-large screen and (max-width: 1279px);
 
 :root {
   /* Useful values */

@@ -40,17 +40,11 @@
   }
 
   .icon-logo {
-    max-width: 220px;
     fill: var(--color-primary);
-
-    @media (--large) {
-      max-width: none;
+    
+    @media (--until-large) {
+      max-width: 220px;
     }
-  }
-
-  .cta.secondary {
-    background-color: transparent;
-    border-width: var(--line-width);
   }
 }
 
@@ -60,26 +54,42 @@ nav {
 
   inset: 4rem 0 0 0;
 
-  background-color: rgb(from var(--color-white) r g b / 0.8);
+  background-color: rgb(from var(--color-white) r g b / 0.6);
   backdrop-filter: blur(5px);
+  border-top: 1px solid var(--color-black);
 
   overflow-x: hidden;
   z-index: var(--z-nav);
   user-select: none;
-
 
   @media (--large) {
     position: relative;
     display: block;
 
     inset: auto;
-    // max-height: 0;
-
+    border-top: 0;
+    
     background-color: transparent;
     backdrop-filter: none;
     transition: max-height var(--duration-standard);
 
     overflow: hidden;
+  }
+
+  &::before {
+    @media (--until-large) {      
+      content: "";
+      position: absolute;
+
+      inset: 0;
+
+      background: #bababa; // [1]
+          
+      mask-image: url(/static/root/assets/grid.png);
+      mask-mode: luminance;
+      mask-position: center center;
+      mask-size: 88px;
+    }
   }
 
   ul, li {
@@ -102,6 +112,11 @@ nav {
     width: 100%;
 
     padding: var(--spacing-xs) var(--spacing-sm);
+    border-width: 1px 0 1px 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-top-left-radius: var(--rounded-sm);
+    border-bottom-left-radius: var(--rounded-sm);
 
     font-family: var(--font-heading);
     font-size: 2rem;
@@ -111,23 +126,17 @@ nav {
       text-align: right;
     }
 
-    &:focus, &:hover {
-      &::before {
-        background-color: var(--font-color-primary);
-      }
-    }
-
     &::before {
       @media (--large) {
         content: "";
         position: absolute;
   
         width: var(--line-width);
-        top: 0;
-        bottom: 0;
+        top: -1px;
+        bottom: -1px;
         right: 0;
 
-        background: currentColor;
+        background: var(--color-primary);
       }
     }
   }
