@@ -1,26 +1,19 @@
 .header {
-  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: var(--spacing-md);
 
-  width: 100%;
-  left: 0;
-
   padding: var(--spacing-xs) var(--spacing-sm);
 
   background-color: var(--color-white);
-
   z-index: var(--z-header);
 
   @media (--large) {
-    position: sticky;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
 
-    top: var(--top-offset);
     padding-top: 0;
 
     background-color: transparent;
@@ -40,31 +33,26 @@
 }
 
 nav {
-  position: fixed;
   display: flex;
 
-  inset: 4rem 0 0 0;
+  min-height: 100vh;
 
   background-color: rgb(from var(--color-white) r g b / 0.6);
   backdrop-filter: blur(5px);
   border-top: 1px solid var(--color-black);
 
-  overflow-x: hidden;
   z-index: var(--z-nav);
   user-select: none;
 
-  @media (--large) {
-    position: relative;
+  @media (--large) {    
     display: block;
 
     inset: auto;
     border-top: 0;
+    min-height: 0;
     
     background-color: transparent;
     backdrop-filter: none;
-    transition: max-height var(--duration-standard);
-
-    overflow: hidden;
   }
 
   &::before {
@@ -85,14 +73,16 @@ nav {
 
   ul, li {
     display: block;
-    margin: 0;
-    padding: 0;
   }
 
   ul {
-    position: relative;
     padding: var(--spacing-sm) 0;
     margin: auto;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
   }
 
   
@@ -103,11 +93,6 @@ nav {
     width: 100%;
 
     padding: var(--spacing-xs) var(--spacing-sm);
-    border-width: 1px 0 1px 1px;
-    border-style: solid;
-    border-color: transparent;
-    border-top-left-radius: var(--rounded-sm);
-    border-bottom-left-radius: var(--rounded-sm);
 
     font-family: var(--font-heading);
     font-size: 2rem;
@@ -123,9 +108,7 @@ nav {
         position: absolute;
   
         width: var(--line-width);
-        top: -1px;
-        bottom: -1px;
-        right: 0;
+        inset: 0 0 0 auto;
 
         background: var(--color-primary);
       }
