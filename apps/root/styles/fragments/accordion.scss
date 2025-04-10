@@ -33,14 +33,21 @@
     position: relative;
 
     .accordion-item {
-      position: absolute;
       opacity: 1;
       transition: opacity var(--duration-short);
-      width: 100%;
-  
+      
+      &.transitioning {
+        position: absolute;
+        width: 100%;
+
+        &.hidden {
+          pointer-events: none;
+        }
+      }
+
       &.hidden {
         opacity: 0;
-        display: none;
+        // display: none;
       }
     }
   }
