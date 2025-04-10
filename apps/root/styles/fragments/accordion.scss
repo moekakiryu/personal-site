@@ -8,13 +8,21 @@
 
     .accordion-toggle {
       position: relative;
-
       opacity: 0.4;
+      user-select: none;
 
-      &:hover, &:focus, &[aria-expanded="true"] {
+      &:hover,
+      &:focus,
+      &[aria-expanded="true"] {
         opacity: 1;
       }
 
+      h2 {
+        margin: 0;
+        text-align: left;
+      }
+
+      // Chevron styles
       &[aria-expanded="true"] h2::before {
         content: ">";
         position: absolute;
@@ -23,11 +31,6 @@
         padding-right: var(--spacing-xs);
 
         color: var(--color-accent);
-      }
-
-      h2 {
-        margin: 0;
-        text-align: left;
       }
     }
   }
