@@ -26,15 +26,7 @@ export class ScrollContainer extends BaseComponent {
     this.onWindowResize();
 
     this.bindEvents(window, {
-      // Note most of these events have an initial condition to skip if not
-      // active.This may be an easy place to refactor if performance becomes an
-      // issue, but I'll leave it in place for now as it creates a nice pattern
-      // for this component and shouldn't be used very often.
       resize: this.onWindowResize,
-      mousemove: this.onWindowMouseMove,
-      touchmove: this.onWindowTouchMove,
-      touchend: this.onWindowTouchEnd,
-      click: this.onWindowClick,
     });
 
     this.bindEvents(this.$viewport, {
@@ -63,86 +55,47 @@ export class ScrollContainer extends BaseComponent {
     });
   }
 
-  get $viewport() {
-    return this.getElement("viewport");
+  initialState() {
+    return {
+      scrollOffset: 0,
+      thumbWidth: 0,
+      dragType: null, // 'content' | 'scrollbar' | 'touch'
+    };
   }
 
-  renderViewport(state) {
-    // No changes...
+  values = {
+    lastInteraction: null,
+    dragDirection: 0,
+    boundListeners: [],
+  };
+
+  get $viewport() {
+    return this.getElement("viewport");
   }
 
   get $content() {
     return this.getElement("content");
   }
 
-  renderContent() {
-    const contentOffset = this.state.scrollOffset * this.availableContentWidth;
-
-    this.$content.style.marginLeft = `-${contentOffset}px`;
-  }
-
   get $track() {
     return this.getElement("track");
-  }
-
-  renderTrack() {
-    if (this.state.dragType === "scrollbar") {
-      this.$track.classList.add(ScrollContainer.classes.active);
-    } else {
-      this.$track.classList.remove(ScrollContainer.classes.active);
-    }
   }
 
   get $thumb() {
     return this.getElement("thumb");
   }
 
-  renderThumb() {
-    const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
-    const progress = roundDecimal(this.state.scrollOffset * 100);
-
-    this.$thumb.ariaValueNow = progress
-    this.$thumb.style.marginLeft = `${thumbOffset}px`;
-    this.$thumb.style.width = `${this.state.thumbWidth}px`;
-  }
-
   get $backButton() {
     return this.getElement("backButton");
-  }
-
-  renderBackButton() {
-    this.$backButton.toggleAttribute("disabled", this.state.scrollOffset === 0);
   }
 
   get $forwardButton() {
     return this.getElement("forwardButton");
   }
 
-  renderForwardButton() {
-    this.$forwardButton.toggleAttribute(
-      "disabled",
-      this.state.scrollOffset === 1
-    );
-  }
-
   get $$snapTargets() {
     return this.$element.querySelectorAll("[data-snap]");
   }
-
-  initialState() {
-    return {
-      scrollOffset: 0,
-      thumbWidth: 0,
-      dragType: null, // 'content' | 'scrollbar' | 'touch'
-      isTouchEnabled: true,
-    };
-  }
-
-  values = {
-    pageX: null,
-    dragDirection: 0,
-    lastTouch: null,
-  };
 
   get availableContentWidth() {
     return this.$content.scrollWidth - this.$viewport.clientWidth;
@@ -152,7 +105,7 @@ export class ScrollContainer extends BaseComponent {
     return this.$track.clientWidth - this.$thumb.clientWidth;
   }
 
-  // Actions
+  // --- Actions --- //
   animateScroll(delta, initial) {
     if (Math.abs(delta) < 1) return;
 
@@ -233,17 +186,37 @@ export class ScrollContainer extends BaseComponent {
     });
   }
 
-  endScroll() {
-    this.state.dragType = null;
-    this.state.isTouchEnabled = true;
-
-    this.values.dragDirection = 0;
-    this.values.pageX = null;
-    this.values.lastTouch = null;
+  snapToNearest() {
+    if (this.values.dragDirection < 1) {
+      this.scrollPrevious();
+    } else {
+      this.scrollNext();
+    }
   }
 
-  // --- Mouse Wheel Events --- //
+  endScroll() {
+    this.state.dragType = null;
 
+    this.values.lastInteraction = null;
+    this.values.dragDirection = 0;
+
+    // Remove any event listeners that may have been dynamically added
+    this.values.boundListeners.forEach(listener => listener.remove());
+    this.values.boundListeners = []
+  }
+
+  addRemovableListener(target, eventType, listener) {
+    const boundListener = listener.bind(this)
+  
+    target.addEventListener(eventType, boundListener)
+    this.values.boundListeners.push({
+      remove: () => target.removeEventListener(eventType, boundListener)
+    })
+
+    return boundListener
+  }
+
+  // --- Scroll Content Events --- //
   onContentMouseWheel({ shiftKey, deltaY }) {
     // Only accept wheel events if the user is trying to scroll horizontally
     if (!shiftKey) return;
@@ -251,20 +224,29 @@ export class ScrollContainer extends BaseComponent {
     this.scrollBy(deltaY / this.availableContentWidth);
   }
 
-  // --- Scroll Content Events --- //
-
   onContentMouseDown(event) {
     event.preventDefault();
+
     this.state.dragType = "content";
+    this.values.lastInteraction = {
+      pageX: event.pageX,
+      pageY: event.pageY,
+    };
+
+    this.addRemovableListener(window, 'mousemove', this.onWindowMouseMove)
+    this.addRemovableListener(window, 'click', this.onWindowClick)
   }
 
   onContentTouchStart(event) {
     const activeTouch = event.touches[0];
 
-    this.values.lastTouch = {
+    this.values.lastInteraction = {
       pageX: activeTouch.pageX,
       pageY: activeTouch.pageY,
     };
+
+    this.addRemovableListener(window, 'touchmove', this.onWindowTouchMove)
+    this.addRemovableListener(window, 'touchend', this.onWindowTouchEnd)
   }
 
   onContentKeyDown({ key }) {
@@ -287,14 +269,12 @@ export class ScrollContainer extends BaseComponent {
 
     if (target.offsetLeft < 0) {
       const delta = target.offsetLeft;
-
       this.scrollBy((delta - padding) / this.availableContentWidth);
       return;
     }
 
     if (targetRight > viewportRight) {
       const delta = targetRight - viewportRight;
-
       this.scrollBy((delta + padding) / this.availableContentWidth);
       return;
     }
@@ -302,7 +282,7 @@ export class ScrollContainer extends BaseComponent {
 
   // --- Scroll Track Events --- //
 
-  onTrackMouseDown({ pageX }) {
+  onTrackMouseDown({ pageX, pageY }) {
     if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
 
     const relativeOffset = pageX - this.$track.offsetLeft;
@@ -312,14 +292,22 @@ export class ScrollContainer extends BaseComponent {
 
     // Manually set pageX to start dragging from the new thumb position (set above)
     this.state.dragType = "scrollbar";
-    this.values.pageX = pageX;
+    this.values.lastInteraction = { x: pageX, y: pageY };
+
+    this.addRemovableListener(window, 'mousemove', this.onWindowMouseMove)
+    this.addRemovableListener(window, 'click', this.onWindowClick)
   }
 
   onThumbMouseDown(event) {
     if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
 
     event.stopPropagation();
+  
     this.state.dragType = "scrollbar";
+    this.values.lastInteraction = { x: event.pageX, y: event.pageY };
+
+    this.addRemovableListener(window, 'mousemove', this.onWindowMouseMove)
+    this.addRemovableListener(window, 'click', this.onWindowClick)
   }
 
   // --- Button Events --- //
@@ -342,8 +330,6 @@ export class ScrollContainer extends BaseComponent {
   }
 
   onWindowMouseMove(event) {
-    if (this.state.dragType === null) return;
-
     // If buttons is 0, we probably didn't catch a mouseup event somewhere
     // (eg if it happened outside the viewport)
     if (event.buttons === 0) {
@@ -352,7 +338,7 @@ export class ScrollContainer extends BaseComponent {
     }
 
     event.preventDefault();
-    const delta = event.pageX - (this.values.pageX ?? event.pageX);
+    const delta = event.pageX - (this.values.lastInteraction?.x ?? event.pageX);
 
     switch (this.state.dragType) {
       case "content":
@@ -365,105 +351,86 @@ export class ScrollContainer extends BaseComponent {
         break;
     }
 
-    this.values.pageX = event.pageX;
+    this.values.lastInteraction = { x: event.pageX, y: event.pageY };
   }
 
+  // Use onClick instead of onMouseUp to let us catch and stop accidental
+  // link clicks
   onWindowClick(event) {
-    // If the user has not interacted with the component, do nothing
-    if (this.state.dragType === null && this.values.pageX === null) return;
+    event.preventDefault();
 
-    // Has a scroll been initiated AND has the mouse moved since then
-    if (this.state.dragType !== null && this.values.pageX !== null)
-      event.preventDefault();
-
-    if (this.state.dragType === 'content') {
-      if (this.values.dragDirection < 1) {
-        this.scrollPrevious();
-      } else {
-        this.scrollNext();
-      }
+    if (this.state.dragType === "content") {
+      this.snapToNearest();
     }
-
     this.endScroll();
   }
 
   onWindowTouchMove(event) {
-    if (!this.state.isTouchEnabled) return;
-
     const { touches } = event;
     const activeTouch = touches[0];
 
-    // Check if user is trying to scroll vertically past container, or horizontally within it
-    if (this.state.dragType === null && this.values.lastTouch) {  
+    // Check if user is trying to scroll vertically past container, or
+    // horizontally within it
+    if (this.state.dragType === null && this.values.lastInteraction) {
       const { pageX: currentPageX, pageY: currentPageY } = activeTouch;
 
       const touchAngle = absoluteAngle(
-        currentPageX - this.values.lastTouch.pageX,
-        currentPageY - this.values.lastTouch.pageY
+        currentPageX - this.values.lastInteraction.x,
+        currentPageY - this.values.lastInteraction.y
       );
-
-      // We only need to check touch direction on the first event
-      this.values.lastTouch = null;
 
       if (touchAngle < this.MAXIMUM_VERTICAL_SCROLL) {
         this.endScroll();
-        this.state.isTouchEnabled = false;
-        this.values.lastTouch = null;
         return;
       }
-      this.state.dragType = 'touch';
-    };
 
-    const lastPageX = this.values.pageX ?? activeTouch.pageX;
+      this.state.dragType = "touch";
+    }
+
+    const lastPageX = this.values.lastInteraction?.x ?? activeTouch.pageX;
     const delta = lastPageX - activeTouch.pageX;
 
     this.scrollBy(delta / this.availableContentWidth);
 
-    this.values.pageX = activeTouch.pageX;
+    this.values.lastInteraction = {
+      x: activeTouch.pageX,
+      y: activeTouch.pageY,
+    };
     this.values.dragDirection = Math.sign(delta);
   }
 
   onWindowTouchEnd() {
-    if (this.state.dragType === null && this.state.isTouchEnabled === true) return;
-
-    if (this.state.dragType === 'touch') {
-      if (this.values.dragDirection < 1) {
-        this.scrollPrevious();
-      } else {
-        this.scrollNext();
-      }
+    if (this.state.dragType === "touch") {
+      this.snapToNearest();
     }
 
     this.endScroll();
   }
 
-  onStateUpdate(_, updatedProp, updatedValue) {
-    if (updatedProp !== "scrollOffset") return;
+  render() {
+    const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
+    const progress = roundDecimal(this.state.scrollOffset * 100);
 
-    const nearRadius = 5; // px
-
-    const isStart = this.state.scrollOffset === 0;
-    const isEnd = this.state.scrollOffset === 1;
-
-    // Compute px values from percentage offsets
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
-    // If a scroll event would place the scrollbar close the either end, update
-    // the state to exactly equal the end
-    const isNearStart = !isStart && contentOffset < nearRadius;
-    const isNearEnd =
-      !isEnd && contentOffset > this.availableContentWidth - nearRadius;
+    this.$content.style.marginLeft = `-${contentOffset}px`;
 
-    return {
-      scrollOffset: isNearStart
-        ? 0
-        : isNearEnd
-        ? 1
-        : roundDecimal(updatedValue, { precision: this.EPSILON }),
-    };
-  }
+    if (this.state.dragType === "scrollbar") {
+      this.$track.classList.add(ScrollContainer.classes.active);
+    } else {
+      this.$track.classList.remove(ScrollContainer.classes.active);
+    }
 
-  render() {
+    this.$thumb.ariaValueNow = progress;
+    this.$thumb.style.marginLeft = `${thumbOffset}px`;
+    this.$thumb.style.width = `${this.state.thumbWidth}px`;
+
+    this.$backButton.toggleAttribute("disabled", this.state.scrollOffset === 0);
+    this.$forwardButton.toggleAttribute(
+      "disabled",
+      this.state.scrollOffset === 1
+    );
+
     switch (this.state.dragType) {
       case "touch":
         document.body.style.overscrollBehaviorX = "none";
@@ -499,12 +466,5 @@ export class ScrollContainer extends BaseComponent {
       ScrollContainer.classes.scrollEnd,
       this.state.scrollOffset === 1
     );
-
-    this.renderViewport();
-    this.renderContent();
-    this.renderTrack();
-    this.renderThumb();
-    this.renderForwardButton();
-    this.renderBackButton();
   }
 }
