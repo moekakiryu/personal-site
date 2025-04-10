@@ -51,6 +51,7 @@ export class ScrollContainer extends BaseComponent {
 
     this.bindEvents(this.$thumb, {
       mousedown: this.onThumbMouseDown,
+      keydown: this.onContentKeyDown,
     });
 
     this.bindEvents(this.$backButton, {
@@ -80,16 +81,6 @@ export class ScrollContainer extends BaseComponent {
     this.$content.style.marginLeft = `-${contentOffset}px`;
   }
 
-  get $controls() {
-    return this.getElement("controls");
-  }
-
-  renderControls() {
-    const progress = roundDecimal(this.state.scrollOffset * 100);
-
-    this.$controls.setAttribute("aria-valuenow", progress);
-  }
-
   get $track() {
     return this.getElement("track");
   }
@@ -108,7 +99,9 @@ export class ScrollContainer extends BaseComponent {
 
   renderThumb() {
     const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
+    const progress = roundDecimal(this.state.scrollOffset * 100);
 
+    this.$thumb.ariaValueNow = progress
     this.$thumb.style.marginLeft = `${thumbOffset}px`;
     this.$thumb.style.width = `${this.state.thumbWidth}px`;
   }
@@ -509,7 +502,6 @@ export class ScrollContainer extends BaseComponent {
 
     this.renderViewport();
     this.renderContent();
-    this.renderControls();
     this.renderTrack();
     this.renderThumb();
     this.renderForwardButton();

@@ -26,12 +26,6 @@
     </div>
     <div
       class="controls"
-      role="scrollbar"
-      aria-controls="project-scroll-container"
-      aria-label="Scroll through highlighted projects"
-      aria-orientation="horizontal"
-      aria-valuenow="0"
-      data-element="ScrollContainer.controls"
     >
       <button
         class="back-button"
@@ -42,12 +36,15 @@
       </button>
       <div
         class="track"
-        aria-label="track"
         data-element="ScrollContainer.track"
       >
         <div
           class="thumb"
           aria-label="thumb"
+          role="scrollbar"
+          aria-controls="project-scroll-container"
+          aria-orientation="horizontal"
+          aria-valuenow="0"
           data-element="ScrollContainer.thumb"
         ></div>
       </div>
