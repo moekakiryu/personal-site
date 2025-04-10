@@ -48,7 +48,9 @@
       </button>
     </div>
   </div>
-  <div class="cta-container center">
-    <a class="cta secondary" href="{% url "root.projects" %}" style="margin-top: 2rem;">View all projects</a>
-  </div>
+  {% if projects.has_more %}
+    <div class="cta-container center">
+      <a class="cta secondary" href="{% url "root.projects" %}" style="margin-top: 2rem;">View all projects</a>
+    </div>
+  {% endif %}
 </div>
