@@ -244,8 +244,8 @@ export class ScrollContainer extends BaseComponent {
 
     this.values.pendingDragType = "touch";
     this.values.lastInteraction = {
-      pageX: activeTouch.pageX,
-      pageY: activeTouch.pageY,
+      x: activeTouch.pageX,
+      y: activeTouch.pageY,
     };
 
     this.addRemovableListener(window, "touchmove", this.onWindowTouchMove);
