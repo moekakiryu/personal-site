@@ -46,7 +46,6 @@ export class Accordion extends BaseComponent {
     );
     const firstItem = Array.from(this.$$toggles)[0];
 
-    console.log((activeItem ?? firstItem).getAttribute("aria-controls"))
     return {
       activeItemId: (activeItem ?? firstItem).getAttribute("aria-controls"),
     };

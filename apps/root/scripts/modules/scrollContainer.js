@@ -64,6 +64,7 @@ export class ScrollContainer extends BaseComponent {
   }
 
   values = {
+    pendingDragType: null,
     lastInteraction: null,
     dragDirection: 0,
     boundListeners: [],
@@ -197,26 +198,28 @@ export class ScrollContainer extends BaseComponent {
   endScroll() {
     this.state.dragType = null;
 
+    this.values.pendingDragType = null;
     this.values.lastInteraction = null;
     this.values.dragDirection = 0;
 
     // Remove any event listeners that may have been dynamically added
-    this.values.boundListeners.forEach(listener => listener.remove());
-    this.values.boundListeners = []
+    this.values.boundListeners.forEach((listener) => listener.remove());
+    this.values.boundListeners = [];
   }
 
   addRemovableListener(target, eventType, listener) {
-    const boundListener = listener.bind(this)
-  
-    target.addEventListener(eventType, boundListener)
-    this.values.boundListeners.push({
-      remove: () => target.removeEventListener(eventType, boundListener)
-    })
+    const boundListener = listener.bind(this);
 
-    return boundListener
+    target.addEventListener(eventType, boundListener);
+    this.values.boundListeners.push({
+      remove: () => target.removeEventListener(eventType, boundListener),
+    });
+
+    return boundListener;
   }
 
-  // --- Scroll Content Events --- //
+  // --- Mouse Events --- //
+
   onContentMouseWheel({ shiftKey, deltaY }) {
     // Only accept wheel events if the user is trying to scroll horizontally
     if (!shiftKey) return;
@@ -227,27 +230,54 @@ export class ScrollContainer extends BaseComponent {
   onContentMouseDown(event) {
     event.preventDefault();
 
-    this.state.dragType = "content";
+    this.values.pendingDragType = "content";
     this.values.lastInteraction = {
       pageX: event.pageX,
       pageY: event.pageY,
     };
 
-    this.addRemovableListener(window, 'mousemove', this.onWindowMouseMove)
-    this.addRemovableListener(window, 'click', this.onWindowClick)
+    this.addRemovableListener(window, "mousemove", this.onWindowMouseMove);
   }
 
   onContentTouchStart(event) {
     const activeTouch = event.touches[0];
 
+    this.values.pendingDragType = "touch";
     this.values.lastInteraction = {
       pageX: activeTouch.pageX,
       pageY: activeTouch.pageY,
     };
 
-    this.addRemovableListener(window, 'touchmove', this.onWindowTouchMove)
-    this.addRemovableListener(window, 'touchend', this.onWindowTouchEnd)
+    this.addRemovableListener(window, "touchmove", this.onWindowTouchMove);
   }
+
+  onTrackMouseDown({ pageX, pageY }) {
+    if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
+
+    const relativeOffset = pageX - this.$track.offsetLeft;
+    const thumbCenter = this.$thumb.clientWidth / 2;
+
+    this.scrollTo((relativeOffset - thumbCenter) / this.availableTrackWidth);
+
+    // Manually set pageX to start dragging from the new thumb position (set above)
+    this.values.pendingDragType = "scrollbar";
+    this.values.lastInteraction = { x: pageX, y: pageY };
+
+    this.addRemovableListener(window, "mousemove", this.onWindowMouseMove);
+  }
+
+  onThumbMouseDown(event) {
+    if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
+
+    event.stopPropagation();
+
+    this.values.pendingDragType = "scrollbar";
+    this.values.lastInteraction = { x: event.pageX, y: event.pageY };
+
+    this.addRemovableListener(window, "mousemove", this.onWindowMouseMove);
+  }
+
+  // --- Accessibility Events --- //
 
   onContentKeyDown({ key }) {
     switch (key) {
@@ -280,36 +310,6 @@ export class ScrollContainer extends BaseComponent {
     }
   }
 
-  // --- Scroll Track Events --- //
-
-  onTrackMouseDown({ pageX, pageY }) {
-    if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
-
-    const relativeOffset = pageX - this.$track.offsetLeft;
-    const thumbCenter = this.$thumb.clientWidth / 2;
-
-    this.scrollTo((relativeOffset - thumbCenter) / this.availableTrackWidth);
-
-    // Manually set pageX to start dragging from the new thumb position (set above)
-    this.state.dragType = "scrollbar";
-    this.values.lastInteraction = { x: pageX, y: pageY };
-
-    this.addRemovableListener(window, 'mousemove', this.onWindowMouseMove)
-    this.addRemovableListener(window, 'click', this.onWindowClick)
-  }
-
-  onThumbMouseDown(event) {
-    if (BREAKPOINTS[getBreakpoint()] < BREAKPOINTS.desktop) return;
-
-    event.stopPropagation();
-  
-    this.state.dragType = "scrollbar";
-    this.values.lastInteraction = { x: event.pageX, y: event.pageY };
-
-    this.addRemovableListener(window, 'mousemove', this.onWindowMouseMove)
-    this.addRemovableListener(window, 'click', this.onWindowClick)
-  }
-
   // --- Button Events --- //
 
   onBackButtonClick() {
@@ -336,10 +336,14 @@ export class ScrollContainer extends BaseComponent {
       this.endScroll();
       return;
     }
-
     event.preventDefault();
-    const delta = event.pageX - (this.values.lastInteraction?.x ?? event.pageX);
 
+    if (!this.state.dragType) {
+      this.addRemovableListener(window, "click", this.onWindowClick);
+      this.state.dragType = this.values.pendingDragType;
+    }
+
+    const delta = event.pageX - (this.values.lastInteraction?.x ?? event.pageX);
     switch (this.state.dragType) {
       case "content":
         this.values.dragDirection = -1 * Math.sign(delta);
@@ -350,7 +354,6 @@ export class ScrollContainer extends BaseComponent {
         this.scrollBy(delta / this.availableTrackWidth);
         break;
     }
-
     this.values.lastInteraction = { x: event.pageX, y: event.pageY };
   }
 
@@ -371,7 +374,7 @@ export class ScrollContainer extends BaseComponent {
 
     // Check if user is trying to scroll vertically past container, or
     // horizontally within it
-    if (this.state.dragType === null && this.values.lastInteraction) {
+    if (this.state.dragType === null) {
       const { pageX: currentPageX, pageY: currentPageY } = activeTouch;
 
       const touchAngle = absoluteAngle(
@@ -384,7 +387,8 @@ export class ScrollContainer extends BaseComponent {
         return;
       }
 
-      this.state.dragType = "touch";
+      this.state.dragType = this.values.pendingDragType;
+      this.addRemovableListener(window, "touchend", this.onWindowTouchEnd);
     }
 
     const lastPageX = this.values.lastInteraction?.x ?? activeTouch.pageX;
