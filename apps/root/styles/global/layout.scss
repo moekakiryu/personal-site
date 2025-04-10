@@ -8,7 +8,7 @@
 
   width: 100%;
 
-  padding: 0 var(--spacing-md);
+  padding: 0 var(--spacing-sm);
 
   @media (--large) {
     flex-direction: row;
@@ -44,7 +44,7 @@
         
         inset: 0;
         
-        background: #bababa; // [1]
+        background: var(--color-hairline); // [1]
         z-index: -1;
         
         mask-image: url(/static/root/assets/grid.png);
@@ -84,5 +84,40 @@
 
   & > :first-child {
     margin-top: 0;
+  }
+}
+
+.hero {
+  position: relative;
+
+  @media (--until-large) {
+    margin: 2px calc(-1 * var(--spacing-sm));
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--color-hairline);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+
+  & > .inner {
+    max-width: var(--max-content-width);
+
+    @media (--until-large) {
+      margin: 0 auto;
+    }
+  }
+  
+  &::before {
+    @media (--until-large) {       
+      content: "";
+      position: absolute;
+      inset: 0;
+      
+      background: var(--color-hairline); // [1]
+      z-index: -1;
+    
+      mask-image: url(/static/root/assets/grid.png);
+      mask-mode: luminance;
+      mask-position: center center;
+      mask-size: 88px;
+    }
   }
 }

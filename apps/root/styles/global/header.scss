@@ -55,22 +55,6 @@ nav {
     backdrop-filter: none;
   }
 
-  &::before {
-    @media (--until-large) {      
-      content: "";
-      position: absolute;
-
-      inset: 0;
-
-      background: #bababa; // [1]
-          
-      mask-image: url(/static/root/assets/grid.png);
-      mask-mode: luminance;
-      mask-position: center center;
-      mask-size: 88px;
-    }
-  }
-
   ul, li {
     display: block;
   }

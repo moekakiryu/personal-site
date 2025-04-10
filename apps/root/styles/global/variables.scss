@@ -30,6 +30,9 @@
 
   --color-primary: #4b4b4b;
   --color-accent: #a92801;
+  
+  // To be used to separate elements. Should NEVER be used for a display color
+  --color-hairline: #bababa;
 
   --font-heading: "Courier Prime", "Times New Roman", Times, serif;
   --font-body: "Montserrat", Geneva, Verdana, sans-serif;
@@ -39,7 +42,7 @@
   /* Site configuration */
   --max-content-width: 50rem;
   --content-padding: var(--spacing-md);
-  --top-offset: 6rem;
+  --top-offset: 4rem;
 
   /* Derived */
   --font-color-primary: var(--color-primary);
