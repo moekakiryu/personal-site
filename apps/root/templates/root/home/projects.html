@@ -1,14 +1,4 @@
-<div class="container">
-  <div class="header-with-cta">
-    <h2>Stuff I've made</h2>
-    
-    {% if projects.has_more %}
-      <div class="tablet">
-        <a class="cta tertiary" href="{% url "root.projects" %}">View all projects</a>
-      </div>
-    {% endif %}
-  </div>
-
+<div>
   <div class="scroll-container" data-component="ScrollContainer">
     <div
       id="project-scroll-container"
@@ -42,6 +32,7 @@
           class="thumb"
           aria-label="thumb"
           role="scrollbar"
+          tabindex="0"
           aria-controls="project-scroll-container"
           aria-orientation="horizontal"
           aria-valuenow="0"
@@ -57,8 +48,7 @@
       </button>
     </div>
   </div>
-
-  <div class="until-tablet">
+  <div class="cta-container center">
     <a class="cta secondary" href="{% url "root.projects" %}">View all projects</a>
   </div>
 </div>

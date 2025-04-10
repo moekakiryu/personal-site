@@ -11,8 +11,48 @@
       <h1 class="section-header">Raymond Lewandowski</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam iaculis pulvinar ex, in rhoncus magna aliquet vel. Proin sit amet nulla a mi volutpat consequat.</p>
     </div>
-</div>
+  </div>
 
-  {% include "root/home/projects.html" %}
-  {% include "root/home/articles.html" %}
+  <div class="container">
+    <div class="accordion" data-component="Accordion">
+      <div class="controls">
+        <button
+          id="accordion-toggle-projects"
+          class="accordion-toggle"
+          aria-controls="accordion-item-projects"
+          aria-expanded="true"
+          data-element="Accordion.toggle"
+        >
+          <h2>Stuff I've made</h2>
+        </button>
+        <button
+          id="accordion-toggle-articles"
+          class="accordion-toggle"
+          aria-controls="accordion-item-articles"
+          aria-expanded="false"
+          data-element="Accordion.toggle"
+        >
+          <h2>Stuff I've written</h2>
+        </button>
+      </div>
+      <div class="content">
+        <div
+          id="accordion-item-projects"
+          class="accordion-item"
+          aria-labelledby="accordion-toggle-projects"
+          data-element="Accordion.item"
+        >
+          {% include "root/home/projects.html" %}
+        </div>
+        <div
+          id="accordion-item-articles"
+          class="accordion-item hidden"
+          aria-labelledby="accordion-toggle-articles"
+          data-element="Accordion.item"
+        >
+          {% include "root/home/articles.html" %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

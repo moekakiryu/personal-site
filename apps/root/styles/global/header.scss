@@ -77,7 +77,11 @@ nav {
 
   ul {
     padding: var(--spacing-sm) 0;
-    margin: auto;
+    margin: 8rem auto auto;
+
+    @media (--large) {
+      margin: 0;
+    }
   }
 
   li {

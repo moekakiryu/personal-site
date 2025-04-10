@@ -6,9 +6,9 @@ export class BaseComponent {
   #name = null;
 
   constructor(name, element) {
-    this.#state = this.initialState();
-    this.#element = element;
     this.#name = name;
+    this.#element = element;
+    this.#state = this.initialState();
   }
 
   initialState() {

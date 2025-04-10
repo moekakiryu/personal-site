@@ -1,0 +1,47 @@
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  & > .controls {
+    .accordion-toggle {
+      position: relative;
+
+      opacity: 0.4;
+
+      &:hover, &:focus, &[aria-expanded="true"] {
+        opacity: 1;
+      }
+
+      &[aria-expanded="true"] h2::before {
+        content: ">";
+        position: absolute;
+
+        right: 100%;
+        padding-right: var(--spacing-xs);
+
+        color: var(--color-accent);
+      }
+
+      h2 {
+        margin: 0;
+      }
+    }
+  }
+
+  & > .content {
+    position: relative;
+
+    .accordion-item {
+      position: absolute;
+      opacity: 1;
+      transition: opacity var(--duration-short);
+      width: 100%;
+  
+      &.hidden {
+        opacity: 0;
+        display: none;
+      }
+    }
+  }
+}

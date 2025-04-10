@@ -1,14 +1,4 @@
-<div class="container">
-  <div class="header-with-cta">
-    <h2>Stuff I've written</h2>
-
-    {% if articles.has_more %}
-      <div class="tablet">
-        <a class="cta tertiary" href="{% url "root.articles" %}">View all articles</a>
-      </div>
-    {% endif %}
-  </div>
-
+<div>
   <div>
     {% for article in articles.list %}
       {% include "root/article/crosslink.html" %}
@@ -16,7 +6,7 @@
   </div>
 
   {% if projects.has_more %}
-    <div class="until-tablet">
+    <div class="cta-container center">
       <a class="cta secondary" href="{% url "root.articles" %}">View all articles</a>
     </div>
   {% endif %}

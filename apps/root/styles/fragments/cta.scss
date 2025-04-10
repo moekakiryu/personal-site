@@ -42,6 +42,7 @@
   &-container.left > &,
   &-container.center > & {
     flex-grow: 0;
+    flex-basis: 50%;
   }
 
   &.primary {

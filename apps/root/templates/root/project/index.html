@@ -11,7 +11,28 @@
 
 {% block content %}
   <div class="container project">
-    {% include "root/project/heading.html" %}
+    <div class="project-heading">
+      {% if project.hero %}
+        {# @TODO: Alt text #}
+        <img src="{{ MEDIA_URL }}{{ project.hero }}" alt="" class="image">
+      {% endif %}
+    
+      <div class="heading{% if not project.hero %} text-only{% endif %}">
+        <div class="title">
+          {% include "root/breadcrumb.html" %}
+          <h1>{{ project.title }}</h1>
+        </div>
+        <div class="cta-container links">
+          {% if project.project_url %}
+            <a class="cta primary" href="{{ project.project_url }}" target="_blank">View project</a>
+            <a class="cta secondary" href="{{ project.source_url }}" target="_blank">View source</a>
+          {% else %}
+            <a class="cta primary" href="{{ project.source_url }}" target="_blank">View source</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
     {{project.article.content|safe}}
   </div>
 {% endblock content %}
