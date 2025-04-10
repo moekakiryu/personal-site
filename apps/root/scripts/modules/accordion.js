@@ -4,40 +4,38 @@ export class Accordion extends BaseComponent {
   static name = "Accordion";
 
   static classes = {
+    transitioning: "transitioning",
     hidden: "hidden",
   };
 
   constructor(name, element) {
     super(name, element);
 
-    this.$$toggles.forEach($toggle => {
-      $toggle.addEventListener('click', this.onToggleClick.bind(this, $toggle))
+    this.$$toggles.forEach(($toggle) =>
+      this.bindEvents($toggle, {
+        click: {
+          listener: this.onToggleClick,
+          extraArgs: [$toggle],
+        },
+      })
+    );
+
+    this.$$items.forEach(($item) =>
+      this.bindEvents($item, {
+        transitionend: {
+          listener: this.onItemTransitionEnd,
+          extraArgs: [$item],
+        },
+      })
+    );
+
+    // Initialize accordion items
+    this.$$items.forEach($item => {
+      if ($item.id !== this.state.activeItemId) {
+        $item.classList.add(Accordion.classes.hidden)
+        $item.style.display = 'none'
+      }
     })
-  }
-
-  get $$toggles() {
-    return this.getElements("toggle");
-  }
-
-  renderToggles() {
-    this.$$toggles.forEach(($toggle) => {
-      const itemId = $toggle.getAttribute("aria-controls");
-
-      $toggle.setAttribute("aria-expanded", itemId === this.state.activeItemId);
-    });
-  }
-
-  get $$items() {
-    return this.getElements("item");
-  }
-
-  renderItems() {
-    this.$$items.forEach(($item) => {
-      $item.classList.toggle(
-        Accordion.classes.hidden,
-        $item.getAttribute("id") !== this.state.activeItemId
-      );
-    });
   }
 
   initialState() {
@@ -46,17 +44,54 @@ export class Accordion extends BaseComponent {
     );
     const firstItem = Array.from(this.$$toggles)[0];
 
+    const activeItemId = (activeItem ?? firstItem).getAttribute(
+      "aria-controls"
+    );
+
     return {
-      activeItemId: (activeItem ?? firstItem).getAttribute("aria-controls"),
+      activeItemId,
     };
   }
 
+  get $$toggles() {
+    return this.getElements("toggle");
+  }
+
+  get $$items() {
+    return this.getElements("item");
+  }
+
   onToggleClick($toggle) {
-    this.state.activeItemId = $toggle.getAttribute('aria-controls')
+    this.state.activeItemId = $toggle.getAttribute("aria-controls");
+  }
+
+  onItemTransitionEnd($item) {
+    $item.classList.remove(Accordion.classes.transitioning);
+    if ($item.id !== this.state.activeItemId) {
+      $item.style.display = 'none'
+    }
   }
 
   render() {
-    this.renderToggles();
-    this.renderItems();
+    this.$$toggles.forEach(($toggle) => {
+      $toggle.setAttribute(
+        "aria-expanded",
+        $toggle.getAttribute("aria-controls") === this.state.activeItemId
+      );
+    });
+
+    this.$$items.forEach(($item) => {
+      const isActive = $item.id === this.state.activeItemId;
+      const wasActive =
+        !isActive && !$item.classList.contains(Accordion.classes.hidden);
+
+      if (isActive || wasActive) {
+        $item.style.display = "";
+        $item.classList.add(Accordion.classes.transitioning)
+      }
+      setTimeout(() => {
+        $item.classList.toggle(Accordion.classes.hidden, !isActive);
+      })
+    });
   }
 }

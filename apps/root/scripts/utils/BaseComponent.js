@@ -19,7 +19,7 @@ export class BaseComponent {
     const selector = `[data-element="${this.name}.${elementName}"]`;
 
     if (parent) {
-      return parent.querySelector(selector)
+      return parent.querySelector(selector);
     }
 
     return this.#element.querySelector(selector);
@@ -29,15 +29,31 @@ export class BaseComponent {
     const selector = `[data-element="${this.name}.${elementName}"]`;
 
     if (parent) {
-      return parent.querySelectorAll(selector)
+      return parent.querySelectorAll(selector);
     }
 
     return this.#element.querySelectorAll(selector);
   }
 
-  bindEvents(element, eventMapping) {
-    Object.entries(eventMapping).forEach(([eventType, handler]) => {
-      element.addEventListener(eventType, handler.bind(this));
+  bindEvents(element, eventMapping, defaultArgs) {
+    const defaultArgArray = defaultArgs ?? [];
+
+    Object.entries(eventMapping).forEach(([eventType, listener]) => {
+      if (listener.extraArgs && listener.listener) {
+        element.addEventListener(
+          eventType,
+          listener.listener.bind(
+            this,
+            ...defaultArgArray,
+            ...listener.extraArgs
+          )
+        );
+      } else {
+        element.addEventListener(
+          eventType,
+          listener.bind(this, ...defaultArgArray)
+        );
+      }
     });
   }
 
@@ -50,8 +66,6 @@ export class BaseComponent {
   }
 
   get state() {
-    // const updateCallback = this.onStateUpdate;
-    // const parentThis = this;
     const updateCallback = (...args) => this.onStateUpdate?.(...args);
     const renderCallback = (...args) => this.render?.(...args);
 

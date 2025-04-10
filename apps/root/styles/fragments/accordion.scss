@@ -4,6 +4,8 @@
   gap: var(--spacing-md);
 
   & > .controls {
+    padding-left: var(--spacing-sm);
+
     .accordion-toggle {
       position: relative;
 
@@ -35,20 +37,22 @@
 
     .accordion-item {
       opacity: 1;
-      transition: opacity var(--duration-short);
+      transition-property: opacity;
+      transition-duration: var(--duration-short);
+      transition-delay: var(--duration-short);
       
       &.transitioning {
         position: absolute;
         width: 100%;
-
+        
         &.hidden {
           pointer-events: none;
         }
       }
-
+      
       &.hidden {
         opacity: 0;
-        // display: none;
+        transition-delay: 0s;
       }
     }
   }
