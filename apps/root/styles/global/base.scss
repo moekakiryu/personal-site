@@ -29,46 +29,6 @@ body {
   display: flex;
   min-height: 100vh;
   background-color: var(--color-white);
-
-  &::before {
-    content: "";
-    position: fixed;
-
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    background-size: 100%;
-    z-index: -1;
-
-    /*
-    TODO: Find performant implementation for this animated background.
-    It has been temporarily disabled due to very poor performance on firefox.
-    -------
-    
-    background-image: linear-gradient(110deg,
-      #ccd6e2,
-      #fff 90%
-    );
-
-    background-color: #e7e7e7;
-
-    mask-image: url(/static/root/assets/hex.png);
-    mask-mode: luminance;
-    mask-size: 250px;
-
-    animation: cycle-gradient 5s ease-in-out infinite alternate;
-
-    @media (--desktop) {
-      background-image: linear-gradient(110deg,
-        #ccd6e2,
-        #fff 60%
-      );
-      animation: cycle-gradient 15s ease-in-out infinite alternate;
-    }
-    */
-  }
 }
 
 h1, h2, h3, h4, h5, h6 {
