@@ -39,10 +39,6 @@
     position: relative;
 
     .accordion-item {
-      opacity: 1;
-      transition-property: opacity;
-      transition-duration: var(--duration-short);
-      transition-delay: var(--duration-short);
       
       &.transitioning {
         position: absolute;
@@ -55,7 +51,6 @@
       
       &.hidden {
         opacity: 0;
-        transition-delay: 0s;
       }
     }
   }

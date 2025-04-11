@@ -20,22 +20,12 @@ export class Accordion extends BaseComponent {
       })
     );
 
-    this.$$items.forEach(($item) =>
-      this.bindEvents($item, {
-        transitionend: {
-          listener: this.onItemTransitionEnd,
-          extraArgs: [$item],
-        },
-      })
-    );
-
-    // Initialize accordion items
-    this.$$items.forEach($item => {
+    this.$$items.forEach(($item) => {
       if ($item.id !== this.state.activeItemId) {
-        $item.classList.add(Accordion.classes.hidden)
-        $item.style.display = 'none'
+        $item.classList.add(Accordion.classes.hidden);
+        $item.style.display = "none";
       }
-    })
+    });
   }
 
   initialState() {
@@ -50,6 +40,7 @@ export class Accordion extends BaseComponent {
 
     return {
       activeItemId,
+      lastActiveItemId: activeItemId,
     };
   }
 
@@ -62,17 +53,13 @@ export class Accordion extends BaseComponent {
   }
 
   onToggleClick($toggle) {
+    this.state.lastActiveItemId = this.state.activeItemId;
     this.state.activeItemId = $toggle.getAttribute("aria-controls");
   }
 
-  onItemTransitionEnd($item) {
-    $item.classList.remove(Accordion.classes.transitioning);
-    if ($item.id !== this.state.activeItemId) {
-      $item.style.display = 'none'
-    }
-  }
-
   render() {
+    if (this.state.activeItemId === this.state.lastActiveItemId) return;
+
     this.$$toggles.forEach(($toggle) => {
       $toggle.setAttribute(
         "aria-expanded",
@@ -82,19 +69,36 @@ export class Accordion extends BaseComponent {
 
     this.$$items.forEach(($item) => {
       const isActive = $item.id === this.state.activeItemId;
-      const wasActive = !$item.classList.contains(Accordion.classes.hidden);
-
-      if (isActive === wasActive) {
-        return
-      }
+      const wasActive = $item.id === this.state.lastActiveItemId;
 
       if (isActive || wasActive) {
         $item.style.display = "";
-        $item.classList.add(Accordion.classes.transitioning)
+        $item.classList.add(Accordion.classes.transitioning);
+
+        const activeAnimations = $item.getAnimations();
+
+        activeAnimations.forEach((animation) => animation.cancel());
+
+        requestAnimationFrame(() => {
+          const fadeAnimation = [{ opacity: 0 }, { opacity: 1 }];
+
+          const keyframes = isActive ? fadeAnimation : fadeAnimation.reverse();
+          const timings = {
+            delay: isActive ? 100 : 0,
+            duration: 250,
+          };
+
+          $item.animate(keyframes, timings).finished.then(() => {
+            $item.classList.remove(Accordion.classes.transitioning);
+            if (!isActive) {
+              $item.style.display = "none";
+              $item.classList.add(Accordion.classes.hidden);
+            } else {
+              $item.classList.remove(Accordion.classes.hidden);
+            }
+          });
+        });
       }
-      setTimeout(() => {
-        $item.classList.toggle(Accordion.classes.hidden, !isActive);
-      })
     });
   }
 }
