@@ -82,8 +82,11 @@ export class Accordion extends BaseComponent {
 
     this.$$items.forEach(($item) => {
       const isActive = $item.id === this.state.activeItemId;
-      const wasActive =
-        !isActive && !$item.classList.contains(Accordion.classes.hidden);
+      const wasActive = !$item.classList.contains(Accordion.classes.hidden);
+
+      if (isActive === wasActive) {
+        return
+      }
 
       if (isActive || wasActive) {
         $item.style.display = "";
