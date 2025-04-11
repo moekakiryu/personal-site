@@ -17,7 +17,7 @@
   &-container {
     @at-root {
       display: flex;
-      flex-direction: column;
+      // flex-direction: column;
       gap: var(--spacing-sm);
 
       @media (--desktop) {
@@ -70,6 +70,7 @@
 
   &.tertiary {
     color: var(--color-primary);
+    flex-grow: 0;
 
     &:hover,
     &:focus {
