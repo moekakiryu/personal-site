@@ -24,7 +24,7 @@
 
       // Chevron styles
       &[aria-expanded="true"] h2::before {
-        content: ">";
+        content: ">" / "";
         position: absolute;
 
         right: 100%;
