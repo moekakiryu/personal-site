@@ -23,6 +23,7 @@
         <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
         {% comment %} <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}class="current"{% endif %}>Hire me!</a></li> {% endcomment %}
       </ul>
+      <a href="{% url "root.resume" %}">Professional Experience</a>
     </nav>
     <div class="right">
       <div class="mobile">

@@ -66,6 +66,31 @@ nav {
     @media (--large) {
       margin: 0;
     }
+
+    a {
+      position: relative;
+
+      padding: var(--spacing-xs) var(--spacing-sm);
+
+      font-family: var(--font-heading);
+      font-size: 2rem;
+
+      @media (--large) {
+        font-size: 1.5rem;
+      }
+
+      &::before {
+        @media (--large) {
+          content: "";
+          position: absolute;
+
+          width: var(--line-width);
+          inset: 0 0 0 auto;
+
+          background: var(--color-primary);
+        }
+      }
+    }
   }
 
   li {
@@ -73,33 +98,12 @@ nav {
     padding: 0;
   }
 
-  
   a {
-    position: relative;
     display: inline-block;
-
     width: 100%;
 
-    padding: var(--spacing-xs) var(--spacing-sm);
-
-    font-family: var(--font-heading);
-    font-size: 2rem;
-
     @media (--large) {
-      font-size: 1.5rem;
       text-align: right;
-    }
-
-    &::before {
-      @media (--large) {
-        content: "";
-        position: absolute;
-  
-        width: var(--line-width);
-        inset: 0 0 0 auto;
-
-        background: var(--color-primary);
-      }
     }
   }
 }
