@@ -19,11 +19,11 @@
       data-element="Navigation.desktopNav"
     >
       <ul>
-        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
-        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
-        {% comment %} <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}class="current"{% endif %}>Hire me!</a></li> {% endcomment %}
+        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
+        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
       </ul>
-      <a href="{% url "root.resume" %}">Professional Experience</a>
+      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>Professional Experience</a>
+      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>AI Policy</a>
     </nav>
     <div class="right">
       <div class="mobile">
@@ -49,12 +49,12 @@
   >
     <div class="link-container">
       <ul>
-        <li><a href="{% url "root.home" %}" {% if meta.current.view == 'root.home' %}class="current"{% endif %}>Home</a></li>
-        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current"{% endif %}>Projects</a></li>
-        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current"{% endif %}>Articles</a></li>
-        {% comment %} <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}class="current"{% endif %}>Hire me!</a></li> {% endcomment %}
+        <li><a href="{% url "root.home" %}" {% if meta.current.view == 'root.home' %}class="current" aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
+        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
       </ul>
-      <a href="{% url "root.resume" %}">Professional Experience</a>
+      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>Professional Experience</a>
+      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>AI Policy</a>
     </div>
   </nav>
 </div>
