@@ -10,6 +10,13 @@
   }
 }
 
+/* --- Cross-Document Page Transitions --- */
+// See: https://developer.chrome.com/docs/web-platform/view-transitions/cross-document
+
+@view-transition {
+  navigation: auto;
+}
+
 /* --- Global Styles --- */
 
 * {
