@@ -11,8 +11,12 @@
 {% endblock head.styles %}
 
 {% block content %}
-  {% include "root/breadcrumb.html" %}
-  <h1>{{ article.title }}</h1>
+  <div class="hero">
+    <div class="inner">
+      {% include "root/breadcrumb.html" %}
+      <h1>{{ article.title }}</h1>
+    </div>
+  </div>
   <div class="container">
     {{ article.content|safe }}
   </div>

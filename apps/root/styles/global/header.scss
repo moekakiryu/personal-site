@@ -4,6 +4,8 @@
   align-items: center;
   gap: var(--spacing-md);
 
+  max-width: var(--max-content-width);
+  margin: 0 auto;
   padding: var(--spacing-xs) var(--spacing-sm);
 
   background-color: var(--color-white);
