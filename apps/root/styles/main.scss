@@ -8,10 +8,12 @@
 @import "global/header.scss";
 
 /* Components */
+@import "modules/scroll-container.scss";
+@import "modules/accordion.scss";
+
+/* Editorial Styles */
 @import "fragments/cta.scss";
 @import "fragments/article.scss";
 @import "fragments/card.scss";
 @import "fragments/item-containers.scss";
 @import "fragments/editorial-content.scss";
-@import "fragments/scroll-container.scss";
-@import "fragments/accordion.scss";
