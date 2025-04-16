@@ -25,24 +25,24 @@ export class Navigation extends BaseComponent {
   }
 
   /* --- Elements --- */
-  get $mobileNav() {
-    return this.getElement("mobileNav");
+  get $mobileNavigation() {
+    return this.getElement("mobileNavigation");
   }
 
   renderMobileNav() {
     if (this.state.isOpen) {
-      this.$mobileNav.style.display = "";
+      this.$mobileNavigation.style.display = "";
 
-      this.$mobileNav.animate([{ opacity: 0 }, { opacity: 1 }], {
+      this.$mobileNavigation.animate([{ opacity: 0 }, { opacity: 1 }], {
         duration: this.ANIMATION_DURATION,
       });
     } else {
-      this.$mobileNav
+      this.$mobileNavigation
         .animate([{ opacity: 1 }, { opacity: 0 }], {
           duration: this.ANIMATION_DURATION,
         })
         .finished.then(() => {
-          this.$mobileNav.style.display = "none";
+          this.$mobileNavigation.style.display = "none";
         });
     }
   }
@@ -67,7 +67,7 @@ export class Navigation extends BaseComponent {
   /* --- Actions --- */
 
   hideNav() {
-    this.$mobileNav.style.display = "none";
+    this.$mobileNavigation.style.display = "none";
     this.state.isOpen = false;
   }
 

@@ -1,6 +1,6 @@
 <div data-component="Navigation">
   <div class="header">
-    <div class="left">
+    <div class="logo">
       <a href="/" aria-label="Go Home" {% if meta.current.view == 'root.home' %}aria-current="page"{% endif %}>
         <div class="desktop">
           {% include "root/icons/logo-reversed.svg" %}
@@ -11,26 +11,32 @@
 
       </a>
     </div>
-    <nav
-      id="nav-desktop"
-      class="desktop"
-      aria-label="Main Menu"
-      role="navigation"
-      data-element="Navigation.desktopNav"
+    <div
+      id="navigation-desktop"
+      class="navigation desktop"
+      data-element="Navigation.desktopNavigation"
     >
-      <ul>
-        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
-        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
-      </ul>
-      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>Professional Experience</a>
-      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>AI Policy</a>
-    </nav>
-    <div class="right">
+      <div class="inner">
+        <nav class="navigation-primary" role="navigation" aria-label="primary">
+          <ul>
+            <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
+            <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
+          </ul>
+        </nav>
+        <nav class="navigation-secondary" role="navigation" aria-label="secondary">
+          <ul>
+            <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>Professional Experience</a></li>
+            <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>AI Policy</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="hamburger">
       <div class="mobile">
         <div class="cta-container">
           <button
-            id="nav-toggle-mobile"
-            aria-controls="nav-mobile"
+            id="navigation-toggle-mobile"
+            aria-controls="navigation-mobile"
             class="cta tertiary"
             data-element="Navigation.toggle"
           >
@@ -40,21 +46,25 @@
       </div>
     </div>
   </div>
-  <nav
-    id="nav-mobile"
-    class="mobile"
-    aria-label="Main Menu"
-    role="navigation"
-    data-element="Navigation.mobileNav"
+  <div
+    id="navigation-mobile"
+    class="navigation mobile"
+    data-element="Navigation.mobileNavigation"
   >
-    <div class="link-container">
-      <ul>
-        <li><a href="{% url "root.home" %}" {% if meta.current.view == 'root.home' %}class="current" aria-current="page"{% endif %}>Home</a></li>
-        <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
-        <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
-      </ul>
-      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>Professional Experience</a>
-      <a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>AI Policy</a>
+    <div class="inner">
+      <nav class="navigation-primary" role="navigation" aria-label="primary">
+          <ul>
+            <li><a href="{% url "root.home" %}" {% if meta.current.view == 'root.home' %}class="current" aria-current="page"{% endif %}>Home</a></li>
+            <li><a href="{% url "root.projects" %}" {% if meta.current.view == 'root.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
+            <li><a href="{% url "root.articles" %}" {% if meta.current.view == 'root.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
+          </ul>
+      </nav>
+      <nav class="navigation-secondary" role="navigation" aria-label="secondary">
+        <ul>  
+          <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>Professional Experience</a></li>
+          <li><a href="{% url "root.resume" %}" {% if meta.current.view == 'root.resume' %}aria-current="page"{% endif %}>AI Policy</a></li>
+        </ul>
+      </nav>
     </div>
-  </nav>
+  </div>
 </div>
