@@ -1,21 +1,19 @@
 /* For main page layouts */
-.main-content {
+.layout-container {
   --sidebar-width: 300px;
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-
-  width: 100%;
-
+  width: 100%;  
   padding: 0 var(--spacing-sm);
-
+  
   @media (--large) {
+    display: flex;
     flex-direction: row;
+    gap: var(--spacing-md);
+
     padding: 0 var(--spacing-lg);
   }
 
-  .floating {
+  .nav-content {
     position: fixed;
     width: 100%;
     top: 0;
@@ -25,19 +23,16 @@
 
     @media (--large) {
       position: sticky;
-      flex-basis: var(--sidebar-width);
-      flex-shrink: 0;
+      flex: 0 0 var(--sidebar-width);
 
       top: 0;
       max-height: 100vh;
 
       margin-left: auto;
       padding-top: var(--top-offset);
-      border-left: 1px solid var(--color-black);
-      border-right: 1px solid var(--color-black);
+      border-inline: 1px solid var(--color-black);
     }
 
-    // 1. Hard code color of grid lines since this is not a theme colour
     &::before {
       @media (--large) {   
         content: "";
@@ -45,7 +40,7 @@
         
         inset: 0;
         
-        background: var(--color-hairline); // [1]
+        background: var(--color-hairline);
         z-index: -1;
         
         mask-image: url(/static/root/assets/grid.png);
@@ -56,7 +51,7 @@
     }
   }
 
-  .fixed {
+  .main-content {
     display: flex;
     flex-direction: column;
     flex-grow: 1;

@@ -20,14 +20,12 @@
   <title>{% block head.title %} {{ meta.current.display_name|default:"Page" }} {% endblock head.title %} | Raymond Lewandowski</title>
 </head>
 
-<body class="line-numbers match-braces no-brace-select">
+<body class="layout-container line-numbers match-braces no-brace-select">
+  <div class="nav-content">
+    {% include "root/header.html" %}
+  </div>
   <div class="main-content">
-    <div class="floating">
-      {% include "root/header.html" %}
-    </div>
-    <div class="fixed">
-      {% block content%}{% endblock content %}
-    </div>
+    {% block content%}{% endblock content %}
   </div>
 </body>
 </html>
