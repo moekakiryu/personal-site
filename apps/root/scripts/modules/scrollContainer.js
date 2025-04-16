@@ -16,8 +16,8 @@ export class ScrollContainer extends BaseComponent {
 
   static classes = {
     active: "active",
-    scrollStart: "scroll-start",
-    scrollEnd: "scroll-end",
+    positionStart: "position-start",
+    positionEnd: "position-end",
   };
 
   constructor(name, element) {
@@ -462,12 +462,12 @@ export class ScrollContainer extends BaseComponent {
 
     // Update element attributes
     this.$element.classList.toggle(
-      ScrollContainer.classes.scrollStart,
+      ScrollContainer.classes.positionStart,
       this.state.scrollOffset === 0
     );
 
     this.$element.classList.toggle(
-      ScrollContainer.classes.scrollEnd,
+      ScrollContainer.classes.positionEnd,
       this.state.scrollOffset === 1
     );
   }

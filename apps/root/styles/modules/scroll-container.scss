@@ -1,17 +1,36 @@
-.scroll-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  
-  &.scroll-start {
-    .viewport {
-      &::before {
-        content: none;
+.scroll {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    
+    &.position-start {
+      .scroll-viewport {
+        &::before {
+          content: none;
+        }
+      }
+
+      .scroll-back-button {
+        &::before {
+          opacity: 1;
+          transition-delay: var(--duration-short);
+        }
+
+        svg {
+          transform: scaleY(0%);
+        }
       }
     }
 
-    .controls {
-      .back-button {
+    &.position-end {
+      .scroll-viewport {
+        &::after {
+          content: none;
+        }
+      }
+
+      .scroll-forward-button {
         &::before {
           opacity: 1;
           transition-delay: var(--duration-short);
@@ -24,26 +43,7 @@
     }
   }
 
-  &.scroll-end {
-    .viewport{
-      &::after {
-        content: none;
-      }
-    }
-    .controls {
-      .forward-button {
-        &::before {
-          opacity: 1;
-          transition-delay: var(--duration-short);
-        }
-
-        svg {
-          transform: scaleY(0%);
-        }      }
-    }
-  }
-
-  .viewport {
+  &-viewport {
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -65,85 +65,86 @@
     }
   }
 
-  .controls {
+  &-controls {
     display: flex;
     align-items: center;
+  }
 
-    // 1. Magic number to keep the icon stroke width the same as the track width
-    .back-button, .forward-button {
-      position: relative;
-      height: 40px; // [1]
-      fill: var(--color-primary);
-      transition: opacity var(--duration-short);
+  // 1. Magic number to keep the icon stroke width the same as the track width
+  &-back-button, &-forward-button {
+    position: relative;
+    height: 40px; // [1]
+    fill: var(--color-primary);
+    transition: opacity var(--duration-short);
 
-      &:hover {
-        fill: var(--color-accent);
-      }
-
-      &:disabled {
-        cursor: default;
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-
-        left: 0;
-        right: 0;
-        top: 50%;
-        height: var(--line-width);
-
-        background-color: var(--color-primary);
-        opacity: 0;
-        z-index: 1;
-
-        transform: translateY(-50%);
-        transition-property: opacity;
-        transition-delay: 0s;
-      }
-
-      svg {
-        height: 100%;
-        transition: transform var(--duration-short);
-      }
+    &:hover {
+      fill: var(--color-accent);
     }
 
-    .back-button {
-      margin-right: 5px;
+    &:disabled {
+      cursor: default;
     }
 
-    .forward-button {
-      margin-left: 5px;
-    }
+    &::before {
+      content: "";
+      position: absolute;
 
-    .track {
-      width: 100%;
+      left: 0;
+      right: 0;
+      top: 50%;
       height: var(--line-width);
-      border-radius: var(--rounded-full);
 
-      overflow: hidden;
+      background-color: var(--color-primary);
+      opacity: 0;
       z-index: 1;
 
+      transform: translateY(-50%);
+      transition-property: opacity;
+      transition-delay: 0s;
+    }
+
+    svg {
+      height: 100%;
+      transition: transform var(--duration-short);
+    }
+  }
+
+  &-back-button {
+    margin-right: 5px;
+  }
+
+  &-forward-button {
+    margin-left: 5px;
+  }
+
+  &-track {
+    width: 100%;
+    height: var(--line-width);
+    border-radius: var(--rounded-full);
+
+    overflow: hidden;
+    z-index: 1;
+
+    @media (--desktop) {
+      cursor: pointer;
+    }
+
+    &:hover, &.active {
       @media (--desktop) {
-        cursor: pointer;
+        height: calc(var(--line-width) * 2);
       }
 
-      &:hover, &.active {
-        .thumb {
-          background-color: var(--color-accent);
-        }
-        @media (--desktop) {
-          height: calc(var(--line-width) * 2);
-        }
-      }
-
-      .thumb {
-        width: 100%;
-        min-width: 85px;
-        height: 100%;
-        border-radius: var(--rounded-full);
-        background-color: var(--color-primary);
+      .scroll-thumb {
+        background-color: var(--color-accent);
       }
     }
+  }
+
+  &-thumb {
+    width: 100%;
+    min-width: 85px;
+    height: 100%;
+    border-radius: var(--rounded-full);
+    background-color: var(--color-primary);
   }
 }

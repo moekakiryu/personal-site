@@ -2,11 +2,11 @@
   <div class="scroll-container" data-component="ScrollContainer">
     <div
       id="project-scroll-container"
-      class="viewport"
+      class="scroll-viewport"
       tabindex="0"
       data-element="ScrollContainer.viewport"
     >
-      <div class="content" data-element="ScrollContainer.content">
+      <div data-element="ScrollContainer.content">
         <div class="project-list">
           {% for project in projects.list %}
             {% include "root/project/crosslink.html" %}
@@ -15,21 +15,21 @@
       </div>
     </div>
     <div
-      class="controls"
+      class="scroll-controls"
     >
       <button
-        class="back-button"
+        class="scroll-back-button"
         aria-label="back"
         data-element="ScrollContainer.backButton"
       >
         {% include "root/icons/arrow-left.svg" %}
       </button>
       <div
-        class="track"
+        class="scroll-track"
         data-element="ScrollContainer.track"
       >
         <div
-          class="thumb"
+          class="scroll-thumb"
           aria-label="thumb"
           role="scrollbar"
           tabindex="0"
@@ -40,7 +40,7 @@
         ></div>
       </div>
       <button
-        class="forward-button"
+        class="scroll-forward-button"
         aria-label="forward"
         data-element="ScrollContainer.forwardButton"
       >
