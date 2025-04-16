@@ -3,55 +3,54 @@
   flex-direction: column;
   gap: var(--spacing-md);
 
-  & > .controls {
+  &-controls {
     padding-left: var(--spacing-sm);
+  }
 
-    .accordion-toggle {
-      position: relative;
-      opacity: 0.4;
-      user-select: none;
+  &-toggle {
+    position: relative;
+    opacity: 0.4;
+    user-select: none;
 
-      &:hover,
-      &:focus,
-      &[aria-expanded="true"] {
-        opacity: 1;
-      }
+    &:hover,
+    &:focus,
+    &[aria-expanded="true"] {
+      opacity: 1;
+    }
 
-      h2 {
-        margin: 0;
-        text-align: left;
-      }
+    h2 {
+      margin: 0;
+      text-align: left;
+    }
 
-      // Chevron styles
-      &[aria-expanded="true"] h2::before {
-        content: ">" / "";
-        position: absolute;
+    // Place chevron before active button text
+    &[aria-expanded="true"] h2::before {
+      content: ">" / "";
+      position: absolute;
 
-        right: 100%;
-        padding-right: var(--spacing-xs);
+      right: 100%;
+      padding-right: var(--spacing-xs);
 
-        color: var(--color-accent);
-      }
+      color: var(--color-accent);
     }
   }
 
-  & > .content {
+  &-content {
     position: relative;
+  }
 
-    .accordion-item {
-      
-      &.transitioning {
-        position: absolute;
-        width: 100%;
-        
-        &.hidden {
-          pointer-events: none;
-        }
-      }
-      
+  &-item {
+    &.transitioning {
+      position: absolute;
+      width: 100%;
+
       &.hidden {
-        opacity: 0;
+        pointer-events: none;
       }
+    }
+
+    &.hidden {
+      opacity: 0;
     }
   }
 }
