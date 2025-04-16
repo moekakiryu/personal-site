@@ -1,19 +1,20 @@
 /* For main page layouts */
-.layout-container {
-  --sidebar-width: 300px;
+.layout {
+  &-container {
+    --sidebar-width: 300px;
+    width: 100%;
+    padding: 0 var(--spacing-sm);
 
-  width: 100%;  
-  padding: 0 var(--spacing-sm);
-  
-  @media (--large) {
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-md);
+    @media (--large) {
+      display: flex;
+      flex-direction: row;
+      gap: var(--spacing-md);
 
-    padding: 0 var(--spacing-lg);
+      padding: 0 var(--spacing-lg);
+    }
   }
 
-  .nav-content {
+  &-navigation {
     position: fixed;
     width: 100%;
     top: 0;
@@ -34,15 +35,15 @@
     }
 
     &::before {
-      @media (--large) {   
+      @media (--large) {
         content: "";
         position: absolute;
-        
+
         inset: 0;
-        
+
         background: var(--color-hairline);
         z-index: -1;
-        
+
         mask-image: url(/static/root/assets/grid.png);
         mask-mode: luminance;
         mask-position: center center;
@@ -51,13 +52,11 @@
     }
   }
 
-  .main-content {
-    display: flex;
-    flex-direction: column;
+  &-content {
     flex-grow: 1;
 
     margin: var(--top-offset) auto 0;
-    
+
     width: 100%;
     max-width: calc(var(--max-content-width) + var(--sidebar-width));
 
@@ -68,7 +67,6 @@
 }
 
 .container {
-  flex-shrink: 1;
   margin: 0 auto var(--spacing-md) auto;
 
   width: 100%;
@@ -76,10 +74,6 @@
 
   @media (--large) {
     margin-left: 0;
-  }
-
-  & > :first-child {
-    margin-top: 0;
   }
 }
 
