@@ -21,7 +21,6 @@
   --z-header: 2;
 
   --duration-short: .25s;
-  --duration-standard: .5s;
 
   /* Colors */
   --color-black: #000;
@@ -41,7 +40,9 @@
   /* Site configuration */
   --max-content-width: 50rem;
   --content-padding: var(--spacing-md);
+
   --top-offset: 4.125rem;
+  --nav-height: 4.125rem;
 
   /* Derived */
   --font-color-primary: var(--color-primary);
