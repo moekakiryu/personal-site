@@ -5,13 +5,13 @@
 @import "global/variables.scss";
 @import "global/base.scss";
 @import "global/layout.scss";
-@import "global/header.scss";
 
 /* Components */
 @import "modules/scroll-container.scss";
 @import "modules/accordion.scss";
 
 /* Editorial Styles */
+@import "editorial/header.scss";
 @import "editorial/hero.scss";
 @import "editorial/cta.scss";
 @import "editorial/containers.scss";
