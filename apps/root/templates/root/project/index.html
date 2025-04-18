@@ -25,8 +25,8 @@
       <div class="heading{% if not project.hero %} text-only{% endif %}">
         <div class="cta-container links">
           {% if project.project_url %}
-            <a class="cta secondary" href="{{ project.project_url }}" target="_blank">View project</a>
-            <a class="cta tertiary" href="{{ project.source_url }}" target="_blank">View source</a>
+            <a class="cta primary" href="{{ project.project_url }}" target="_blank">View project</a>
+            <a class="cta secondary" href="{{ project.source_url }}" target="_blank">View source</a>
           {% else %}
             <a class="cta" href="{{ project.source_url }}" target="_blank">View source</a>
           {% endif %}
