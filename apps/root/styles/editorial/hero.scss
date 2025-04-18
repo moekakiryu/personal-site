@@ -4,9 +4,9 @@
 
   & > .inner {
     max-width: var(--max-content-width);
-    padding-inline: var(--spacing-sm);
 
     @media (--until-large) {
+      padding-inline: var(--spacing-sm);
       margin: 0 auto;
     }
   }
