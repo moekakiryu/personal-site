@@ -1,6 +1,6 @@
 import { Accordion } from './modules/accordion'
 import { Navigation } from "./modules/navigation";
-import { ResumeTimeline } from "./modules/resume";
+import { ResumeTimeline } from "./modules/timeline";
 import { ScrollContainer } from './modules/scrollContainer';
 
 const mountables = [
