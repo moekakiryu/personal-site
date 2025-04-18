@@ -3,74 +3,25 @@
   &-container {
     --sidebar-width: 300px;
     width: 100%;
-    padding: 0 var(--spacing-sm);
-
-    @media (--large) {
-      display: flex;
-      flex-direction: row;
-      gap: var(--spacing-md);
-
-      padding: 0 var(--spacing-lg);
-    }
+    display: flex;
+    flex-direction: column;
   }
 
   &-navigation {
-    position: fixed;
-    width: 100%;
+    position: sticky;
     top: 0;
-    left: 0;
 
     z-index: var(--z-header);
 
-    @media (--large) {
-      position: sticky;
-      flex: 0 0 var(--sidebar-width);
-
-      top: 0;
-      max-height: 100vh;
-
-      margin-left: auto;
-      padding-top: var(--top-offset);
-      border-inline: 1px solid var(--color-black);
-    }
-
-    &::before {
-      @media (--large) {
-        content: "";
-        position: absolute;
-
-        inset: 0;
-
-        background: var(--color-hairline);
-        z-index: -1;
-
-        mask-image: url(/static/root/assets/grid.png);
-        mask-mode: luminance;
-        mask-position: center center;
-        mask-size: 88px;
-      }
-    }
   }
 
-  &-content {
-    margin: var(--top-offset) auto 0;
-
-    width: 100%;
-    max-width: calc(var(--max-content-width) + var(--sidebar-width));
-
-    @media (--large) {
-      margin-left: 0;
-    }
-  }
 }
 
 .container {
   margin: 0 auto var(--spacing-md) auto;
+  padding-inline: var(--spacing-sm);
 
   width: 100%;
   max-width: var(--max-content-width);
 
-  @media (--large) {
-    margin-left: 0;
-  }
 }
