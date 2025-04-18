@@ -11,6 +11,16 @@
     }
   }
 
+  .breadcrumb {
+    display: inline-block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-accent);
+
+    & + h1 {
+      margin-top: 0;
+    }
+  }
+
   &-landing {
     @media (--until-large) {
       padding-block: var(--spacing-md);
