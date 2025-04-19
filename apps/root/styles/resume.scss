@@ -1,1 +1,10 @@
+@import "global/variables.scss";
 @import "modules/timeline.scss";
+
+.hire-me {
+  min-height: calc(100vh - var(--top-offset));
+
+  @media (--until-large) {
+    padding-top: var(--spacing-sm);
+  }
+}
