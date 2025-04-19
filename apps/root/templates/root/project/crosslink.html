@@ -1,18 +1,18 @@
-<a class="card" href="{% url "root.project" project.slug %}" data-snap>
+<a class="crosslink" href="{% url "root.project" project.slug %}" data-snap>
   {% if project.thumbnail %}
-    <div class="image">
-      <img src="{{ MEDIA_URL }}{{ project.thumbnail }}" alt="">
-    </div>
+    <div class="image-container" style="background-image: url({{ MEDIA_URL }}{{ project.thumbnail }});"></div>
   {% endif %}
-  <div class="details">
+  <div class="entry">
     <h3 class="name">
       {{ project.title }}
     </h3>
-    <p class="description">
-      {{ project.blurb }}
-    </p>
-    <div class="read-more">
-      + Read more
+    <div class="details">
+      <p class="description">
+        {{ project.blurb }}
+      </p>
+      <div class="read-more">
+        + Read more
+      </div>
     </div>
   </div>
 </a>

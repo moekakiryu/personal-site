@@ -1,0 +1,58 @@
+.crosslink {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--spacing-sm);
+
+  font-family: var(--font-body);
+  font-weight: normal;
+
+  .image-container {
+    flex: 0 0 25%;
+    aspect-ratio: 1 / 1;
+    background-size: cover;
+    background-position: center;
+    min-width: 125px;
+    box-shadow: 0 0 0 0 transparent;
+    transition: transform var(--duration-short), box-shadow var(--duration-short);
+  }
+
+  &:hover, &:focus {
+    color: inherit;
+
+    .image-container {
+      transform: translateY(-4%) translateX(-1%);
+      box-shadow: 0px 5px 9px -8px var(--color-black);
+    }
+
+    .read-more {
+      color: var(--color-accent);
+    }
+  }
+
+  .name, .date {
+    display: block;
+    margin: 0;
+    
+    @media (--tablet) {
+      display: inline-block;
+    }
+  }
+
+  .date {
+    &::before {
+      @media (--tablet) {
+        content: "|";
+        padding-inline: var(--spacing-xs);
+      }
+    }
+  }
+
+  .description {
+    font-size: .875rem;
+  }
+
+  .read-more {
+    font-weight: bold;
+  }
+}
