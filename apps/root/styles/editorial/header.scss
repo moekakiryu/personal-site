@@ -1,6 +1,7 @@
 .header {
   @media (--until-large) {
     background-color: var(--color-white);
+    border-bottom: 1px solid var(--color-primary);
   }
 
   & > .inner {
