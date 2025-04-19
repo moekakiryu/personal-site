@@ -36,6 +36,10 @@ body {
   background-color: var(--color-white);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
 h1 {
   margin: 0;
   font-size: 1.8rem;
@@ -46,11 +50,10 @@ h1 {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   margin-block: var(--spacing-xs);
-  font-family: var(--font-heading);
 
-  :not(h2, h3, h4, h5, h6) + & {
+  :not(&) + & {
     margin-top: var(--spacing-md);
   }
 }
