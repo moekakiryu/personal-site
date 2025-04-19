@@ -1,56 +1,59 @@
 <div>
-  <div class="scroll-container" data-component="ScrollContainer">
-    <div
-      id="project-scroll-container"
-      class="scroll-viewport"
-      tabindex="0"
-      data-element="ScrollContainer.viewport"
-    >
-      <div data-element="ScrollContainer.content">
-        <div class="project-list">
-          {% for project in projects.list %}
-            {% include "root/project/crosslink.html" %}
-          {% endfor %}
+  <div class="container">
+    <div class="scroll-container" data-component="ScrollContainer">
+      <div
+        id="project-scroll-container"
+        class="scroll-viewport"
+        tabindex="0"
+        data-element="ScrollContainer.viewport"
+      >
+        <div data-element="ScrollContainer.content">
+          <div class="project-list">
+            {% for project in projects.list %}
+              {% include "root/project/crosslink.html" %}
+            {% endfor %}
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      class="scroll-controls"
-    >
-      <button
-        class="scroll-back-button"
-        aria-label="back"
-        data-element="ScrollContainer.backButton"
-      >
-        {% include "root/icons/arrow-left.svg" %}
-      </button>
       <div
-        class="scroll-track"
-        data-element="ScrollContainer.track"
+        class="scroll-controls"
       >
+        <button
+          class="scroll-back-button"
+          aria-label="back"
+          data-element="ScrollContainer.backButton"
+        >
+          {% include "root/icons/arrow-left.svg" %}
+        </button>
         <div
-          class="scroll-thumb"
-          aria-label="thumb"
-          role="scrollbar"
-          tabindex="0"
-          aria-controls="project-scroll-container"
-          aria-orientation="horizontal"
-          aria-valuenow="0"
-          data-element="ScrollContainer.thumb"
-        ></div>
+          class="scroll-track"
+          data-element="ScrollContainer.track"
+        >
+          <div
+            class="scroll-thumb"
+            aria-label="thumb"
+            role="scrollbar"
+            tabindex="0"
+            aria-controls="project-scroll-container"
+            aria-orientation="horizontal"
+            aria-valuenow="0"
+            data-element="ScrollContainer.thumb"
+          ></div>
+        </div>
+        <button
+          class="scroll-forward-button"
+          aria-label="forward"
+          data-element="ScrollContainer.forwardButton"
+        >
+          {% include "root/icons/arrow-right.svg" %}
+        </button>
       </div>
-      <button
-        class="scroll-forward-button"
-        aria-label="forward"
-        data-element="ScrollContainer.forwardButton"
-      >
-        {% include "root/icons/arrow-right.svg" %}
-      </button>
     </div>
   </div>
+
   {% if projects.has_more %}
-    <div style="margin-top: 2rem;">
-      <a class="cta primary" href="{% url "root.projects" %}" style="margin-top: 2rem;">View all projects</a>
+    <div class="container">
+      <a class="cta primary" href="{% url "root.projects" %}">View all projects</a>
     </div>
   {% endif %}
 </div>
