@@ -17,6 +17,10 @@ export class Navigation extends BaseComponent {
       resize: this.onWindowResize,
     });
 
+    this.bindEvents(this.$mobileNavigation, {
+      click: this.onMobileNavigationClick,
+    })
+
     this.bindEvents(this.$toggle, {
       click: this.onToggleClick,
     });
@@ -29,31 +33,8 @@ export class Navigation extends BaseComponent {
     return this.getElement("mobileNavigation");
   }
 
-  renderMobileNav() {
-    if (this.state.isOpen) {
-      this.$mobileNavigation.style.display = "";
-
-      this.$mobileNavigation.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: this.ANIMATION_DURATION,
-      });
-    } else {
-      this.$mobileNavigation
-        .animate([{ opacity: 1 }, { opacity: 0 }], {
-          duration: this.ANIMATION_DURATION,
-        })
-        .finished.then(() => {
-          this.$mobileNavigation.style.display = "none";
-        });
-    }
-  }
-
   get $toggle() {
     return this.getElement("toggle");
-  }
-
-  renderToggle() {
-    this.$toggle.innerText = this.state.isOpen ? "Close" : "Menu";
-    this.$toggle.setAttribute("aria-expanded", this.state.isOpen);
   }
 
   /* --- State --- */
@@ -77,6 +58,12 @@ export class Navigation extends BaseComponent {
     this.state.isOpen = !this.state.isOpen;
   }
 
+  onMobileNavigationClick({ target, currentTarget }) {
+    if (target === currentTarget) {
+      this.state.isOpen = false;
+    }
+  }
+
   onWindowResize() {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
@@ -88,7 +75,23 @@ export class Navigation extends BaseComponent {
   render() {
     document.body.style.overflow = this.state.isOpen ? "hidden" : "";
 
-    this.renderMobileNav();
-    this.renderToggle();
+    this.$toggle.innerText = this.state.isOpen ? "Close" : "Menu";
+    this.$toggle.setAttribute("aria-expanded", this.state.isOpen);
+
+    if (this.state.isOpen) {
+      this.$mobileNavigation.style.display = "";
+
+      this.$mobileNavigation.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: this.ANIMATION_DURATION,
+      });
+    } else {
+      this.$mobileNavigation
+        .animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: this.ANIMATION_DURATION,
+        })
+        .finished.then(() => {
+          this.$mobileNavigation.style.display = "none";
+        });
+    }
   }
 }
