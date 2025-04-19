@@ -36,18 +36,27 @@ body {
   background-color: var(--color-white);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin-top: 2em;
-  font-family: var(--font-heading);
-}
-
 h1 {
+  margin: 0;
   font-size: 1.8rem;
   line-height: 1em;
 
   @media (--desktop) {
     font-size: 2rem;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-block: var(--spacing-xs);
+  font-family: var(--font-heading);
+
+  :not(h2, h3, h4, h5, h6) + & {
+    margin-top: var(--spacing-md);
+  }
+}
+
+p {
+  margin-block: var(--spacing-sm);
 }
 
 a {
