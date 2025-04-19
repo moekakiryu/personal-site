@@ -55,11 +55,11 @@ export class ResumeTimeline extends BaseComponent {
 
   setTimelineProgress() {
     this.$$lines.forEach((line) => {
-      const fill = this.$fill(line);
+      const $fill = this.$fill(line);
       const clipHeight = this.getClipHeight(line);
 
       requestAnimationFrame(() => {
-        fill.style.clipPath = `inset(${clipHeight}% 0 0 0)`;
+        $fill.style.clipPath = `inset(${clipHeight}% 0 0 0)`;
       });
     });
   }

@@ -1,40 +1,40 @@
 <div class="container">
   <div class="timeline" data-component="ResumeTimeline">
     {% for employer in employers %}
-      <div class="employer">
-        <div
-          class="mobile employer-title floating-title"
+      <div>
+        <h3
+          class="timeline-summary mobile"
           data-element="ResumeTimeline.floatingTitle"
-        >{{ employer.name }}</div>
+        >{{ employer.name }}</h3>
         <div>
           {% for contract in employer.contracts %}
             {% with start_date=contract.start|date:"Y" end_date=contract.end|date:"Y" %}
-              <div class="contract" data-element="ResumeTimeline.contract">
-                <div class="title desktop">
+              <div class="timeline-contract" data-element="ResumeTimeline.contract">
+                <div class="timeline-summary desktop">
                   {% if forloop.first %}
-                    <h3 class="employer-title">{{ employer.name }}</h3>
+                    <h3>{{ employer.name }}</h3>
                   {% endif %}
-                  <div>
-                    {% if start_date == end_date %}
-                      <span class="date">{{ start_date }}</span>
-                    {% else %}
-                      <span class="date">{{ start_date }}</span> - <span class="date">{{ end_date }}</span>
-                    {% endif %}
-                  </div>
+                  {% if start_date == end_date %}
+                    <span>{{ start_date }}</span>
+                  {% else %}
+                    <span>{{ start_date }} - {{ end_date }}</span>
+                  {% endif %}
                 </div>
-                <div class="line" data-element="ResumeTimeline.line">
-                  <div class="fill" data-element="ResumeTimeline.fill"></div>
+                <div class="timeline-line" data-element="ResumeTimeline.line">
+                  <div class="timeline-line-fill" data-element="ResumeTimeline.fill"></div>
                 </div>
-                <div class="description js-description">
-                  <h4 class="contract-name">{{contract.name}}</h4>
-                  <span class="date mobile">
+                <div class="timeline-details">
+                  <h4>{{contract.name}}</h4>
+                  <span class="mobile">
                     {% if start_date == end_date %}
-                      <span class="date">{{ start_date }}</span>
+                      <span>{{ start_date }}</span>
                     {% else %}
-                      <span class="date">{{ start_date }}</span> - <span class="date">{{ end_date }}</span>
+                      <span>{{ start_date }} - {{ end_date }}</span>
                     {% endif %}
                   </span>
-                  {{ contract.description|safe }}
+                  <span>
+                    {{ contract.description|safe }}
+                  </span>
                 </div>
               </div>
             {% endwith %}

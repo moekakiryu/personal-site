@@ -1,141 +1,113 @@
 .timeline {
-  // TODO: Fix name clash with global variables
-  --top-offset: 5rem;
   --timeline-width: var(--line-width);
   --faded-content-opacity: 0.4;
   --faded-timeline-opacity: 0.15;
-
-  @media (--large) {
-    --top-offset: var(--spacing-md);
-  }
 
   h3, h4 {
     margin: 0;
   }
 
-  .floating-title {
+  & > :first-child .timeline-contract:first-child .timeline-details {
+    border-top: none;
+  }
+
+  &-contract {
+    display: flex;
+
+    &:first-child {
+      .timeline-details {
+        border-top-style: none;
+
+        @media (--large) {
+          border-top-style: solid;
+        }
+      }
+    }
+
+    &.passed {
+      .timeline-summary {
+        opacity: var(--faded-content-opacity);
+      }
+
+      .timeline-line::before {
+        width: 0;
+        background-color: transparent;
+      }
+      
+      .timeline-details {
+        opacity: var(--faded-content-opacity);
+      }
+    }
+  }
+
+  &-summary {
     position: sticky;
 
-    padding: var(--spacing-sm) 0 var(--spacing-xs) 0;
+    padding-block: var(--spacing-sm) var(--spacing-xs);
     top: var(--nav-height);
     
-    background: var(--color-white);
-    z-index: 1;
-    transition: box-shadow .25s;
+    background-color: var(--color-white);
+    z-index: var(--z-floating);
+    transition: box-shadow var(--duration-short);
+
+    @media (--large) {
+      position: static;
+      flex-basis: 25%;
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: transparent;
+    }
     
     &.floating {
       box-shadow: 0px 5px 8px -8px var(--color-black);
     }
   }
 
-  .employer-title {
-    font-family: var(--font-heading);
-    font-size: 1.3rem;
-    color: var(--color-primary);
-    word-break: break-word;
-    font-weight: bold;
-  }
+  &-line {
+    position: relative;
+    flex-basis: var(--timeline-width);
 
-  .contract {
-    display: flex;
+    &::before {
+      content: "";
+      position: absolute;
 
-    &.passed {
-      .title {
-        opacity: var(--faded-content-opacity);
+      border-radius: var(--rounded-full);
 
-        .employer-title {
-          color: var(--color-black);
-        }
-      }
+      top: var(--spacing-sm);
+      // TODO: Fix px alignment hack
+      left: 1px;
+      height: 12px;
+      width: 12px;
 
-      .description {
-        opacity: var(--faded-content-opacity);
+      background-color: var(--color-primary);
 
-        &::before {
-          background-color: rgb(from var(--color-primary) r g b / var(--faded-timeline-opacity));
-          width: 0;
-        }
-      }
+      transform: translateX(-50%);
+      transition: background-color var(--duration-short), width var(--duration-short);
     }
 
-    .title {
-      flex: 0 0 40%;
-      padding: var(--spacing-sm) var(--spacing-md);
-
-      @media (--desktop) {
-        flex-basis: 25%;
-      }
-
-      .date {
-        display: inline-block;
-      }
-    }
-
-    .line {
-      flex: 0 0 var(--timeline-width);
-      position: relative;
-
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
       border-radius: var(--rounded-full);
       overflow: hidden;
 
-      &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-left: var(--timeline-width) dashed rgb(from var(--color-primary) r g b / var(--faded-timeline-opacity));
-      }
-      
-      
-      .fill {
-        position: absolute;
-        inset: 0;
-        background: var(--color-primary);
-      }
+      border-left: var(--timeline-width) dashed rgb(from var(--color-primary) r g b / var(--faded-timeline-opacity));
     }
-
-    .description {
-      flex: 1 1 60%;
-      position: relative;
-
-      padding: var(--spacing-sm) var(--spacing-md);
-      border-top: 1px dashed var(--color-black);
-
-      @media (--desktop) {
-        flex-basis: 75%;
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-
-        border-radius: var(--rounded-full);
-
-        left: calc(-0.5 * var(--timeline-width));
-        height: 12px;
-        width: 12px;
-
-        background-color: var(--color-primary);
-
-        transform: translateX(-50%);
-        transition: background-color var(--duration-short), width var(--duration-short);
-      }
-
-      .contract-name {
-        font-size: 1.2rem;
-      }
-    }
-
-  }
-
-  .contract:first-child .description {
-    border-top-style: none;
-
-    @media (--desktop) {
-      border-top-style: solid;
+    
+    
+    &-fill {
+      position: absolute;
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+      inset: 0;
+      background: var(--color-primary);
     }
   }
 
-  .employer:first-child .contract:first-child .description {
-    border-top: none;
+  &-details {
+    flex: 1 1 0;
+
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-top: 1px dashed var(--color-black);
   }
 }

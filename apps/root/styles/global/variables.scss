@@ -18,6 +18,7 @@
   --rounded-sm: .5rem;
   --rounded-full: 9999px;
 
+  --z-floating: 1;
   --z-header: 2;
 
   --duration-short: .25s;
@@ -42,7 +43,7 @@
   --content-padding: var(--spacing-md);
 
   --top-offset: 4.125rem;
-  --nav-height: 4.125rem;
+  --nav-height: 4.156rem;
 
   /* Derived */
   --font-color-primary: var(--color-primary);
