@@ -1,19 +1,18 @@
 .crosslink {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   gap: var(--spacing-sm);
 
-  font-family: var(--font-body);
   font-weight: normal;
 
   .image-container {
-    flex: 0 0 25%;
+    flex: 0 0 40%;
     aspect-ratio: 1 / 1;
-    background-size: cover;
-    background-position: center;
-    min-width: 125px;
-    box-shadow: 0 0 0 0 transparent;
+    min-width: 0;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transform: translateY(0.25rem);
     transition: transform var(--duration-short), box-shadow var(--duration-short);
   }
 
@@ -21,7 +20,7 @@
     color: inherit;
 
     .image-container {
-      transform: translateY(-4%) translateX(-1%);
+      transform: translateY(0);
       box-shadow: 0px 5px 9px -8px var(--color-black);
     }
 
