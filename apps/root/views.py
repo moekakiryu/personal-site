@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.forms.models import model_to_dict
 
 from apps.root.models import Article, Project, Contract
-
+from utils.querysets import stratify
 
 def home(request, **kwargs):
   article_count = 3
@@ -41,7 +41,15 @@ def article(request, article_id, **kwargs):
 
 
 def projects(request, **kwargs):
-  projects = Project.objects.all().order_by('-id')
+  standard_projects = Project.objects.filter(is_featured=False).order_by('-id')
+  featured_projects = Project.objects.filter(is_featured=True).order_by('-id')
+
+  if standard_projects and featured_projects:
+     projects = stratify(featured_projects, standard_projects)
+  elif standard_projects or featured_projects:
+     projects = standard_projects or featured_projects
+  else:
+     projects = []
 
   return render(request, 'root/projects/index.html', {
     'projects': projects

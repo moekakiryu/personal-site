@@ -45,11 +45,13 @@
     align-items: center;
 
     &.featured {
+      order: -1;
       padding-block: var(--spacing-sm);
       border-block: 1px dashed var(--color-primary);
       
       @media (--desktop) {
         grid-column: 1 / 3;
+        order: unset;
       }
     }
   }
