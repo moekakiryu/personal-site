@@ -6,12 +6,12 @@ const absoluteAngle = (x, y) => {
   return (180 * Math.atan(Math.abs(x) / Math.abs(y))) / Math.PI;
 };
 
-const FRICTION = 1.06;
 
 export class ScrollContainer extends BaseComponent {
   EPSILON = 5; // Decimal places
   SNAP_PADDING = 0.05; // Percent (of viewport width)
-  SCROLL_SPEED = 1.5;
+  SCROLL_SPEED = 1.9;
+  FRICTION = 1.05;
   MAXIMUM_VERTICAL_SCROLL = 55; // degrees
 
   static name = "ScrollContainer";
@@ -144,7 +144,7 @@ export class ScrollContainer extends BaseComponent {
       return;
     }
 
-    const movement = Math.min(this.values.momentum, 15) / FRICTION;
+    const movement = Math.min(this.values.momentum, 15) / this.FRICTION;
     this.values.momentum = movement;
 
     this.scrollBy(
