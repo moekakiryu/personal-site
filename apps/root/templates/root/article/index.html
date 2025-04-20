@@ -1,11 +1,13 @@
 {% extends "root/base.html" %}
 
 {% load static %}
+{% load rich_content %}
 
 {% block head.title %}{{ article.title }}{% endblock head.title %}
 
 {% block head.opengraph %}
   <meta property="og:title" content="{{ article.title }} - Raymond Lewandowski">
+  <meta property="og:description" content="{{ article.content|rich_preview:20 }}">
   <meta property="og:type" content="article">
 
   <meta property="og:article:author" content="Raymond Lewandowski">

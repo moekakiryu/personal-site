@@ -1,11 +1,13 @@
 {% extends "root/base.html" %}
 
 {% load static %}
+{% load rich_content %}
 
 {% block head.title %}{{ project.title }}{% endblock head.title %}
 
 {% block head.opengraph %}
   <meta property="og:title" content="{{ project.title }} - Raymond Lewandowski">
+  <meta property="og:description" content="{{ project.article.content|rich_preview:20 }}">
   <meta property="og:type" content="article">
   <meta property="og:article:author" content="Raymond Lewandowski">
   <meta property="og:image" content="{% if project.hero %}{{ MEDIA_URL }}{{ project.hero }}{% else %}{% static "root/assets/page-default.png" %}{% endif %}">
