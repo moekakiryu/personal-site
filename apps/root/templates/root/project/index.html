@@ -4,6 +4,14 @@
 
 {% block head.title %}{{ project.title }}{% endblock head.title %}
 
+{% block head.opengraph %}
+  <meta property="og:title" content="{{ project.title }} - Raymond Lewandowski">
+  <meta property="og:type" content="article">
+  <meta property="og:article:author" content="Raymond Lewandowski">
+  <meta property="og:image" content="{% if project.hero %}{{ MEDIA_URL }}{{ project.hero }}{% else %}{% static "root/assets/page-default.png" %}{% endif %}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock head.opengraph %}
+
 {% block head.styles %}
   <link rel="stylesheet" type="text/css" href="{% static "root/css/article.min.css" %}">
   <script src="{% static "root/js/prism.min.js" %}"></script>

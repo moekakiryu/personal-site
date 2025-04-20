@@ -6,6 +6,14 @@
   {# General Metadata#}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block head.meta %}{% endblock head.meta %}
+  {% block head.opengraph %}
+    <meta property="og:title" content="{{ meta.current.name|default:"Page" }} - Raymond Lewandowski">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{% static "root/assets/page-default.png" %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  {% endblock head.opengraph %}
+
 
   {# Stylesheets #}
   <link rel="preload" href="{% static 'root/css/main.min.css' %}" as="style">
