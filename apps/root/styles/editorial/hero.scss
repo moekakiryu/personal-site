@@ -55,10 +55,10 @@
         content: "";
         position: absolute;
         inset: 0;
-        
+
         background: var(--color-hairline); // [1]
         z-index: -1;
-      
+
         mask-image: url(/static/root/assets/grid.png);
         mask-mode: luminance;
         mask-position: center center;
@@ -69,12 +69,35 @@
 
   &-project {
     & > .inner {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 0 var(--spacing-md);
+
       padding-bottom: 0;
+
+      @media (--desktop) {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: stretch;
+      }
+    }
+
+    .title {
+      flex: 1 1 0;
     }
 
     .image {
       width: 100%;
-      margin-block: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+    }
+
+    .cta-container {
+      flex-grow: 1;
+    }
+
+    .cta {
+      margin-top: var(--spacing-sm);
     }
   }
 
