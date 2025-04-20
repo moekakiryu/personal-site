@@ -9,6 +9,10 @@ export class BaseComponent {
     this.#name = name;
     this.#element = element;
     this.#state = this.initialState();
+
+    Object.entries(this.initialState()).forEach(([key, value]) => {
+      this.state[key] = value
+    })
   }
 
   initialState() {
