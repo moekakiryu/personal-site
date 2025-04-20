@@ -90,7 +90,7 @@ export class BaseComponent {
           });
         }
 
-        renderCallback(target);
+        renderCallback(target, prop, value);
         return true;
       },
     });

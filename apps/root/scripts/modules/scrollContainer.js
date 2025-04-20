@@ -84,7 +84,7 @@ export class ScrollContainer extends BaseComponent {
   }
 
   get $controls() {
-    return this.getElement('controls')
+    return this.getElement("controls");
   }
 
   get $track() {
@@ -135,22 +135,25 @@ export class ScrollContainer extends BaseComponent {
     this.scrollBy(easedSpeed / this.availableContentWidth);
     requestAnimationFrame(() => {
       this.animateScroll(delta - easedSpeed, delta);
-    })
+    });
   }
 
   animateMomentum() {
     if (Math.abs(this.values.momentum) < 1) {
       this.values.momentum = 0;
-      return
+      return;
     }
 
-    const movement = Math.min(this.values.momentum, 15) / FRICTION
-    this.values.momentum = movement
+    const movement = Math.min(this.values.momentum, 15) / FRICTION;
+    this.values.momentum = movement;
 
-    this.scrollBy(this.values.dragDirection * Math.abs(movement) / this.availableContentWidth)
+    this.scrollBy(
+      (this.values.dragDirection * Math.abs(movement)) /
+        this.availableContentWidth
+    );
     requestAnimationFrame(() => {
-      this.animateMomentum()
-    })
+      this.animateMomentum();
+    });
   }
 
   scrollNext() {
@@ -386,7 +389,10 @@ export class ScrollContainer extends BaseComponent {
         break;
     }
     this.values.lastInteraction = { x: event.pageX, y: event.pageY };
-    this.values.momentum = this.values.momentum === 0 ? Math.abs(event.movementX) : (Math.abs(event.movementX) + this.values.momentum) / 2;
+    this.values.momentum =
+      this.values.momentum === 0
+        ? Math.abs(event.movementX)
+        : (Math.abs(event.movementX) + this.values.momentum) / 2;
   }
 
   // Use onClick instead of onMouseUp to let us catch and stop accidental
@@ -430,7 +436,10 @@ export class ScrollContainer extends BaseComponent {
       x: activeTouch.pageX,
       y: activeTouch.pageY,
     };
-    this.values.momentum = this.values.momentum === 0 ? Math.abs(delta) : (Math.abs(delta) + this.values.momentum) / 2;
+    this.values.momentum =
+      this.values.momentum === 0
+        ? Math.abs(delta)
+        : (Math.abs(delta) + this.values.momentum) / 2;
     // this.values.momentum = Math.max(Math.abs(delta), this.values.momentum);
     this.values.dragDirection = Math.sign(delta);
   }
@@ -440,66 +449,91 @@ export class ScrollContainer extends BaseComponent {
     this.endScroll();
   }
 
-  render() {
+  render(_, prop) {
     const thumbOffset = this.state.scrollOffset * this.availableTrackWidth;
     const progress = roundDecimal(this.state.scrollOffset * 100);
 
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
-    this.$viewport.classList.toggle(ScrollContainer.classes.disabled, !this.state.isEnabled)
-    this.$controls.classList.toggle(ScrollContainer.classes.disabled, !this.state.isEnabled)
-    this.$content.style.marginLeft = `-${contentOffset}px`;
+    switch (prop) {
+      case "isEnabled":
+        this.$viewport.classList.toggle(
+          ScrollContainer.classes.disabled,
+          !this.state.isEnabled
+        );
+        this.$controls.classList.toggle(
+          ScrollContainer.classes.disabled,
+          !this.state.isEnabled
+        );
+        break;
 
-    if (this.state.dragType === "scrollbar") {
-      this.$track.classList.add(ScrollContainer.classes.active);
-    } else {
-      this.$track.classList.remove(ScrollContainer.classes.active);
+      case "scrollOffset":
+        this.$content.style.marginLeft = `-${contentOffset}px`;
+        this.$thumb.style.marginLeft = `${thumbOffset}px`;
+        this.$thumb.ariaValueNow = progress;
+
+        this.$backButton.toggleAttribute(
+          "disabled",
+          this.state.scrollOffset === 0
+        );
+        this.$forwardButton.toggleAttribute(
+          "disabled",
+          this.state.scrollOffset === 1
+        );
+
+        this.$element.classList.toggle(
+          ScrollContainer.classes.positionStart,
+          this.state.scrollOffset === 0
+        );
+    
+        this.$element.classList.toggle(
+          ScrollContainer.classes.positionEnd,
+          this.state.scrollOffset === 1
+        );
+        break;
+
+      case "dragType":
+        if (this.state.dragType === "scrollbar") {
+          this.$track.classList.add(ScrollContainer.classes.active);
+        } else {
+          this.$track.classList.remove(ScrollContainer.classes.active);
+        }
+        break;
+
+      case "thumbWidth":
+        this.$thumb.style.width = `${this.state.thumbWidth}px`;
+        break;
+
+      case 'dragType':
+        // Do nothing.... handled below
+        break;
     }
 
-    this.$thumb.ariaValueNow = progress;
-    this.$thumb.style.marginLeft = `${thumbOffset}px`;
-    this.$thumb.style.width = `${this.state.thumbWidth}px`;
+    if (prop === 'dragType') {
+      switch (this.state.dragType) {
+        case "touch":
+          document.body.style.overscrollBehaviorX = "none";
+          document.documentElement.style.overscrollBehaviorX = "none";
+          document.documentElement.style.overflowY = "hidden";
+          break;
 
-    this.$backButton.toggleAttribute("disabled", this.state.scrollOffset === 0);
-    this.$forwardButton.toggleAttribute(
-      "disabled",
-      this.state.scrollOffset === 1
-    );
+        case "content":
+          document.body.style.userSelect = "none";
+          document.body.style.cursor = "pointer";
+          break;
 
-    switch (this.state.dragType) {
-      case "touch":
-        document.body.style.overscrollBehaviorX = "none";
-        document.documentElement.style.overscrollBehaviorX = "none";
-        document.documentElement.style.overflowY = "hidden";
-        break;
+        case "scrollbar":
+          document.body.style.userSelect = "none";
+          document.body.style.cursor = "pointer";
+          break;
 
-      case "content":
-        document.body.style.userSelect = "none";
-        document.body.style.cursor = "pointer";
-        break;
-
-      case "scrollbar":
-        document.body.style.userSelect = "none";
-        document.body.style.cursor = "pointer";
-        break;
-
-      default:
-        document.documentElement.style.overscrollBehaviorX = "";
-        document.documentElement.style.overflowY = "";
-        document.body.style.overscrollBehaviorX = "";
-        document.body.style.userSelect = "";
-        document.body.style.cursor = "";
+        default:
+          document.documentElement.style.overscrollBehaviorX = "";
+          document.documentElement.style.overflowY = "";
+          document.body.style.overscrollBehaviorX = "";
+          document.body.style.userSelect = "";
+          document.body.style.cursor = "";
+      }
     }
-
-    // Update element attributes
-    this.$element.classList.toggle(
-      ScrollContainer.classes.positionStart,
-      this.state.scrollOffset === 0
-    );
-
-    this.$element.classList.toggle(
-      ScrollContainer.classes.positionEnd,
-      this.state.scrollOffset === 1
-    );
   }
 }
