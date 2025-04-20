@@ -45,11 +45,16 @@ def projects(request, **kwargs):
   featured_projects = Project.objects.filter(is_featured=True).order_by('-id')
 
   if standard_projects and featured_projects:
-     projects = stratify(featured_projects, standard_projects)
+    print('Branch 1')
+    projects = stratify(featured_projects, standard_projects)
   elif standard_projects or featured_projects:
-     projects = standard_projects or featured_projects
+    print('Branch 2')
+    projects = standard_projects or featured_projects
   else:
-     projects = []
+    print('Branch 3')
+    projects = []
+  
+  print([project.title for project in projects])
 
   return render(request, 'root/projects/index.html', {
     'projects': projects
