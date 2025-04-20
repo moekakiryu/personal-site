@@ -9,7 +9,7 @@ def home(request, **kwargs):
   article_count = 3
   project_count = 4
 
-  projects = Project.objects.all().order_by('-id')
+  projects = Project.objects.all().order_by('-is_featured','-id')
   articles = Article.objects.all().order_by('-created')
 
   return render(request, 'root/home/index.html', {
