@@ -8,17 +8,6 @@
     align-items: flex-start;
   }
 
-  .image-container {
-    flex: 0 0 40%;
-    aspect-ratio: 1 / 1;
-
-    margin-top: 0.25rem;
-    background-size: contain;
-    background-repeat: no-repeat;
-
-    transition: transform var(--duration-short), box-shadow var(--duration-short);
-  }
-
   &:hover, &:focus {
     color: inherit;
 
@@ -30,6 +19,17 @@
     .read-more {
       color: var(--color-accent);
     }
+  }
+
+  .image-container {
+    flex: 0 0 40%;
+    aspect-ratio: 1 / 1;
+
+    margin-top: 0.25rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transition: transform var(--duration-short), box-shadow var(--duration-short);
   }
 
   .name, .date {
