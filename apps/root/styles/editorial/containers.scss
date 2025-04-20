@@ -68,6 +68,10 @@
         border-bottom: 1px dashed var(--color-primary);
       }
 
+      .entry {
+        align-self: center;
+      }
+
       .image-container {
         @media (--until-desktop) {
           flex-basis: 40%;
