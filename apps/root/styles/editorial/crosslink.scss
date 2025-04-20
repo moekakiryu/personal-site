@@ -42,6 +42,9 @@
   }
 
   .date {
+    @media (--until-tablet) {
+      font-style: italic;
+    }
     &::before {
       @media (--tablet) {
         content: "|";
