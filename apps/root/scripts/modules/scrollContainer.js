@@ -1,16 +1,14 @@
 import { clamp, roundWithPrecision as roundDecimal } from "../utils/math";
-import { getBreakpoint, BREAKPOINTS } from "../utils/breakpoints";
+import { getBreakpoint, responsiveValue, BREAKPOINTS } from "../utils/breakpoints";
 import { BaseComponent } from "../utils/BaseComponent";
 
 const absoluteAngle = (x, y) => {
   return (180 * Math.atan(Math.abs(x) / Math.abs(y))) / Math.PI;
 };
 
-
 export class ScrollContainer extends BaseComponent {
   EPSILON = 5; // Decimal places
   SNAP_PADDING = 0.05; // Percent (of viewport width)
-  SCROLL_SPEED = 1.9;
   FRICTION = 1.05;
   MAXIMUM_VERTICAL_SCROLL = 55; // degrees
 
@@ -115,6 +113,12 @@ export class ScrollContainer extends BaseComponent {
     return this.$track.clientWidth - this.$thumb.clientWidth;
   }
 
+  get scrollSpeed() {
+    return responsiveValue(12.5, {
+      desktop: 16
+    })
+  }
+
   // --- Actions --- //
   animateScroll(delta, initial) {
     if (Math.abs(delta) < 1) return;
@@ -123,9 +127,16 @@ export class ScrollContainer extends BaseComponent {
     const direction = Math.sign(delta);
 
     // CREDIT: https://easings.net
-    const easedSpeed =
-      direction *
-      (Math.pow(1 - progress, 3) + Math.pow(progress + this.SCROLL_SPEED, 3));
+    const easingFunc = (n) =>
+      n === 0
+        ? 0
+        : n === 1
+        ? 1
+        : n < 0.5
+        ? Math.pow(2, 20 * n - 10) / 2
+        : (2 - Math.pow(2, -20 * n + 10)) / 2;
+
+    const easedSpeed = direction * this.scrollSpeed * easingFunc(progress)
 
     if (Math.abs(easedSpeed) >= Math.abs(delta)) {
       this.scrollBy(delta / this.availableContentWidth);
@@ -485,7 +496,7 @@ export class ScrollContainer extends BaseComponent {
           ScrollContainer.classes.positionStart,
           this.state.scrollOffset === 0
         );
-    
+
         this.$element.classList.toggle(
           ScrollContainer.classes.positionEnd,
           this.state.scrollOffset === 1
@@ -501,7 +512,7 @@ export class ScrollContainer extends BaseComponent {
         break;
     }
 
-    if (prop === 'dragType') {
+    if (prop === "dragType") {
       if (this.state.dragType === "scrollbar") {
         this.$track.classList.add(ScrollContainer.classes.active);
       } else {
@@ -511,7 +522,7 @@ export class ScrollContainer extends BaseComponent {
         case "touch":
           document.body.style.overscrollBehaviorX = "none";
           document.documentElement.style.overscrollBehaviorX = "none";
-          document.documentElement.style.overflowY = "hidden";
+          // document.documentElement.style.overflowY = "hidden";
           break;
 
         case "content":
@@ -526,7 +537,7 @@ export class ScrollContainer extends BaseComponent {
 
         default:
           document.documentElement.style.overscrollBehaviorX = "";
-          document.documentElement.style.overflowY = "";
+          // document.documentElement.style.overflowY = "";
           document.body.style.overscrollBehaviorX = "";
           document.body.style.userSelect = "";
           document.body.style.cursor = "";
