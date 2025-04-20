@@ -139,7 +139,10 @@ export class ScrollContainer extends BaseComponent {
   }
 
   animateMomentum() {
-    if (Math.abs(this.values.momentum) < 1) return
+    if (Math.abs(this.values.momentum) < 1) {
+      this.values.momentum = 0;
+      return
+    }
 
     const movement = Math.min(this.values.momentum, 15) / FRICTION
     this.values.momentum = movement
@@ -383,7 +386,7 @@ export class ScrollContainer extends BaseComponent {
         break;
     }
     this.values.lastInteraction = { x: event.pageX, y: event.pageY };
-    this.values.momentum = Math.max(event.movementX, this.values.momentum);
+    this.values.momentum = this.values.momentum === 0 ? Math.abs(event.movementX) : (Math.abs(event.movementX) + this.values.momentum) / 2;
   }
 
   // Use onClick instead of onMouseUp to let us catch and stop accidental
@@ -427,7 +430,8 @@ export class ScrollContainer extends BaseComponent {
       x: activeTouch.pageX,
       y: activeTouch.pageY,
     };
-    this.values.momentum = Math.max(delta, this.values.momentum);
+    this.values.momentum = this.values.momentum === 0 ? Math.abs(delta) : (Math.abs(delta) + this.values.momentum) / 2;
+    // this.values.momentum = Math.max(Math.abs(delta), this.values.momentum);
     this.values.dragDirection = Math.sign(delta);
   }
 
