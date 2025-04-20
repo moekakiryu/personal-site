@@ -12,13 +12,14 @@ urlpatterns = [
     path('projects/', views.projects, name="root.projects",
         kwargs=url_meta(display_name='Projects')
     ),
-
     path('articles/', views.articles, name="root.articles",
         kwargs=url_meta(display_name='Articles')
     ),
 
+    path("resume/", views.resume, name="root.resume",
+         kwargs=url_meta(display_name='Professional Experience')
+    ),
+
     path('articles/<uuid:article_id>/', views.article, name="root.article"),
     path('projects/<uuid:project_id>/', views.project, name="root.project"),
-
-    path("resume/", views.resume, name="root.resume"),
 ]

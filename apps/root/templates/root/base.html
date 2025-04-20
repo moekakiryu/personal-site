@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -9,15 +10,13 @@
   {# Stylesheets #}
   <link rel="preload" href="{% static 'root/css/main.min.css' %}" as="style">
   <link rel="stylesheet" href="{% static 'root/css/main.min.css' %}">
-  {% block head.styles %}
-  {% endblock head.styles %}
-
+  {% block head.styles %}{% endblock head.styles %}
 
   {# Javascript #}
   <script src="{% static "root/js/main.min.js" %}"></script>
 
   {# Title #}
-  <title>{% block head.title %} {{ meta.current.display_name|default:"Page" }} {% endblock head.title %} | Raymond Lewandowski</title>
+  <title>{% block head.title %} {{ meta.current.name|default:"Page" }} {% endblock head.title %} | Raymond Lewandowski</title>
 </head>
 
 <body class="layout-container line-numbers match-braces no-brace-select">
