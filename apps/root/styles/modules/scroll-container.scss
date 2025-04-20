@@ -48,6 +48,12 @@
     width: 100%;
     overflow: hidden;
 
+    &.disabled {
+      &::before, &::after {
+        content: none
+      }
+    }
+
     &::before, &::after {
       content: "";
       position: absolute;
@@ -68,6 +74,10 @@
   &-controls {
     display: flex;
     align-items: center;
+
+    &.disabled {
+      display: none;
+    }
   }
 
   // 1. Magic number to keep the icon stroke width the same as the track width

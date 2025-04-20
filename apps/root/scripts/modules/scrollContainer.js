@@ -16,6 +16,7 @@ export class ScrollContainer extends BaseComponent {
 
   static classes = {
     active: "active",
+    disabled: "disabled",
     positionStart: "position-start",
     positionEnd: "position-end",
   };
@@ -57,6 +58,7 @@ export class ScrollContainer extends BaseComponent {
 
   initialState() {
     return {
+      isEnabled: true,
       scrollOffset: 0,
       thumbWidth: 0,
       dragType: null, // 'content' | 'scrollbar' | 'touch'
@@ -76,6 +78,10 @@ export class ScrollContainer extends BaseComponent {
 
   get $content() {
     return this.getElement("content");
+  }
+
+  get $controls() {
+    return this.getElement('controls')
   }
 
   get $track() {
@@ -326,6 +332,12 @@ export class ScrollContainer extends BaseComponent {
     const percentVisible =
       this.$viewport.clientWidth / this.$content.scrollWidth;
 
+    if (percentVisible === 1) {
+      this.state.isEnabled = false;
+    } else if (!this.state.isEnabled) {
+      this.state.isEnabled = true;
+    }
+
     this.state.thumbWidth = this.$track.clientWidth * percentVisible;
   }
 
@@ -417,6 +429,8 @@ export class ScrollContainer extends BaseComponent {
 
     const contentOffset = this.state.scrollOffset * this.availableContentWidth;
 
+    this.$viewport.classList.toggle(ScrollContainer.classes.disabled, !this.state.isEnabled)
+    this.$controls.classList.toggle(ScrollContainer.classes.disabled, !this.state.isEnabled)
     this.$content.style.marginLeft = `-${contentOffset}px`;
 
     if (this.state.dragType === "scrollbar") {

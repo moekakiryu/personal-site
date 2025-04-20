@@ -12,7 +12,6 @@
 .project-list {
   display: grid;
   grid-auto-flow: column;
-  margin-inline: calc(-1 * var(--spacing-sm));
 
   .crosslink {
     flex-direction: column;
@@ -26,7 +25,12 @@
       flex-direction: row;
     }
 
+    &:first-child {
+      margin-left: calc(-1 * var(--spacing-sm));
+    }
+
     &:last-child {
+      margin-right: calc(-1 * var(--spacing-sm));
       border-right: none;
     }
   }
