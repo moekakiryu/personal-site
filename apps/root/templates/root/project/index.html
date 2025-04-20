@@ -35,5 +35,5 @@
   <div class="container">
     {{project.article.content|safe}}
   </div>
-  {% include "root/disclaimer.html" %}
+  {% include "root/disclaimer.html" with article=project.article %}
 {% endblock content %}

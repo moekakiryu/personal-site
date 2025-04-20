@@ -23,6 +23,7 @@ class Article(models.Model):
   )
 
   # Content Fields
+  is_spicy = models.BooleanField()
   title = models.CharField(
     max_length=255,
   )
