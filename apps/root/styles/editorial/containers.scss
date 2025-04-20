@@ -30,7 +30,6 @@
     }
 
     &:last-child {
-      margin-right: calc(-1 * var(--spacing-sm));
       border-right: none;
     }
   }
