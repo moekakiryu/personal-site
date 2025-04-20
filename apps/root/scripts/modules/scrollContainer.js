@@ -493,23 +493,20 @@ export class ScrollContainer extends BaseComponent {
         break;
 
       case "dragType":
-        if (this.state.dragType === "scrollbar") {
-          this.$track.classList.add(ScrollContainer.classes.active);
-        } else {
-          this.$track.classList.remove(ScrollContainer.classes.active);
-        }
+        // Do nothing... handled below
         break;
 
       case "thumbWidth":
         this.$thumb.style.width = `${this.state.thumbWidth}px`;
         break;
-
-      case 'dragType':
-        // Do nothing.... handled below
-        break;
     }
 
     if (prop === 'dragType') {
+      if (this.state.dragType === "scrollbar") {
+        this.$track.classList.add(ScrollContainer.classes.active);
+      } else {
+        this.$track.classList.remove(ScrollContainer.classes.active);
+      }
       switch (this.state.dragType) {
         case "touch":
           document.body.style.overscrollBehaviorX = "none";
