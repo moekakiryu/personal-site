@@ -6,6 +6,8 @@ const absoluteAngle = (x, y) => {
   return (180 * Math.atan(Math.abs(x) / Math.abs(y))) / Math.PI;
 };
 
+const FRICTION = 1.06;
+
 export class ScrollContainer extends BaseComponent {
   EPSILON = 5; // Decimal places
   SNAP_PADDING = 0.05; // Percent (of viewport width)
@@ -67,6 +69,7 @@ export class ScrollContainer extends BaseComponent {
 
   values = {
     pendingDragType: null,
+    momentum: 0,
     lastInteraction: null,
     dragDirection: 0,
     boundListeners: [],
@@ -130,7 +133,21 @@ export class ScrollContainer extends BaseComponent {
     }
 
     this.scrollBy(easedSpeed / this.availableContentWidth);
-    requestAnimationFrame(() => this.animateScroll(delta - easedSpeed, delta));
+    requestAnimationFrame(() => {
+      this.animateScroll(delta - easedSpeed, delta);
+    })
+  }
+
+  animateMomentum() {
+    if (Math.abs(this.values.momentum) < 1) return
+
+    const movement = Math.min(this.values.momentum, 15) / FRICTION
+    this.values.momentum = movement
+
+    this.scrollBy(this.values.dragDirection * Math.abs(movement) / this.availableContentWidth)
+    requestAnimationFrame(() => {
+      this.animateMomentum()
+    })
   }
 
   scrollNext() {
@@ -148,7 +165,7 @@ export class ScrollContainer extends BaseComponent {
       const delta = targetRight - viewportRight;
       const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
-      requestAnimationFrame(() => this.animateScroll(delta + padding));
+      this.animateScroll(delta + padding);
       return;
     }
 
@@ -169,7 +186,7 @@ export class ScrollContainer extends BaseComponent {
       const delta = previousSnapTarget.offsetLeft;
       const padding = this.SNAP_PADDING * this.$viewport.clientWidth;
 
-      requestAnimationFrame(() => this.animateScroll(delta - padding));
+      this.animateScroll(delta - padding);
       return;
     }
 
@@ -177,6 +194,14 @@ export class ScrollContainer extends BaseComponent {
       min: 0,
       max: 1,
     });
+  }
+
+  snapToNearest() {
+    if (this.values.dragDirection < 1) {
+      this.scrollPrevious();
+    } else {
+      this.scrollNext();
+    }
   }
 
   scrollBy(delta) {
@@ -193,20 +218,11 @@ export class ScrollContainer extends BaseComponent {
     });
   }
 
-  snapToNearest() {
-    if (this.values.dragDirection < 1) {
-      this.scrollPrevious();
-    } else {
-      this.scrollNext();
-    }
-  }
-
   endScroll() {
     this.state.dragType = null;
 
     this.values.pendingDragType = null;
     this.values.lastInteraction = null;
-    this.values.dragDirection = 0;
 
     // Remove any event listeners that may have been dynamically added
     this.values.boundListeners.forEach((listener) => listener.remove());
@@ -367,6 +383,7 @@ export class ScrollContainer extends BaseComponent {
         break;
     }
     this.values.lastInteraction = { x: event.pageX, y: event.pageY };
+    this.values.momentum = event.movementX;
   }
 
   // Use onClick instead of onMouseUp to let us catch and stop accidental
@@ -374,9 +391,7 @@ export class ScrollContainer extends BaseComponent {
   onWindowClick(event) {
     event.preventDefault();
 
-    if (this.state.dragType === "content") {
-      this.snapToNearest();
-    }
+    this.animateMomentum();
     this.endScroll();
   }
 
@@ -412,14 +427,12 @@ export class ScrollContainer extends BaseComponent {
       x: activeTouch.pageX,
       y: activeTouch.pageY,
     };
+    this.values.momentum = delta;
     this.values.dragDirection = Math.sign(delta);
   }
 
   onWindowTouchEnd() {
-    if (this.state.dragType === "touch") {
-      this.snapToNearest();
-    }
-
+    this.animateMomentum();
     this.endScroll();
   }
 
