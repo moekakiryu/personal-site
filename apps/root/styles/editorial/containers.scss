@@ -1,11 +1,7 @@
 .article-list {
   .crosslink {
     border-top: 1px dashed var(--color-primary);
-    padding-block: var(--spacing-sm);
-
-    &:last-child {
-      border-bottom: 1px dashed var(--color-primary);
-    }
+    padding-block: var(--spacing-sm) var(--spacing-lg);
   }
 }
 
@@ -19,7 +15,7 @@
     max-width: 75vw;
     padding-inline: var(--spacing-sm);
     border-right: 1px dashed var(--color-primary);
-    
+
     @media (--tablet) {
       width: 350px;
       flex-direction: row;
@@ -60,12 +56,15 @@
     &.featured {
       order: -1;
       padding-block: var(--spacing-sm);
-      border-top: 1px dashed var(--color-primary);
+      border-bottom: var(--line-width) dashed var(--color-accent);
       
       @media (--desktop) {
-        order: unset;
         grid-column: 1 / 3;
-        border-bottom: 1px dashed var(--color-primary);
+      }
+
+      @media (--large) {
+        order: unset;
+        border-top: var(--line-width) dashed var(--color-accent);
       }
 
       .entry {

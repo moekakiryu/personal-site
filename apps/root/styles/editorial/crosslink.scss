@@ -42,15 +42,7 @@
   }
 
   .date {
-    @media (--until-tablet) {
-      font-style: italic;
-    }
-    &::before {
-      @media (--tablet) {
-        content: "|";
-        padding-inline: var(--spacing-xs);
-      }
-    }
+    padding-right: var(--spacing-sm);
   }
 
   .description {

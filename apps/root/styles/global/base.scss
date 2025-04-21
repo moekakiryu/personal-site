@@ -46,6 +46,15 @@ h1 {
   line-height: 1em;
 
   @media (--desktop) {
+    font-size: 3rem;
+  }
+}
+
+
+h2 {
+  font-size: 1.5rem;
+
+  @media (--desktop) {
     font-size: 2rem;
   }
 }
