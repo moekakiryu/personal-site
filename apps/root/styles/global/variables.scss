@@ -45,15 +45,6 @@
   --top-offset: 4.125rem;
   --nav-height: 4.156rem;
 
-  /* Derived */
-  --font-color-primary: var(--color-primary);
-  --font-color-link: var(--color-primary);
-  --font-color-link-hover: var(--color-accent);
-
-  /* Global Styles */
-  font-family: var(--font-body);
-  color: var(--font-color-primary);
-
   @media (--large) {
     --top-offset: 10rem;
   }
