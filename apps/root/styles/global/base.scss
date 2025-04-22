@@ -90,6 +90,10 @@ ul, ol {
 
 li {
   padding-block: var(--spacing-xs);
+
+  &::marker {
+    font-weight: bold;
+  }
 }
 
 svg {
