@@ -74,7 +74,7 @@ p {
 }
 
 a {
-  color: var(--font-color-link);
+  color: var(--color-primary);
   font-weight: bold;
   text-decoration: none;
 
@@ -82,7 +82,7 @@ a {
 
   &:hover,
   &:focus {
-    color: var(--font-color-link-hover);
+    color: var(--color-accent);
   }
 }
 
