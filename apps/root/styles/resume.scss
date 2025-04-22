@@ -1,6 +1,61 @@
 @import "global/variables.scss";
 @import "modules/timeline.scss";
 
+.toolkit {
+  .skills {
+    display: flex;
+    gap: var(--spacing-xs);
+
+    @media (--desktop) {
+      flex-direction: column;
+    }
+
+    svg {
+      flex: 1 0 15%;
+
+      @media (--desktop) {
+        flex-basis: 200px;
+      }
+    }
+  
+    .skills-list {
+      display: grid;
+      gap: var(--spacing-sm);
+
+      padding-top: var(--spacing-md);
+
+      @media (--desktop) {
+        padding-top: 0;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      span {
+        display: inline-block;
+        padding-block: 0.2em;
+        font-style: italic;
+
+        &::after {
+          content: ", ";
+        }
+
+        &:last-child::after, &:has(+ :not(span))::after {
+          content: none;
+        }
+      }
+
+    }
+    .line {
+      fill: none;
+      stroke: var(--color-primary);
+      stroke-width: var(--line-width);
+
+      &.filled {
+        fill: var(--color-white);
+      }
+    }
+  }
+}
+
 .hire-me {
   min-height: calc(100vh - var(--top-offset));
 

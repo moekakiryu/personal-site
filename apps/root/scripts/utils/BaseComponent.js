@@ -1,3 +1,5 @@
+import { bindEvents } from "./dom";
+
 export class BaseComponent {
   static name;
 
@@ -11,8 +13,8 @@ export class BaseComponent {
     this.#state = this.initialState();
 
     Object.entries(this.initialState()).forEach(([key, value]) => {
-      this.state[key] = value
-    })
+      this.state[key] = value;
+    });
   }
 
   initialState() {
@@ -42,23 +44,21 @@ export class BaseComponent {
   bindEvents(element, eventMapping, defaultArgs) {
     const defaultArgArray = defaultArgs ?? [];
 
-    Object.entries(eventMapping).forEach(([eventType, listener]) => {
-      if (listener.extraArgs && listener.listener) {
-        element.addEventListener(
-          eventType,
-          listener.listener.bind(
-            this,
-            ...defaultArgArray,
-            ...listener.extraArgs
-          )
-        );
-      } else {
-        element.addEventListener(
-          eventType,
-          listener.bind(this, ...defaultArgArray)
-        );
-      }
-    });
+    const boundMapping = Object.fromEntries(
+      Object.entries(eventMapping).map(([eventType, listener]) => {
+        if (listener.extraArgs && listener.listener) {
+          const { listener: listenerMethod, extraArgs } = listener;
+
+          return [
+            eventType,
+            listenerMethod.bind(this, ...defaultArgArray, ...extraArgs),
+          ];
+        }
+        return [eventType, listener.bind(this, ...defaultArgArray)];
+      })
+    );
+
+    bindEvents(element, boundMapping);
   }
 
   get name() {
