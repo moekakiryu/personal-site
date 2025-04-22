@@ -84,6 +84,14 @@ a {
   }
 }
 
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  padding-block: var(--spacing-xs);
+}
+
 svg {
   width: 100%;
 }
