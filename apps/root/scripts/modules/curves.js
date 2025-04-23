@@ -198,6 +198,7 @@ function updateSvg(svgElement, targetElements) {
       ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.off
       : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.off;
     const scrollListener = () => {
+      document.querySelectorAll('.debug-output').forEach(output => output.innerHTML = `hasFired: ${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger}`)
       if (hasFired && window.scrollY < scrollReset) {
         hasFired = false;
         return
