@@ -31,8 +31,8 @@ const parameters = {
       off: 400,
     },
     mobile: {
-      on: 300,
-      off: 400,
+      on: 200,
+      off: 300,
     },
   },
 };
