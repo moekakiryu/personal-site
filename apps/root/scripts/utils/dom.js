@@ -1,5 +1,5 @@
 function createElementCreator(creator) {
-  return function (tagName, attributes = {}, events = {}) {
+  return function (tagName, attributes = {}, events = {}, ...children) {
     const element = creator(tagName);
 
     Object.entries(attributes).forEach(([attribute, value]) => {
@@ -7,6 +7,8 @@ function createElementCreator(creator) {
     });
 
     bindEvents(element, events);
+
+    children.forEach((child) => element.appendChild(child));
 
     return element;
   };

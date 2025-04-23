@@ -26,6 +26,8 @@ export function getBreakpoint() {
 /**
  * Accept a mapping of breakpoint names (see `getBreakpoint` above) and return
  * the value corresponding to the current screen size
+ * 
+ * @TODO: return a dynamic property `.current`
  */
 export function responsiveValue(defaultValue, mapping) {
   const currentBreakpoint = getBreakpoint();

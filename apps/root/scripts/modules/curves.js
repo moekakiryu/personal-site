@@ -1,14 +1,30 @@
-import { BREAKPOINTS, getBreakpoint } from '../utils/breakpoints'
-import { createSvgElement } from '../utils/dom'
-import { SVGCursor } from '../utils/SVGCursor'
+import { BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
+import { createSvgElement } from "../utils/dom";
+import { SVGCursor } from "../utils/SVGCursor";
 
 const parameters = {
-  curveRadius: 50, // px
-  originOffset: -60, // px - How far away from the center the curves should start from
+  // (px) How broad the curve corners should be
+  curveRadius: {
+    desktop: 40,
+    mobile: 25,
+  },
+  // (px) Offset from the center for the starting point of each curve
+  originOffset: -60,
+  // (px) Offset from the center for the ending point of each curve
   targetOffset: {
     x: -58,
     y: 18,
-  }, // px - How far away from the center the curves should start from
+  },
+  // (seconds) How long the 'flash' duration should take
+  animationDuration: {
+    desktop: 0.5,
+    mobile: 0.5,
+  },
+
+  revealHeight: {
+    desktop: 400,
+    mobile: 300,
+  },
 };
 
 function buildConnectorPath(start, end, curveRadius) {
@@ -34,23 +50,18 @@ function buildConnectorPath(start, end, curveRadius) {
 
   // Set start position
   cursor.move({ x: startX, y: startY });
-
   // Move down
   cursor.line({ y: legs.y });
-
   // Draw first curve
   cursor.arc(fitRadius, directionalPi / 2, directionalPi);
-
   // Move horizontally
   cursor.line({ x: legs.x });
-
-  // Draw second curve
+  // Draw second curvz
   cursor.arc(fitRadius, 2 * directionalPi, (3 * directionalPi) / 2);
-
   // Move down
   cursor.line({ y: legs.y });
 
-  return cursor.commands.join(' ');
+  return cursor.commands.join(" ");
 }
 
 function buildElbowPath(start, end, curveRadius) {
@@ -64,91 +75,150 @@ function buildElbowPath(start, end, curveRadius) {
 
   const legs = {
     x: endX - startX - fitRadius,
-    y: endY - fitRadius
-  }
+    y: endY - fitRadius,
+  };
 
   const cursor = new SVGCursor();
-  
+
   // Set start position
-  cursor.move({ x: startX, y: startY })
-
+  cursor.move({ x: startX, y: startY });
   // Move down
-  cursor.line({ y: legs.y })
-
+  cursor.line({ y: legs.y });
   // Bend right
-  cursor.arc(fitRadius, 3 * Math.PI / 2, Math.PI)
-
+  cursor.arc(fitRadius, (3 * Math.PI) / 2, Math.PI);
   // Move horizontally
-  cursor.line({ x: legs.x })
+  cursor.line({ x: legs.x });
 
-  return cursor.commands.join(' ')
+  return cursor.commands.join(" ");
+}
+
+function buildPath(svgElement, target) {
+  const isDesktop = BREAKPOINTS[getBreakpoint()] > BREAKPOINTS.tablet;
+
+  const localOffset = {
+    x: target.getBoundingClientRect().x - svgElement.getBoundingClientRect().x,
+    y: target.getBoundingClientRect().y - svgElement.getBoundingClientRect().y,
+  };
+
+  if (isDesktop) {
+    const origin = {
+      x: svgElement.clientWidth / 2 + parameters.originOffset,
+      y: 0,
+    };
+    const elementCenter = {
+      x: localOffset.x + target.offsetWidth / 2 + parameters.targetOffset.x,
+      y: svgElement.clientHeight,
+    };
+
+    return buildConnectorPath(
+      origin,
+      elementCenter,
+      parameters.curveRadius.desktop
+    );
+  } else {
+    const origin = {
+      x: 7,
+      y: 0,
+    };
+    const elementCenter = {
+      x: svgElement.clientWidth - 7,
+      y: localOffset.y + parameters.targetOffset.y,
+    };
+
+    return buildElbowPath(origin, elementCenter, parameters.curveRadius.mobile);
+  }
 }
 
 function updateSvg(svgElement, targetElements) {
-  svgElement.replaceChildren()
+  const isDesktop = BREAKPOINTS[getBreakpoint()] > BREAKPOINTS.tablet;
+  svgElement.replaceChildren();
 
-  const curves = Array.from(targetElements).map((element) => {
-    const localOffset = {
-      x: element.getBoundingClientRect().x - svgElement.getBoundingClientRect().x,
-      y: element.getBoundingClientRect().y - svgElement.getBoundingClientRect().y
-    }
+  const curves = Array.from(targetElements).map((element, elementIndex) => {
+    const pathId = `connector${elementIndex}`;
+    const animationId = `${pathId}Animation`;
 
-    // // Note we are using the SVG element since the curve will span the full height
-    let path
-    if (BREAKPOINTS[getBreakpoint()] > BREAKPOINTS.tablet) {
-      const origin = {
-        x: svgElement.clientWidth / 2 + parameters.originOffset,
-        y: 0,
-      }
-      const elementCenter = {
-        x: localOffset.x + element.offsetWidth / 2 + parameters.targetOffset.x,
-        y: svgElement.clientHeight
-      }
+    const path = buildPath(svgElement, element);
+    const breakpointParameters = isDesktop
+      ? {
+          dur: `${parameters.animationDuration.desktop}s`,
+        }
+      : {
+          dur: `${parameters.animationDuration.mobile}s`,
+          calcMode: "linear",
+        };
 
-      path = buildConnectorPath(origin, elementCenter, parameters.curveRadius)
-    } else {
-      const origin = {
-        x: 7,
-        y: 0,
-      }
-      const elementCenter = {
-        x: svgElement.clientWidth - 7,
-        y: localOffset.y + parameters.targetOffset.y,
-      }
-  
-      path = buildElbowPath(origin, elementCenter, 20)
-    }
+    const pathElement = createSvgElement("path", {
+      id: pathId,
+      d: path,
+      class: "line",
+    });
 
-    return {
-      path: createSvgElement('path', {
-        d: path,
-        class: 'line',
-        'stroke-linecap': 'round',
-      }),
-      // circle: createSvgElement('circle', {
-      //   cx: elementCenter.x,
-      //   cy: elementCenter.y,
-      //   r: 6,
-      //   class: 'line filled'
-      // })
-    }
-  })
+    const animationElement = createSvgElement(
+      "animateMotion",
+      {
+        id: animationId,
+        fill: "freeze",
+        begin: "indefinite",
+        ...breakpointParameters,
+      },
+      undefined,
+      // spellchecker: disable-next-line
+      createSvgElement("mpath", { href: `#${pathId}` })
+    );
 
-  curves.forEach(({path, circle}) => {
-    svgElement.appendChild(path)
-    // svgElement.appendChild(circle)
-  })
+    const animationVisibilityElement = createSvgElement("set", {
+      attributeName: "visibility",
+      to: "visible",
+      begin: `${animationId}.begin`,
+      end: `${animationId}.end`,
+    });
+
+    const circleElement = createSvgElement(
+      "circle",
+      {
+        r: 8,
+        class: "circle",
+      },
+      undefined,
+      animationElement,
+      animationVisibilityElement
+    );
+
+    let hasFired = false;
+    const scrollTrigger = isDesktop
+      ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop
+      : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile;
+    console.log(scrollTrigger, )
+    const scrollListener = () => {
+      if (hasFired && window.scrollY < scrollTrigger) hasFired = false;
+      if (hasFired || window.scrollY < scrollTrigger) return;
+
+      animationElement.beginElement();
+      hasFired = true;
+    };
+    window.addEventListener("scroll", scrollListener);
+    window.addEventListener("resize", () =>
+      window.removeEventListener("scroll", scrollListener)
+    );
+
+    return { path: pathElement, circle: circleElement };
+  });
+
+  curves.reverse().forEach(({ path, circle }) => {
+    svgElement.appendChild(path);
+    svgElement.appendChild(circle);
+  });
 }
 
 export function init() {
-  const svgElement = document.getElementById('curve-template')
-  const targets = document.querySelectorAll('.skills-list > div')
+  const svgElement = document.getElementById("curve-template");
+  const targets = document.querySelectorAll(".skills-list > div");
 
   if (svgElement) {
-    updateSvg(svgElement, targets)
+    updateSvg(svgElement, targets);
 
-    window.addEventListener('resize', () => {
-      updateSvg(svgElement, targets)
-    })
+    window.addEventListener("resize", () => {
+      updateSvg(svgElement, targets);
+    });
   }
 }

@@ -14,7 +14,7 @@
       flex: 1 0 15%;
 
       @media (--desktop) {
-        flex-basis: 200px;
+        flex-basis: 175px;
       }
     }
   
@@ -44,14 +44,17 @@
       }
 
     }
+
     .line {
       fill: none;
       stroke: var(--color-primary);
       stroke-width: var(--line-width);
+      stroke-linecap: round;
+    }
 
-      &.filled {
-        fill: var(--color-white);
-      }
+    .circle {
+      fill: var(--color-white);
+      visibility: hidden;
     }
   }
 }
