@@ -32,6 +32,7 @@ const parameters = {
     },
   },
 };
+const firedEvents = []
 
 function buildConnectorPath(start, end, curveRadius) {
   const { x: startX, y: startY } = start;
@@ -136,6 +137,7 @@ function buildPath(svgElement, target) {
 }
 
 function updateSvg(svgElement, targetElements) {
+  firedEvents.push('Update')
   const isDesktop = BREAKPOINTS[getBreakpoint()] > BREAKPOINTS.tablet;
   svgElement.replaceChildren();
 
@@ -191,7 +193,6 @@ function updateSvg(svgElement, targetElements) {
     );
 
     let hasFired = false;
-    const firedEvents = []
     const scrollTrigger = isDesktop
       ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.on
       : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.on;
@@ -202,7 +203,7 @@ function updateSvg(svgElement, targetElements) {
       document.querySelectorAll('.debug-output').forEach(output => {
         output.innerHTML = `
           <div>hasFired: ${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger}</div>
-          <div>${JSON.stringify(firedEvents, undefined, 2)}</div>
+          <div>[<br>&nbsp;&nbsp;${firedEvents.join(',<br>&nbsp;&nbsp;')}<br>]</div>
         `
       })
       if (hasFired && window.scrollY < scrollReset) {
@@ -217,9 +218,10 @@ function updateSvg(svgElement, targetElements) {
       hasFired = true;
     };
     window.addEventListener("scroll", scrollListener);
-    window.addEventListener("resize", () =>
+    window.addEventListener("resize", () => {
+      firedEvents.push('Clear event listeners')
       window.removeEventListener("scroll", scrollListener)
-    );
+    });
 
     return { path: pathElement, circle: circleElement };
   });
@@ -238,6 +240,7 @@ export function init() {
     updateSvg(svgElement, targets);
 
     window.addEventListener("resize", () => {
+      firedEvents.push('Window resize')
       updateSvg(svgElement, targets);
     });
   }
