@@ -1,4 +1,8 @@
-import { addBreakpointListener, BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
+import {
+  addBreakpointListener,
+  BREAKPOINTS,
+  getBreakpoint,
+} from "../utils/breakpoints";
 import { createSvgElement } from "../utils/dom";
 import { SVGCursor } from "../utils/SVGCursor";
 
@@ -32,7 +36,6 @@ const parameters = {
     },
   },
 };
-const firedEvents = []
 
 function buildConnectorPath(start, end, curveRadius) {
   const { x: startX, y: startY } = start;
@@ -137,7 +140,6 @@ function buildPath(svgElement, target) {
 }
 
 function updateSvg(svgElement, targetElements) {
-  firedEvents.push('Update')
   const isDesktop = BREAKPOINTS[getBreakpoint()] > BREAKPOINTS.tablet;
   svgElement.replaceChildren();
 
@@ -192,37 +194,37 @@ function updateSvg(svgElement, targetElements) {
       animationVisibilityElement
     );
 
-    let hasFired = false;
     const scrollTrigger = isDesktop
-      ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.on
-      : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.on;
+      ? svgElement.getBoundingClientRect().y -
+        parameters.revealHeight.desktop.on
+      : svgElement.getBoundingClientRect().y -
+        parameters.revealHeight.mobile.on;
+
     const scrollReset = isDesktop
-      ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.off
-      : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.off;
+      ? svgElement.getBoundingClientRect().y -
+        parameters.revealHeight.desktop.off
+      : svgElement.getBoundingClientRect().y -
+        parameters.revealHeight.mobile.off;
+
+    let hasFired = false;
     const scrollListener = () => {
-      document.querySelectorAll('.debug-output').forEach(output => {
-        output.innerHTML = `
-          <div>hasFired: ${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger}</div>
-          <div>[<br>&nbsp;&nbsp;${firedEvents.join(',<br>&nbsp;&nbsp;')}<br>]</div>
-        `
-      })
       if (hasFired && window.scrollY < scrollReset) {
-        firedEvents.push(`Reset: (${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger})`)
         hasFired = false;
-        return
+        return;
       }
       if (hasFired || window.scrollY < scrollTrigger) return;
 
       animationElement.beginElement();
-      firedEvents.push(`Main (${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger})`)
       hasFired = true;
     };
+
     const resizeListener = () => {
-      window.removeEventListener('scroll', scrollListener);
-      addBreakpointListener(resizeListener)
-    }
+      window.removeEventListener("scroll", scrollListener);
+      addBreakpointListener(resizeListener);
+    };
+
     window.addEventListener("scroll", scrollListener);
-    addBreakpointListener(resizeListener)
+    addBreakpointListener(resizeListener);
 
     return { path: pathElement, circle: circleElement };
   });
@@ -240,9 +242,8 @@ export function init() {
   if (svgElement) {
     updateSvg(svgElement, targets);
 
-    addBreakpointListener((event) => {
-      firedEvents.push('Window resize')
+    addBreakpointListener(() => {
       updateSvg(svgElement, targets);
-    })
+    });
   }
 }
