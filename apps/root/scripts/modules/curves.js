@@ -191,6 +191,7 @@ function updateSvg(svgElement, targetElements) {
     );
 
     let hasFired = false;
+    const firedEvents = []
     const scrollTrigger = isDesktop
       ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.on
       : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.on;
@@ -198,14 +199,21 @@ function updateSvg(svgElement, targetElements) {
       ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.off
       : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.off;
     const scrollListener = () => {
-      document.querySelectorAll('.debug-output').forEach(output => output.innerHTML = `hasFired: ${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger}`)
+      document.querySelectorAll('.debug-output').forEach(output => {
+        output.innerHTML = `
+          <div>hasFired: ${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger}</div>
+          <div>${JSON.stringify(firedEvents, undefined, 2)}</div>
+        `
+      })
       if (hasFired && window.scrollY < scrollReset) {
+        firedEvents.push(`Reset: (${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger})`)
         hasFired = false;
         return
       }
       if (hasFired || window.scrollY < scrollTrigger) return;
 
       animationElement.beginElement();
+      firedEvents.push(`Main (${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger})`)
       hasFired = true;
     };
     window.addEventListener("scroll", scrollListener);
