@@ -1,4 +1,4 @@
-import { BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
+import { addBreakpointListener, BREAKPOINTS, getBreakpoint } from "../utils/breakpoints";
 import { createSvgElement } from "../utils/dom";
 import { SVGCursor } from "../utils/SVGCursor";
 
@@ -219,10 +219,10 @@ function updateSvg(svgElement, targetElements) {
     };
     const resizeListener = () => {
       window.removeEventListener('scroll', scrollListener);
-      window.removeEventListener('resize', resizeListener)
+      addBreakpointListener(resizeListener)
     }
     window.addEventListener("scroll", scrollListener);
-    window.addEventListener("resize", resizeListener);
+    addBreakpointListener(resizeListener)
 
     return { path: pathElement, circle: circleElement };
   });
@@ -240,9 +240,9 @@ export function init() {
   if (svgElement) {
     updateSvg(svgElement, targets);
 
-    window.addEventListener("resize", () => {
+    addBreakpointListener((event) => {
       firedEvents.push('Window resize')
       updateSvg(svgElement, targets);
-    });
+    })
   }
 }

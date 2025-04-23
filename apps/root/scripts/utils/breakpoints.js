@@ -1,3 +1,5 @@
+let currentWidth = window.innerWidth
+
 export const BREAKPOINTS = {
   mobile: 0,
   tablet: 480,
@@ -44,4 +46,19 @@ export function responsiveValue(defaultValue, mapping) {
   }, undefined);
 
   return mappedKey ? mapping[mappedKey] : defaultValue;
+}
+
+export function addBreakpointListener(listener) {
+  let currentWidth = window.innerWidth
+
+  const decoratedListener = (event) => {
+    const newWidth = window.innerWidth
+
+    if (currentWidth !== newWidth) {
+      currentWidth = newWidth
+      listener(event)
+    }
+  }
+
+  window.addEventListener('resize', decoratedListener)
 }
