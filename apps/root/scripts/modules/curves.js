@@ -217,11 +217,12 @@ function updateSvg(svgElement, targetElements) {
       firedEvents.push(`Main (${hasFired}, reset: ${window.scrollY < scrollReset}, trigger: ${window.scrollY < scrollTrigger})`)
       hasFired = true;
     };
+    const resizeListener = () => {
+      window.removeEventListener('scroll', scrollListener);
+      window.removeEventListener('resize', resizeListener)
+    }
     window.addEventListener("scroll", scrollListener);
-    window.addEventListener("resize", () => {
-      firedEvents.push('Clear event listeners')
-      window.removeEventListener("scroll", scrollListener)
-    });
+    window.addEventListener("resize", resizeListener);
 
     return { path: pathElement, circle: circleElement };
   });
