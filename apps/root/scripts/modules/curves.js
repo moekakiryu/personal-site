@@ -22,8 +22,14 @@ const parameters = {
   },
 
   revealHeight: {
-    desktop: 400,
-    mobile: 300,
+    desktop: {
+      on: 300,
+      off: 400,
+    },
+    mobile: {
+      on: 300,
+      off: 400,
+    },
   },
 };
 
@@ -186,11 +192,16 @@ function updateSvg(svgElement, targetElements) {
 
     let hasFired = false;
     const scrollTrigger = isDesktop
-      ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop
-      : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile;
-    console.log(scrollTrigger, )
+      ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.on
+      : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.on;
+    const scrollReset = isDesktop
+      ? svgElement.getBoundingClientRect().y - parameters.revealHeight.desktop.off
+      : svgElement.getBoundingClientRect().y - parameters.revealHeight.mobile.off;
     const scrollListener = () => {
-      if (hasFired && window.scrollY < scrollTrigger) hasFired = false;
+      if (hasFired && window.scrollY < scrollReset) {
+        hasFired = false;
+        return
+      }
       if (hasFired || window.scrollY < scrollTrigger) return;
 
       animationElement.beginElement();
