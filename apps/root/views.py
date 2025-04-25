@@ -83,7 +83,6 @@ def resume(request, **kwargs):
           current_employer = contract.employer
       else:
           contract_group.append(contract)
-      
 
   # Append the last group if it exists
   if contract_group:
