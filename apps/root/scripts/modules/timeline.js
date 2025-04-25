@@ -3,8 +3,6 @@ import { responsiveValue } from "../utils/breakpoints";
 import { roundWithPrecision } from "../utils/math";
 
 export class ResumeTimeline extends BaseComponent {
-  DOT_OFFSET = 18; // px
-
   static name = "ResumeTimeline";
 
   static classes = {
@@ -25,7 +23,7 @@ export class ResumeTimeline extends BaseComponent {
   }
 
   get revealHeight() {
-    return responsiveValue(100, { large: 160 }); // px
+    return responsiveValue(100, { desktop: 160 }); // px
   }
 
   get $$contracts() {
@@ -42,6 +40,10 @@ export class ResumeTimeline extends BaseComponent {
 
   $fill(line) {
     return this.getElement("fill", { parent: line });
+  }
+
+  getDotOffset(target) {
+    return responsiveValue(0.5 * target.offsetHeight, { desktop: 18 })
   }
 
   getClipHeight(target) {
@@ -68,7 +70,7 @@ export class ResumeTimeline extends BaseComponent {
     this.$$contracts.forEach((contract) => {
       if (
         contract.getBoundingClientRect().y <=
-        this.revealHeight - this.DOT_OFFSET
+        this.revealHeight - this.getDotOffset(contract)
       ) {
         contract.classList.add(ResumeTimeline.classes.passed);
       } else {
