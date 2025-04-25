@@ -43,7 +43,7 @@ export class ResumeTimeline extends BaseComponent {
   }
 
   getDotOffset(target) {
-    return responsiveValue(0.5 * target.offsetHeight, { desktop: 18 })
+    return responsiveValue(0.5 * target.offsetHeight, { desktop: 18 });
   }
 
   getClipHeight(target) {
@@ -92,11 +92,10 @@ export class ResumeTimeline extends BaseComponent {
       const isTop = floatingTitle.offsetTop === titleParent.offsetTop;
       const isBottom = parentBottom - floatingBottom < 5;
 
-      if (!isTop && !isBottom) {
-        floatingTitle.classList.add(ResumeTimeline.classes.floating);
-      } else {
-        floatingTitle.classList.remove(ResumeTimeline.classes.floating);
-      }
+      floatingTitle.classList.toggle(
+        ResumeTimeline.classes.floating,
+        !isTop && !isBottom
+      );
     });
   }
 
