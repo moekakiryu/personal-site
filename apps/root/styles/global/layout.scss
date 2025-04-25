@@ -17,6 +17,7 @@
     position: sticky;
     top: 0;
 
+    pointer-events: none;
     z-index: var(--z-header);
 
     @media (--large) {

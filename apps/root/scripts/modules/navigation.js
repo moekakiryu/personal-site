@@ -7,7 +7,8 @@ export class Navigation extends BaseComponent {
   static name = "Navigation";
 
   static classes = {
-    hidden: "hidden",
+    top: "top",
+    open: "open",
   };
 
   constructor(name, element) {
@@ -19,13 +20,14 @@ export class Navigation extends BaseComponent {
 
     this.bindEvents(this.$mobileNavigation, {
       click: this.onMobileNavigationClick,
-    })
+    });
 
     this.bindEvents(this.$toggle, {
       click: this.onToggleClick,
     });
 
-    this.hideNav();
+    this.attachScrollObserver();
+    this.state.isOpen = false;
   }
 
   /* --- Elements --- */
@@ -37,19 +39,64 @@ export class Navigation extends BaseComponent {
     return this.getElement("toggle");
   }
 
+  get $fadeArea() {
+    return this.getElement("fadeArea");
+  }
+
   /* --- State --- */
+
+  values = {
+    observer: null,
+  };
 
   initialState() {
     return {
+      isTop: true,
       isOpen: BREAKPOINTS[getBreakpoint()] >= BREAKPOINTS.large,
     };
   }
 
   /* --- Actions --- */
 
-  hideNav() {
-    this.$mobileNavigation.style.display = "none";
-    this.state.isOpen = false;
+  attachScrollObserver() {
+    if (this.values.observer) {
+      this.values.observer.observer.disconnect();
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        this.state.isTop = !entry.isIntersecting;
+      },
+      {
+        rootMargin: `0px 0px -100%`,
+      }
+    );
+
+    observer.observe(document.querySelector("main"));
+
+    this.values.observer = {
+      observer,
+      reconnect: () => this.attachScrollObserver(),
+    };
+
+    return observer;
+  }
+
+  hideElement(target) {
+    target
+      .animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: this.ANIMATION_DURATION,
+      })
+      .finished.then(() => {
+        target.style.display = "none";
+      });
+  }
+
+  showElement(target) {
+    target.style.display = "";
+    target.animate([{ opacity: 0 }, { opacity: 1 }], {
+      duration: this.ANIMATION_DURATION,
+    });
   }
 
   /* --- Handlers --- */
@@ -67,31 +114,43 @@ export class Navigation extends BaseComponent {
   onWindowResize() {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
+    if (breakpoint < BREAKPOINTS.desktop) {
+      if (!this.state.isTop && !this.state.isOpen) {
+        this.$fadeArea.style.display = 'none';
+      }
+    }
+
+    if (breakpoint >= BREAKPOINTS.desktop) {
+      this.$fadeArea.style.display = ''
+    }
+
     if (breakpoint >= BREAKPOINTS.large) {
       this.state.isOpen = false;
     }
   }
 
   render() {
+    const breakpoint = BREAKPOINTS[getBreakpoint()];
+
     document.body.style.overflow = this.state.isOpen ? "hidden" : "";
 
     this.$toggle.innerText = this.state.isOpen ? "Close" : "Menu";
     this.$toggle.setAttribute("aria-expanded", this.state.isOpen);
 
     if (this.state.isOpen) {
-      this.$mobileNavigation.style.display = "";
-
-      this.$mobileNavigation.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: this.ANIMATION_DURATION,
-      });
+      this.showElement(this.$mobileNavigation);
     } else {
-      this.$mobileNavigation
-        .animate([{ opacity: 1 }, { opacity: 0 }], {
-          duration: this.ANIMATION_DURATION,
-        })
-        .finished.then(() => {
-          this.$mobileNavigation.style.display = "none";
-        });
+      this.hideElement(this.$mobileNavigation);
     }
+    this.$element.classList.toggle(Navigation.classes.open, this.state.isOpen);
+
+    if (breakpoint < BREAKPOINTS.desktop) {
+      if (this.state.isOpen || this.state.isTop) {
+        this.showElement(this.$fadeArea);
+      } else {
+        this.hideElement(this.$fadeArea)
+      }
+    }
+    this.$element.classList.toggle(Navigation.classes.top, this.state.isTop);
   }
 }

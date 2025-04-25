@@ -1,22 +1,55 @@
 .header {
-  @media (--until-large) {
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--duration-short), border-color var(--duration-short);
+
+  @media (--desktop) {
     background-color: var(--color-white);
-    border-bottom: 1px solid var(--color-primary);
+    border-color: var(--color-primary);
+    pointer-events: all;
   }
 
+  @media (--large) {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  &.top, &.open {
+    @media (--until-large) {
+      background-color: var(--color-white);
+      border-color: var(--color-primary);
+      pointer-events: all;
+    }
+
+    .hamburger {
+      border-left-color: transparent;
+      border-bottom-left-radius: 0;
+      transition: border-color 0s;
+    }
+  }
+
+  // 1. Small hack to make the hamburger and nav bottom borders overlap to
+  //    cause less jank in visibility transitions
   & > .inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: var(--spacing-md);
 
     max-width: var(--max-content-width);
-    padding: var(--spacing-xs) var(--spacing-sm);
     margin-inline: auto;
+    margin-bottom: -1px; // [1]
 
     @media (--large) {
       display: block;
-      padding-block: 0;
+      padding-inline: var(--spacing-sm);
+    }
+  }
+
+  .fade-area {
+    flex-grow: 1;
+
+    @media (--until-large) {
+      padding-left: var(--spacing-sm);
     }
   }
 
@@ -29,6 +62,24 @@
     
     @media (--until-large) {
       max-width: 220px;
+    }
+  }
+
+  .hamburger {
+    padding-block: var(--spacing-xs);
+
+    border-left: 1px solid var(--color-primary);
+    border-bottom: 1px solid var(--color-primary);
+    border-bottom-left-radius: var(--rounded-sm);
+    
+    background-color: var(--color-white);
+    pointer-events: all;
+
+    transition: border-color var(--duration-short);
+
+    @media (--desktop) {
+      border-left: none;
+      border-bottom-left-radius: 0;
     }
   }
 }

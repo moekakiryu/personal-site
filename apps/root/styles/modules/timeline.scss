@@ -71,8 +71,9 @@
       content: "";
       position: absolute;
 
-      border: var(--line-width) solid var(--color-primary);
+      border: var(--line-width) solid var(--color-accent);
       border-radius: var(--rounded-full);
+      outline: 2px solid var(--color-white);
 
       top: var(--spacing-sm);
       // TODO: Fix px alignment hack
