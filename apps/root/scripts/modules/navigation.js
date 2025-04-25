@@ -129,7 +129,7 @@ export class Navigation extends BaseComponent {
     }
   }
 
-  render() {
+  render(_, prop) {
     const breakpoint = BREAKPOINTS[getBreakpoint()];
 
     document.body.style.overflow = this.state.isOpen ? "hidden" : "";
@@ -145,8 +145,12 @@ export class Navigation extends BaseComponent {
     this.$element.classList.toggle(Navigation.classes.open, this.state.isOpen);
 
     if (breakpoint < BREAKPOINTS.desktop) {
-      if (this.state.isOpen || this.state.isTop) {
-        this.showElement(this.$fadeArea);
+      if (this.state.isTop) {
+        if (prop === 'isTop') {
+          this.showElement(this.$fadeArea)
+        }
+      } else if (this.state.isOpen) {
+        this.showElement(this.$fadeArea)
       } else {
         this.hideElement(this.$fadeArea)
       }
