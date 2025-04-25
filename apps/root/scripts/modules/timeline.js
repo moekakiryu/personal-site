@@ -25,7 +25,7 @@ export class ResumeTimeline extends BaseComponent {
   }
 
   get revealHeight() {
-    return responsiveValue(130, { large: 160 }); // px
+    return responsiveValue(100, { large: 160 }); // px
   }
 
   get $$contracts() {
