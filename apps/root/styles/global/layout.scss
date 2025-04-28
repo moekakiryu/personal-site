@@ -71,6 +71,14 @@
     padding-inline: 0;
   }
 
+  &.bleed {
+    padding-inline: 0;
+
+    & > .inner {
+      padding-inline: var(--spacing-sm);
+    }
+  }
+
   .container & {
     padding: 0;
   }

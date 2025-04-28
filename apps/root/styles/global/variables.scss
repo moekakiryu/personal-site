@@ -63,13 +63,13 @@
 }
 
 /* NOTE: Use max-width here to hide on small screens */
-@media screen and (max-width: 1280px) {
+@media (--until-large) {
   .desktop {
     display: none !important;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (--until-desktop) {
   .tablet {
     display: none !important;
   }

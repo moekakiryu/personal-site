@@ -1,7 +1,7 @@
 @import "global/variables.scss";
 @import "modules/timeline.scss";
 
-.toolkit {
+
   .skills {
     display: flex;
     gap: var(--spacing-xs);
@@ -22,10 +22,7 @@
       display: grid;
       gap: var(--spacing-sm);
 
-      padding-top: var(--spacing-md);
-
       @media (--desktop) {
-        padding-top: 0;
         grid-template-columns: repeat(4, 1fr);
       }
 
@@ -57,12 +54,36 @@
       visibility: hidden;
     }
   }
-}
 
 .hire-me {
   min-height: calc(100vh - var(--top-offset));
 
   @media (--until-large) {
     padding-top: var(--spacing-sm);
+  }
+}
+
+.grid {
+  position: relative;
+
+  // Extras
+  border-block: 1px solid var(--color-primary);
+  padding: var(--spacing-sm);
+  // End extras
+
+  &::before {
+    @media (--until-large) {       
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background: var(--color-hairline); // [1]
+      z-index: -1;
+
+      mask-image: url(/static/root/assets/grid.png);
+      mask-mode: luminance;
+      mask-position: center center;
+      mask-size: 88px;
+    }
   }
 }
