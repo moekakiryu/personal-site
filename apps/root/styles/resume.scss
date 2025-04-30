@@ -67,7 +67,7 @@
   position: relative;
 
   // Extras
-  border-block: 1px solid var(--color-primary);
+  border-block: var(--line-width) solid var(--color-primary);
   padding: var(--spacing-sm);
   // End extras
 
