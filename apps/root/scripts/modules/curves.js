@@ -1,5 +1,5 @@
 import {
-  addBreakpointListener,
+  addScreenWidthListener,
   BREAKPOINTS,
   getBreakpoint,
 } from "../utils/breakpoints";
@@ -25,17 +25,20 @@ const parameters = {
     mobile: 0.5,
   },
 
+  // Percent of screen height
   revealHeight: {
-    desktop: {
-      on: 300,
-      off: 400,
-    },
-    mobile: {
-      on: 200,
-      off: 300,
-    },
+    desktop: 25,
+    mobile: 30,
   },
+
+  // Percent of screen height
+  resetHeight: {
+    desktop: 5,
+    mobile: 5
+  }
 };
+
+const firedAnimations = []
 
 function buildConnectorPath(start, end, curveRadius) {
   const { x: startX, y: startY } = start;
@@ -139,6 +142,32 @@ function buildPath(svgElement, target) {
   }
 }
 
+function createHeightObserver(target, height, callback) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries.length > 1) {
+        console.warn("Multiple entries found for IntersectionObserver");
+      }
+      const entry = entries[0];
+      const {
+        boundingClientRect: { top },
+        isIntersecting,
+      } = entry;
+
+      if (isIntersecting && top > 0) {
+        callback()
+      }
+    },
+    {
+      rootMargin: `-0% 0px -${100 - height}%`,
+      threshold: 0,
+    }
+  );
+  observer.observe(target);
+
+  return observer
+}
+
 function updateSvg(svgElement, targetElements) {
   const isDesktop = BREAKPOINTS[getBreakpoint()] > BREAKPOINTS.tablet;
   svgElement.replaceChildren();
@@ -194,37 +223,24 @@ function updateSvg(svgElement, targetElements) {
       animationVisibilityElement
     );
 
-    const scrollTrigger = isDesktop
-      ? svgElement.getBoundingClientRect().y -
-        parameters.revealHeight.desktop.on
-      : svgElement.getBoundingClientRect().y -
-        parameters.revealHeight.mobile.on;
+    const revealHeight = isDesktop
+      ? parameters.revealHeight.desktop
+      : parameters.revealHeight.mobile;
 
-    const scrollReset = isDesktop
-      ? svgElement.getBoundingClientRect().y -
-        parameters.revealHeight.desktop.off
-      : svgElement.getBoundingClientRect().y -
-        parameters.revealHeight.mobile.off;
+    const resetHeight = isDesktop
+      ? parameters.resetHeight.desktop
+      : parameters.resetHeight.mobile;
 
-    let hasFired = false;
-    const scrollListener = () => {
-      if (hasFired && window.scrollY < scrollReset) {
-        hasFired = false;
-        return;
+    createHeightObserver(pathElement, revealHeight, () => {
+      if (!firedAnimations.includes(animationId)) {
+        animationElement.beginElement()
+        firedAnimations.push(animationId)
       }
-      if (hasFired || window.scrollY < scrollTrigger) return;
+    })
 
-      animationElement.beginElement();
-      hasFired = true;
-    };
-
-    const resizeListener = () => {
-      window.removeEventListener("scroll", scrollListener);
-      addBreakpointListener(resizeListener);
-    };
-
-    window.addEventListener("scroll", scrollListener);
-    addBreakpointListener(resizeListener);
+    createHeightObserver(pathElement, resetHeight, () => {
+      firedAnimations.splice(firedAnimations.indexOf(animationId), 1)
+    })
 
     return { path: pathElement, circle: circleElement };
   });
@@ -242,7 +258,7 @@ export function init() {
   if (svgElement) {
     updateSvg(svgElement, targets);
 
-    addBreakpointListener(() => {
+    addScreenWidthListener(() => {
       updateSvg(svgElement, targets);
     });
   }

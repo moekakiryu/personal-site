@@ -48,7 +48,10 @@ export function responsiveValue(defaultValue, mapping) {
   return mappedKey ? mapping[mappedKey] : defaultValue;
 }
 
-export function addBreakpointListener(listener) {
+// This helper is necessary because mobile browsers (most notable FF) also
+// fire resize events when the search bar auto-hides and auto-reveals, which we
+// want to ignore
+export function addScreenWidthListener(listener) {
   let currentWidth = window.innerWidth
 
   const decoratedListener = (event) => {
@@ -61,4 +64,6 @@ export function addBreakpointListener(listener) {
   }
 
   window.addEventListener('resize', decoratedListener)
+
+  return decoratedListener
 }
