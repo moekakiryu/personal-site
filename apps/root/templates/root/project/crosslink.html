@@ -1,8 +1,8 @@
-<a class="crosslink{% if project.is_featured %} featured{% endif %}" href="{% url "root.project" project.slug %}" data-snap>
+<a class="project{% if project.is_featured %} featured{% endif %}" href="{% url "root.project" project.slug %}" data-snap>
   {% if project.thumbnail %}
     <div class="image-container" style="background-image: url({{ MEDIA_URL }}{{ project.thumbnail }});"></div>
   {% endif %}
-  <div class="entry">
+  <div class="details">
     <h3 class="name">
       {{ project.title }}
     </h3>
