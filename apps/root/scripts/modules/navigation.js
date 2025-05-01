@@ -27,7 +27,6 @@ export class Navigation extends BaseComponent {
     });
 
     this.attachScrollObserver();
-    this.state.isOpen = false;
   }
 
   /* --- Elements --- */
@@ -47,6 +46,7 @@ export class Navigation extends BaseComponent {
 
   values = {
     observer: null,
+    pendingAnimations: new Map(),
   };
 
   initialState() {
@@ -83,20 +83,49 @@ export class Navigation extends BaseComponent {
   }
 
   hideElement(target) {
-    target
-      .animate([{ opacity: 1 }, { opacity: 0 }], {
-        duration: this.ANIMATION_DURATION,
-      })
-      .finished.then(() => {
+    const animation = target.animate([{ opacity: 1 }, { opacity: 0 }], {
+      duration: this.ANIMATION_DURATION,
+    });
+
+    animation.finished
+      .then(() => {
         target.style.display = "none";
+        this.values.pendingAnimations.delete(target)
+      })
+      .catch((e) => {
+        if (!(e instanceof DOMException)) {
+          throw e;
+        }
       });
+
+    if (this.values.pendingAnimations.get(target)) {
+      this.values.pendingAnimations.get(target).cancel();
+    }
+    this.values.pendingAnimations.set(target, animation);
   }
 
   showElement(target) {
+    if (target.style.display !== 'none' && !this.values.pendingAnimations.get(target)) return
     target.style.display = "";
-    target.animate([{ opacity: 0 }, { opacity: 1 }], {
+
+    const animation = target.animate([{ opacity: 0 }, { opacity: 1 }], {
       duration: this.ANIMATION_DURATION,
     });
+
+    animation.finished
+      .then(() => {
+        this.values.pendingAnimations.delete(target);
+      })
+      .catch((e) => {
+        if (!(e instanceof DOMException)) {
+          throw e;
+        }
+      });
+
+    if (this.values.pendingAnimations.get(target)) {
+      this.values.pendingAnimations.get(target).cancel();
+    }
+    this.values.pendingAnimations.set(target, animation);
   }
 
   /* --- Handlers --- */
@@ -116,12 +145,12 @@ export class Navigation extends BaseComponent {
 
     if (breakpoint < BREAKPOINTS.desktop) {
       if (!this.state.isTop && !this.state.isOpen) {
-        this.$fadeArea.style.display = 'none';
+        this.$fadeArea.style.display = "none";
       }
     }
 
     if (breakpoint >= BREAKPOINTS.desktop) {
-      this.$fadeArea.style.display = ''
+      this.$fadeArea.style.display = "";
     }
 
     if (breakpoint >= BREAKPOINTS.large) {
@@ -146,13 +175,13 @@ export class Navigation extends BaseComponent {
 
     if (breakpoint < BREAKPOINTS.desktop) {
       if (this.state.isTop) {
-        if (prop === 'isTop') {
-          this.showElement(this.$fadeArea)
+        if (prop === "isTop") {
+          this.showElement(this.$fadeArea);
         }
       } else if (this.state.isOpen) {
-        this.showElement(this.$fadeArea)
+        this.showElement(this.$fadeArea);
       } else {
-        this.hideElement(this.$fadeArea)
+        this.hideElement(this.$fadeArea);
       }
     }
     this.$element.classList.toggle(Navigation.classes.top, this.state.isTop);
