@@ -2,6 +2,8 @@
   display: flex;
   gap: var(--spacing-sm);
 
+  margin-block: 0.25rem;
+
   font-weight: unset;
 
   @media (--desktop) {
@@ -25,7 +27,6 @@
     flex: 0 0 40%;
     aspect-ratio: 1 / 1;
 
-    margin-top: 0.25rem;
     background-size: contain;
     background-repeat: no-repeat;
 
