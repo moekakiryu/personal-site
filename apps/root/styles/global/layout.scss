@@ -14,13 +14,15 @@
   }
 
   &-navigation {
-    position: sticky;
+    position: fixed;
     top: 0;
+    inset-inline: 0;
 
     pointer-events: none;
     z-index: var(--z-header);
 
     @media (--large) {
+      position: sticky;
       flex: 0 0 var(--sidebar-width);
 
       height: 100vh;
@@ -48,6 +50,8 @@
   }
 
   &-content {
+    margin-top: var(--nav-height);
+
     @media (--large) {
       flex-grow: 1;
       max-width: calc(var(--max-content-width) + var(--sidebar-width));
