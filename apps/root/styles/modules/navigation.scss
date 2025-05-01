@@ -38,6 +38,8 @@
     margin-inline: auto;
     margin-bottom: calc(-1 * var(--line-width));
 
+    overflow: hidden;
+
 
     @media (--large) {
       display: block;
