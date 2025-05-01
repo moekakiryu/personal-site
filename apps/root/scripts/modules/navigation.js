@@ -160,10 +160,6 @@ export class Navigation extends BaseComponent {
     if (breakpoint >= BREAKPOINTS.desktop) {
       this.$fadeArea.style.display = "";
     }
-
-    if (breakpoint >= BREAKPOINTS.large) {
-      this.state.isOpen = false;
-    }
   }
 
   render() {
