@@ -1,59 +1,59 @@
+// TODO: Variables is required to support custom breakpoint compilation. This should be fixed so the double import is not required
 @import "global/variables.scss";
 @import "modules/timeline.scss";
 
+.skills {
+  display: flex;
+  gap: var(--spacing-xs);
 
-  .skills {
-    display: flex;
-    gap: var(--spacing-xs);
+  @media (--desktop) {
+    flex-direction: column;
+  }
+
+  svg {
+    flex: 1 0 15%;
 
     @media (--desktop) {
-      flex-direction: column;
-    }
-
-    svg {
-      flex: 1 0 15%;
-
-      @media (--desktop) {
-        flex-basis: 175px;
-      }
-    }
-  
-    .skills-list {
-      display: grid;
-      gap: var(--spacing-sm);
-
-      @media (--desktop) {
-        grid-template-columns: repeat(4, 1fr);
-      }
-
-      span {
-        display: inline-block;
-        padding-block: 0.2em;
-        font-style: italic;
-
-        &::after {
-          content: ", ";
-        }
-
-        &:last-child::after, &:has(+ :not(span))::after {
-          content: none;
-        }
-      }
-
-    }
-
-    .line {
-      fill: none;
-      stroke: var(--color-primary);
-      stroke-width: var(--line-width);
-      stroke-linecap: round;
-    }
-
-    .circle {
-      fill: var(--color-white);
-      visibility: hidden;
+      flex-basis: 175px;
     }
   }
+
+  .skills-list {
+    display: grid;
+    gap: var(--spacing-sm);
+
+    @media (--desktop) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    span {
+      display: inline-block;
+      padding-block: 0.2em;
+      font-style: italic;
+
+      &::after {
+        content: ", ";
+      }
+
+      &:last-child::after, &:has(+ :not(span))::after {
+        content: none;
+      }
+    }
+
+  }
+
+  .line {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: var(--line-width);
+    stroke-linecap: round;
+  }
+
+  .circle {
+    fill: var(--color-white);
+    visibility: hidden;
+  }
+}
 
 .hire-me {
   min-height: calc(100vh - var(--top-offset));
