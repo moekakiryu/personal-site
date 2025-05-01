@@ -52,7 +52,7 @@ export class Navigation extends BaseComponent {
   initialState() {
     return {
       isTop: true,
-      isOpen: BREAKPOINTS[getBreakpoint()] >= BREAKPOINTS.large,
+      isOpen: false,
     };
   }
 
@@ -65,7 +65,11 @@ export class Navigation extends BaseComponent {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        this.state.isTop = !entry.isIntersecting;
+        const breakpoint = BREAKPOINTS[getBreakpoint()];
+
+        if (breakpoint < BREAKPOINTS.desktop) {
+          this.state.isTop = !entry.isIntersecting;
+        }
       },
       {
         rootMargin: `0px 0px -100%`,
@@ -90,7 +94,7 @@ export class Navigation extends BaseComponent {
     animation.finished
       .then(() => {
         target.style.display = "none";
-        this.values.pendingAnimations.delete(target)
+        this.values.pendingAnimations.delete(target);
       })
       .catch((e) => {
         if (!(e instanceof DOMException)) {
@@ -105,7 +109,11 @@ export class Navigation extends BaseComponent {
   }
 
   showElement(target) {
-    if (target.style.display !== 'none' && !this.values.pendingAnimations.get(target)) return
+    if (
+      target.style.display !== "none" &&
+      !this.values.pendingAnimations.get(target)
+    )
+      return;
     target.style.display = "";
 
     const animation = target.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -158,32 +166,21 @@ export class Navigation extends BaseComponent {
     }
   }
 
-  render(_, prop) {
-    const breakpoint = BREAKPOINTS[getBreakpoint()];
-
+  render() {
     document.body.style.overflow = this.state.isOpen ? "hidden" : "";
 
     this.$toggle.innerText = this.state.isOpen ? "Close" : "Menu";
     this.$toggle.setAttribute("aria-expanded", this.state.isOpen);
 
-    if (this.state.isOpen) {
-      this.showElement(this.$mobileNavigation);
-    } else {
-      this.hideElement(this.$mobileNavigation);
-    }
-    this.$element.classList.toggle(Navigation.classes.open, this.state.isOpen);
+    this.state.isOpen
+      ? this.showElement(this.$mobileNavigation)
+      : this.hideElement(this.$mobileNavigation);
 
-    if (breakpoint < BREAKPOINTS.desktop) {
-      if (this.state.isTop) {
-        if (prop === "isTop") {
-          this.showElement(this.$fadeArea);
-        }
-      } else if (this.state.isOpen) {
-        this.showElement(this.$fadeArea);
-      } else {
-        this.hideElement(this.$fadeArea);
-      }
-    }
+    this.state.isTop || this.state.isOpen
+      ? this.showElement(this.$fadeArea)
+      : this.hideElement(this.$fadeArea);
+
     this.$element.classList.toggle(Navigation.classes.top, this.state.isTop);
+    this.$element.classList.toggle(Navigation.classes.open, this.state.isOpen);
   }
 }
