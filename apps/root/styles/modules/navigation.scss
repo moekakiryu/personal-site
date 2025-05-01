@@ -21,7 +21,7 @@
     }
 
     .hamburger {
-      border-color: transparent;
+      border-left-color: transparent;
       border-bottom-left-radius: 0;
       background-color: transparent;
       transition: border-color 0s;
@@ -36,6 +36,8 @@
 
     max-width: var(--max-content-width);
     margin-inline: auto;
+    margin-bottom: calc(-1 * var(--line-width));
+
 
     @media (--large) {
       display: block;
@@ -69,7 +71,7 @@
     border-left: var(--line-width) solid var(--color-primary);
     border-bottom: var(--line-width) solid var(--color-primary);
     border-bottom-left-radius: var(--rounded-sm);
-    margin-bottom: calc(-1 * var(--line-width));
+    margin-left: calc(-1 * var(--line-width));
     
     background-color: var(--color-white);
     pointer-events: all;
