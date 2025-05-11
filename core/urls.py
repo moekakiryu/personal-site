@@ -20,6 +20,7 @@ urlpatterns = [
 
     # Local Applications
     path('', include('apps.root.urls')),
+    path('metro/', include('apps.metroTunnel.urls')),
 ]
 
 if settings.DEBUG:
