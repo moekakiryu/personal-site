@@ -10,13 +10,13 @@
   <meta property="og:description" content="{{ project.article.content|rich_preview:20 }}">
   <meta property="og:type" content="article">
   <meta property="og:article:author" content="Raymond Lewandowski">
-  <meta property="og:image" content="{% if project.hero %}{{ MEDIA_URL }}{{ project.hero }}{% else %}{% static "root/assets/page-default.png" %}{% endif %}">
+  <meta property="og:image" content="{% if project.hero %}{{ MEDIA_URL }}{{ project.hero }}{% else %}{% static "www/assets/page-default.png" %}{% endif %}">
   <meta property="og:url" content="{{ request.build_absolute_uri }}">
 {% endblock head.opengraph %}
 
 {% block head.styles %}
-  <link rel="stylesheet" type="text/css" href="{% static "root/css/article.min.css" %}">
-  <script src="{% static "root/js/prism.min.js" %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static "www/css/article.min.css" %}">
+  <script src="{% static "www/js/prism.min.js" %}"></script>
 {% endblock head.styles %}
 
 {% block content %}

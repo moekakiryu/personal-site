@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "run-s 'build:**'",
-    "build:css": "postcss styles/*.scss -d static/root/css --ext .min.css --verbose",
-    "build:js": "esbuild --bundle --minify scripts/index.js --outfile=static/root/js/main.min.js",
-    "build:js:external": "esbuild --minify scripts/external/* --outdir=static/root/js",
+    "build:css": "postcss styles/*.scss -d static/www/css --ext .min.css --verbose",
+    "build:js": "esbuild --bundle --minify scripts/index.js --outfile=static/www/js/main.min.js",
+    "build:js:external": "esbuild --minify scripts/external/* --outdir=static/www/js",
     "dev": "run-p 'dev:*'",
     "dev:css": "yarn run build:css --watch",
     "dev:js": "yarn run build:js --sourcemap --watch"

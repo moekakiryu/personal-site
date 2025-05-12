@@ -14,14 +14,14 @@
   <meta property="og:article:published_time" content="{{ article.created|date:'Y-m-d' }}">
   <meta property="og:article:modified_time" content="{{ article.updated|date:'Y-m-d' }}">
 
-  <meta property="og:image" content="{% static "root/assets/page-default.png" %}">
+  <meta property="og:image" content="{% static "www/assets/page-default.png" %}">
   <meta property="og:url" content="{{ request.build_absolute_uri }}">
 {% endblock head.opengraph %}
 
 {% block head.styles %}
-  <link rel="preload" href="{% static 'root/css/article.min.css' %}" as="style">
-  <link rel="stylesheet" type="text/css" href="{% static "root/css/article.min.css" %}">
-  <script src="{% static "root/js/prism.min.js" %}"></script>
+  <link rel="preload" href="{% static 'www/css/article.min.css' %}" as="style">
+  <link rel="stylesheet" type="text/css" href="{% static "www/css/article.min.css" %}">
+  <script src="{% static "www/js/prism.min.js" %}"></script>
 {% endblock head.styles %}
 
 {% block content %}

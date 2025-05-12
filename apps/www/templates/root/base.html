@@ -10,18 +10,18 @@
   {% block head.opengraph %}
     <meta property="og:title" content="{{ meta.current.name|default:"Page" }} - Raymond Lewandowski">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{% static "root/assets/page-default.png" %}">
+    <meta property="og:image" content="{% static "www/assets/page-default.png" %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
   {% endblock head.opengraph %}
 
 
   {# Stylesheets #}
-  <link rel="preload" href="{% static 'root/css/main.min.css' %}" as="style">
-  <link rel="stylesheet" href="{% static 'root/css/main.min.css' %}">
+  <link rel="preload" href="{% static 'www/css/main.min.css' %}" as="style">
+  <link rel="stylesheet" href="{% static 'www/css/main.min.css' %}">
   {% block head.styles %}{% endblock head.styles %}
 
   {# Javascript #}
-  <script src="{% static "root/js/main.min.js" %}"></script>
+  <script src="{% static "www/js/main.min.js" %}"></script>
 
   {# Title #}
   <title>{% block head.title %} {{ meta.current.name|default:"Page" }} {% endblock head.title %} | Raymond Lewandowski</title>

@@ -52,11 +52,11 @@ class Project(models.Model):
     max_length=255,
   )
   thumbnail = models.ImageField(
-    upload_to='root/projects/',
+    upload_to='www/projects/',
     blank=True
   )
   hero = models.ImageField(
-    upload_to='root/projects/',
+    upload_to='www/projects/',
     blank=True
   )
   blurb = models.TextField(
