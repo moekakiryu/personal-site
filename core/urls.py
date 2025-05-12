@@ -19,7 +19,7 @@ urlpatterns = [
     path('robots.txt', TemplateView.as_view(template_name = 'robots.txt', content_type = "text/plain")),
 
     # Local Applications
-    path('', include('apps.root.urls')),
+    path('', include('apps.www.urls')),
 ]
 
 if settings.DEBUG:

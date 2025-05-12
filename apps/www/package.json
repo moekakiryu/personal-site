@@ -1,5 +1,5 @@
 {
-  "name": "@raymondlewandowski/root",
+  "name": "@raymondlewandowski/www",
   "packageManager": "yarn@4.7.0",
   "private": true,
   "scripts": {

@@ -82,7 +82,7 @@ INSTALLED_APPS = [
     'django_hosts',
 
     # Local Applications
-    'apps.root.apps.RootConfig',
+    'apps.www.apps.WwwConfig',
 ]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#middleware
@@ -212,7 +212,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --- PLUGINS --- #
 ROOT_HOSTCONF = "core.hosts"
-DEFAULT_HOST = "root"
+DEFAULT_HOST = "www"
 
 TINYMCE_DEFAULT_CONFIG = {
     "theme": "silver",
