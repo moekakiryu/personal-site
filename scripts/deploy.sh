@@ -1,5 +1,5 @@
 #!/bin/bash
-exit 0;
+
 # Verify this script is being run in the correct directory
 # Note: We assume that finding an django entry is enough verification for this
 if [ ! -f manage.py ]; then
