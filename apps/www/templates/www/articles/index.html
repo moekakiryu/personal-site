@@ -1,9 +1,9 @@
-{% extends "root/base.html" %}
+{% extends "www/base.html" %}
 
 {% block content %}
   <div class="hero hero-landing">
     <div class="inner">
-      {% include "root/breadcrumb.html" %}
+      {% include "www/breadcrumb.html" %}
       <h1>All the stuff I've written</h1>
       <p>
         Mostly opinion pieces, but also write&#8209;ups about anything and everything I
@@ -14,7 +14,7 @@
   <div class="container">
     <div class="article-list">
       {% for article in articles %}
-        {% include "root/article/crosslink.html" %}
+        {% include "www/article/crosslink.html" %}
       {% endfor %}
     </div>
   </div>

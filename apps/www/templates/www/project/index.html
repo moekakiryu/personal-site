@@ -1,4 +1,4 @@
-{% extends "root/base.html" %}
+{% extends "www/base.html" %}
 
 {% load static %}
 {% load rich_content %}
@@ -23,7 +23,7 @@
   <div class="hero hero-project">
     <div class="inner">
       <div class="title">
-        {% include "root/breadcrumb.html" %}
+        {% include "www/breadcrumb.html" %}
         <h1>{{ project.title }}</h1>
       </div>
 
@@ -45,5 +45,5 @@
   <div class="container">
     {{project.article.content|safe}}
   </div>
-  {% include "root/disclaimer.html" with article=project.article %}
+  {% include "www/disclaimer.html" with article=project.article %}
 {% endblock content %}

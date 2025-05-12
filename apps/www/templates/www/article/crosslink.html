@@ -1,6 +1,6 @@
 {% load rich_content %}
 
-<a class="article" href="{% url "root.article" article.slug %}">
+<a class="article" href="{% url "www.article" article.slug %}">
   <div class="details">
     <h3 class="name">{{ article.title }}</h3>
     <span class="date">{{ article.updated|date:"N Y" }}</span>

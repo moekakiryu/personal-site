@@ -1,9 +1,9 @@
-{% extends "root/base.html" %}
+{% extends "www/base.html" %}
 
 {% block content %}
   <div class="hero hero-landing">
     <div class="inner">
-    {% include "root/breadcrumb.html" %}
+    {% include "www/breadcrumb.html" %}
       <h1>All the stuff I've made</h1>
       <p>...Not counting all of the stuff I've made for my job, the stuff I never saved, or the stuff I just haven't uploaded to this site yet.</p>
     </div>
@@ -11,7 +11,7 @@
   <div class="container">
     <div class="project-grid">
       {% for project in projects %}
-        {% include "root/project/crosslink.html" %}
+        {% include "www/project/crosslink.html" %}
       {% endfor %}
     </div>    
   </div>

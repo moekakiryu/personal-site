@@ -12,7 +12,7 @@ def home(request, **kwargs):
   projects = Project.objects.all().order_by('-is_featured','-id')
   articles = Article.objects.all().order_by('-created')
 
-  return render(request, 'root/home/index.html', {
+  return render(request, 'www/home/index.html', {
     'projects': {
       'list': projects[:project_count],
       'has_more': projects.count() > project_count
@@ -27,7 +27,7 @@ def home(request, **kwargs):
 def articles(request, **kwargs):
   articles = Article.objects.all().order_by('-created')
 
-  return render(request, 'root/articles/index.html', {
+  return render(request, 'www/articles/index.html', {
     'articles': articles
   })
 
@@ -35,7 +35,7 @@ def articles(request, **kwargs):
 def article(request, article_id, **kwargs):
   article = Article.objects.get(slug = article_id)
 
-  return render(request, 'root/article/index.html', {
+  return render(request, 'www/article/index.html', {
     'article': article
   })
 
@@ -51,7 +51,7 @@ def projects(request, **kwargs):
   else:
     projects = []
 
-  return render(request, 'root/projects/index.html', {
+  return render(request, 'www/projects/index.html', {
     'projects': projects
   })
 
@@ -59,7 +59,7 @@ def projects(request, **kwargs):
 def project(request, project_id, **kwargs):
   project = Project.objects.get(slug = project_id)
 
-  return render(request, 'root/project/index.html', {
+  return render(request, 'www/project/index.html', {
     'project': project,
   })
 
@@ -91,6 +91,6 @@ def resume(request, **kwargs):
         'contracts': contract_group,
       })
 
-  return render(request, 'root/resume/index.html', {
+  return render(request, 'www/resume/index.html', {
      'employers': employers
   })

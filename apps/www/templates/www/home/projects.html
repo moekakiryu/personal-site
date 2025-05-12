@@ -10,7 +10,7 @@
         <div data-element="ScrollContainer.content">
           <div class="project-list">
             {% for project in projects.list %}
-              {% include "root/project/crosslink.html" %}
+              {% include "www/project/crosslink.html" %}
             {% endfor %}
           </div>
         </div>
@@ -25,7 +25,7 @@
           data-element="ScrollContainer.backButton"
           disabled
         >
-          {% include "root/icons/arrow-left.svg" %}
+          {% include "www/icons/arrow-left.svg" %}
         </button>
         <div
           class="scroll-track"
@@ -47,7 +47,7 @@
           aria-label="forward"
           data-element="ScrollContainer.forwardButton"
         >
-          {% include "root/icons/arrow-right.svg" %}
+          {% include "www/icons/arrow-right.svg" %}
         </button>
       </div>
     </div>
@@ -55,7 +55,7 @@
 
   {% if projects.has_more %}
     <div class="container">
-      <a class="cta primary" href="{% url "root.projects" %}">View all projects</a>
+      <a class="cta primary" href="{% url "www.projects" %}">View all projects</a>
     </div>
   {% endif %}
 </div>

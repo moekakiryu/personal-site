@@ -2,14 +2,14 @@
   <div class="container">
     <div class="article-list">
       {% for article in articles.list %}
-        {% include "root/article/crosslink.html" %}
+        {% include "www/article/crosslink.html" %}
       {% endfor %}
     </div>
   </div>
 
   {% if articles.has_more %}
     <div class="container">
-      <a class="cta primary" href="{% url "root.articles" %}">View all articles</a>
+      <a class="cta primary" href="{% url "www.articles" %}">View all articles</a>
     </div>
   {% endif %}
 </div>
