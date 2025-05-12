@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0008_project_hero_project_is_featured_project_source_url_and_more'),
+        ('www', '0008_project_hero_project_is_featured_project_source_url_and_more'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='project',
             name='hero',
-            field=models.ImageField(blank=True, upload_to='root/projects/'),
+            field=models.ImageField(blank=True, upload_to='www/projects/'),
         ),
         migrations.AlterField(
             model_name='project',
             name='thumbnail',
-            field=models.ImageField(blank=True, upload_to='root/projects/'),
+            field=models.ImageField(blank=True, upload_to='www/projects/'),
         ),
     ]

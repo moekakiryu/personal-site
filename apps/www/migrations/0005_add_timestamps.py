@@ -4,7 +4,7 @@ from django.db import migrations, models
 from django.utils import timezone
 
 def fill_current_time(apps, schema_editor):
-    ActiveModel = apps.get_model('root', 'blogentry')
+    ActiveModel = apps.get_model('www', 'blogentry')
 
     for entry in ActiveModel.objects.all():
         entry.created = timezone.now()
@@ -14,7 +14,7 @@ def fill_current_time(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0004_require_uuid_slug'),
+        ('www', '0004_require_uuid_slug'),
     ]
 
     operations = [

@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0005_add_timestamps'),
+        ('www', '0005_add_timestamps'),
     ]
 
     operations = [

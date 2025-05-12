@@ -7,14 +7,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0007_project_thumbnail'),
+        ('www', '0007_project_thumbnail'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='project',
             name='hero',
-            field=models.ImageField(default='root/projects/noimage.png', upload_to='root/projects/'),
+            field=models.ImageField(default='www/projects/noimage.png', upload_to='www/projects/'),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='project',
             name='article',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to='root.article'),
+            field=models.OneToOneField(on_delete=django.db.models.deletion.PROTECT, to='www.article'),
         ),
         migrations.AlterField(
             model_name='project',

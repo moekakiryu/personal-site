@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0010_employer_contract'),
+        ('www', '0010_employer_contract'),
     ]
 
     operations = [

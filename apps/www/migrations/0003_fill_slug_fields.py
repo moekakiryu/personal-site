@@ -18,16 +18,16 @@ def get_uuid_generator(app, model):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0002_add_uuid_slug'),
+        ('www', '0002_add_uuid_slug'),
     ]
 
     operations = [
         migrations.RunPython(
-            get_uuid_generator('root', 'blogentry'),
+            get_uuid_generator('www', 'blogentry'),
             reverse_code=migrations.RunPython.noop,
         ),
         migrations.RunPython(
-            get_uuid_generator('root', 'project'),
+            get_uuid_generator('www', 'project'),
             reverse_code=migrations.RunPython.noop,
         ),
     ]

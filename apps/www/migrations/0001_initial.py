@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('project_url', models.URLField()),
                 ('title', models.CharField(max_length=255)),
                 ('blurb', models.TextField(max_length=120)),
-                ('writeup', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='root.blogentry')),
+                ('writeup', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='www.blogentry')),
             ],
         ),
     ]

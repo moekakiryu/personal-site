@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0009_alter_project_hero_alter_project_thumbnail'),
+        ('www', '0009_alter_project_hero_alter_project_thumbnail'),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('start', models.DateField()),
                 ('end', models.DateField()),
                 ('description', tinymce.models.HTMLField()),
-                ('employer', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='root.employer')),
+                ('employer', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='www.employer')),
             ],
         ),
     ]

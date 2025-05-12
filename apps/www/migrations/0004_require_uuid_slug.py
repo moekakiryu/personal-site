@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('root', '0003_fill_slug_fields'),
+        ('www', '0003_fill_slug_fields'),
     ]
 
     operations = [
