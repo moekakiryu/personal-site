@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 
-from apps.root.models import Article, Project, Contract
+from apps.www.models import Article, Project, Contract
 from utils.querysets import stratify
 
 def home(request, **kwargs):

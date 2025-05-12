@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.root.models import Article, Project, Employer, Contract
+from apps.www.models import Article, Project, Employer, Contract
 
 
 class ArticleAdmin(admin.ModelAdmin):
