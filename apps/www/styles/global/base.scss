@@ -132,6 +132,6 @@ svg {
   }
 
   .fill {
-    fill: rgb(from var(--color-black) r g b / 0.05);
+    fill: var(--color-black);
   }
 }
