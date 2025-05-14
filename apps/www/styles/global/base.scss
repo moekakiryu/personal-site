@@ -121,3 +121,17 @@ blockquote {
 
   font-style: italic;
 }
+
+svg {
+  .primary {
+    stroke: var(--color-primary);
+  }
+
+  .accent {
+    stroke: var(--color-accent);
+  }
+
+  .fill {
+    fill: rgb(from var(--color-black) r g b / 0.05);
+  }
+}

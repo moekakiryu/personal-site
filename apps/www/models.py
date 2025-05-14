@@ -51,11 +51,12 @@ class Project(models.Model):
   title = models.CharField(
     max_length=255,
   )
-  thumbnail = models.ImageField(
+  # TODO: Add SVG validation
+  thumbnail = models.FileField(
     upload_to='www/projects/',
     blank=True
   )
-  hero = models.ImageField(
+  hero = models.FileField(
     upload_to='www/projects/',
     blank=True
   )

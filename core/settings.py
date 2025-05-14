@@ -111,6 +111,7 @@ TEMPLATES = [
         'OPTIONS': {
             'libraries': {
               'rich_content': 'core.templatetags.rich_content',
+              'svg': 'core.templatetags.svg',
             },
             'context_processors': [
                 # Django processors

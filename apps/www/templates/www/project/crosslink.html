@@ -1,6 +1,12 @@
+{% load svg %}
+
 <a class="project{% if project.is_featured %} featured{% endif %}" href="{% url "www.project" project.slug %}" data-snap>
   {% if project.thumbnail %}
-    <div class="image-container" style="background-image: url({{ MEDIA_URL }}{{ project.thumbnail }});"></div>
+    {% if project.thumbnail.path|slice:"-3:" == "svg" %}
+      {{ project.thumbnail|svg:"image-container" }}
+    {% else %}
+      <div class="image-container" style="background-image: url({{ MEDIA_URL }}{{ project.thumbnail }});"></div>
+    {% endif %}
   {% endif %}
   <div class="details">
     <h3 class="name">

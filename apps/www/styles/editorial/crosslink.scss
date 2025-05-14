@@ -54,3 +54,20 @@
     font-weight: bold;
   }
 }
+
+.project {
+  svg {
+    .accent {
+      stroke: var(--color-primary);
+      transition: stroke var(--duration-short);
+    }
+  }
+
+  &:hover {
+    svg {
+      .accent {
+        stroke: var(--color-accent);
+      }
+    }
+  }
+}
