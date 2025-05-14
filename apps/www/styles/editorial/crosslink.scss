@@ -70,4 +70,14 @@
       }
     }
   }
+
+   &.active {
+    @media (--until-desktop) {
+      svg {
+        .accent {
+          stroke: var(--color-accent);
+        }
+      }
+    }
+   }
 }

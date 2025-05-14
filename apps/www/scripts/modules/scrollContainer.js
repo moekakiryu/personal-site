@@ -1,5 +1,9 @@
 import { clamp, roundWithPrecision as roundDecimal } from "../utils/math";
-import { getBreakpoint, responsiveValue, BREAKPOINTS } from "../utils/breakpoints";
+import {
+  getBreakpoint,
+  responsiveValue,
+  BREAKPOINTS,
+} from "../utils/breakpoints";
 import { BaseComponent } from "../utils/BaseComponent";
 
 const absoluteAngle = (x, y) => {
@@ -115,8 +119,8 @@ export class ScrollContainer extends BaseComponent {
 
   get scrollSpeed() {
     return responsiveValue(12.5, {
-      desktop: 16
-    })
+      desktop: 16,
+    });
   }
 
   // --- Actions --- //
@@ -136,7 +140,7 @@ export class ScrollContainer extends BaseComponent {
         ? Math.pow(2, 20 * n - 10) / 2
         : (2 - Math.pow(2, -20 * n + 10)) / 2;
 
-    const easedSpeed = direction * this.scrollSpeed * easingFunc(progress)
+    const easedSpeed = direction * this.scrollSpeed * easingFunc(progress);
 
     if (Math.abs(easedSpeed) >= Math.abs(delta)) {
       this.scrollBy(delta / this.availableContentWidth);
@@ -451,13 +455,28 @@ export class ScrollContainer extends BaseComponent {
       this.values.momentum === 0
         ? Math.abs(delta)
         : (Math.abs(delta) + this.values.momentum) / 2;
-    // this.values.momentum = Math.max(Math.abs(delta), this.values.momentum);
     this.values.dragDirection = Math.sign(delta);
   }
 
   onWindowTouchEnd() {
     this.animateMomentum();
     this.endScroll();
+  }
+
+  onStateUpdate() {
+    const viewportLeft = this.$viewport.offsetLeft;
+    const { right: viewportRight } = this.$viewport.getBoundingClientRect();
+
+    this.$$snapTargets.forEach((target) => {
+      const { left: targetLeft, right: targetRight } =
+        target.getBoundingClientRect();
+
+      if (viewportLeft <= targetLeft && viewportRight >= targetRight) {
+        target.classList.add(ScrollContainer.classes.active);
+      } else {
+        target.classList.remove(ScrollContainer.classes.active);
+      }
+    });
   }
 
   render(_, prop) {
@@ -522,7 +541,6 @@ export class ScrollContainer extends BaseComponent {
         case "touch":
           document.body.style.overscrollBehaviorX = "none";
           document.documentElement.style.overscrollBehaviorX = "none";
-          // document.documentElement.style.overflowY = "hidden";
           break;
 
         case "content":
@@ -537,7 +555,6 @@ export class ScrollContainer extends BaseComponent {
 
         default:
           document.documentElement.style.overscrollBehaviorX = "";
-          // document.documentElement.style.overflowY = "";
           document.body.style.overscrollBehaviorX = "";
           document.body.style.userSelect = "";
           document.body.style.cursor = "";
