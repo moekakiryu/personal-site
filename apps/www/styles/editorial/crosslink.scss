@@ -1,0 +1,56 @@
+.article, .project {
+  display: flex;
+  gap: var(--spacing-sm);
+
+  margin-block: 0.25rem;
+
+  font-weight: unset;
+
+  @media (--desktop) {
+    align-items: flex-start;
+  }
+
+  &:hover, &:focus {
+    color: inherit;
+
+    .image-container {
+      transform: translateY(-.25rem);
+      filter: drop-shadow(0px 4px 2px #d0d0d0);
+    }
+
+    .read-more {
+      color: var(--color-accent);
+    }
+  }
+
+  .image-container {
+    flex: 0 0 40%;
+    aspect-ratio: 1 / 1;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    transition: transform var(--duration-short), filter var(--duration-short);
+  }
+
+  .name, .date {
+    display: block;
+    margin: 0;
+    
+    @media (--tablet) {
+      display: inline-block;
+    }
+  }
+
+  .date {
+    padding-inline: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .description {
+    font-size: .875rem;
+  }
+
+  .read-more {
+    font-weight: bold;
+  }
+}

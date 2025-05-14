@@ -1,0 +1,61 @@
+<div>
+  <div class="container">
+    <div class="scroll-container position-start" data-component="ScrollContainer">
+      <div
+        id="project-scroll-container"
+        class="scroll-viewport"
+        tabindex="0"
+        data-element="ScrollContainer.viewport"
+      >
+        <div data-element="ScrollContainer.content">
+          <div class="project-list">
+            {% for project in projects.list %}
+              {% include "www/project/crosslink.html" %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div
+        class="scroll-controls"
+        data-element="ScrollContainer.controls"
+      >
+        <button
+          class="scroll-back-button"
+          aria-label="back"
+          data-element="ScrollContainer.backButton"
+          disabled
+        >
+          {% include "www/icons/arrow-left.svg" %}
+        </button>
+        <div
+          class="scroll-track"
+          data-element="ScrollContainer.track"
+        >
+          <div
+            class="scroll-thumb"
+            aria-label="thumb"
+            role="scrollbar"
+            tabindex="0"
+            aria-controls="project-scroll-container"
+            aria-orientation="horizontal"
+            aria-valuenow="0"
+            data-element="ScrollContainer.thumb"
+          ></div>
+        </div>
+        <button
+          class="scroll-forward-button"
+          aria-label="forward"
+          data-element="ScrollContainer.forwardButton"
+        >
+          {% include "www/icons/arrow-right.svg" %}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {% if projects.has_more %}
+    <div class="container">
+      <a class="cta primary" href="{% url "www.projects" %}">View all projects</a>
+    </div>
+  {% endif %}
+</div>

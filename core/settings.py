@@ -79,13 +79,15 @@ INSTALLED_APPS = [
     # Plugins
     'tinymce',
     'axes',
+    'django_hosts',
 
     # Local Applications
-    'apps.root.apps.RootConfig',
+    'apps.www.apps.WwwConfig',
 ]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#middleware
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -94,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 
@@ -208,6 +211,9 @@ DATABASES = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --- PLUGINS --- #
+ROOT_HOSTCONF = "core.hosts"
+DEFAULT_HOST = "www"
+
 TINYMCE_DEFAULT_CONFIG = {
     "theme": "silver",
     "skin": "oxide-dark",

@@ -1,0 +1,10 @@
+{% load rich_content %}
+
+<a class="article" href="{% url "www.article" article.slug %}">
+  <div class="details">
+    <h3 class="name">{{ article.title }}</h3>
+    <span class="date">{{ article.updated|date:"N Y" }}</span>
+    <p class="description">{{ article.content|rich_preview:40 }}</p>
+    <div class="read-more">+ Read more</div>
+  </div>
+</a>

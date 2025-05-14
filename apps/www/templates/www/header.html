@@ -1,0 +1,67 @@
+<div class="header top" data-component="Navigation">
+  <div class="inner">
+    <div class="fade-area" data-element="Navigation.fadeArea">
+      <div class="logo">
+        <a href="/" aria-label="Go Home" {% if meta.current.view == 'www.home' %}aria-current="page"{% endif %}>
+          <div class="desktop">
+            {% include "www/icons/logo-reversed.svg" %}
+          </div>
+          <div class="mobile">
+            {% include "www/icons/logo.svg" %}
+          </div>
+
+        </a>
+      </div>
+      <div
+        id="navigation-desktop"
+        class="navigation desktop"
+        data-element="Navigation.desktopNavigation"
+      >
+        <div class="inner">
+          <nav class="navigation-primary" role="navigation" aria-label="primary">
+            <ul>
+              <li><a href="{% url "www.projects" %}" {% if meta.current.view == 'www.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
+              <li><a href="{% url "www.articles" %}" {% if meta.current.view == 'www.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
+            </ul>
+          </nav>
+          <nav class="navigation-secondary" role="navigation" aria-label="secondary">
+            <ul>
+              <li><a href="{% url "www.resume" %}" {% if meta.current.view == 'www.resume' %}aria-current="page"{% endif %}>Professional Experience</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="hamburger mobile">
+      <button
+        id="navigation-toggle-mobile"
+        aria-controls="navigation-mobile"
+        class="cta secondary"
+        data-element="Navigation.toggle"
+      >
+        Menu
+      </button>
+    </div>
+  </div>
+  <div
+    id="navigation-mobile"
+    class="navigation mobile"
+    data-element="Navigation.mobileNavigation"
+    style="display: none;"
+  >
+    <div class="inner">
+      <nav class="navigation-primary" role="navigation" aria-label="primary">
+          <ul>
+            <li><a href="{% url "www.home" %}" {% if meta.current.view == 'www.home' %}class="current" aria-current="page"{% endif %}>Home</a></li>
+            <li><a href="{% url "www.projects" %}" {% if meta.current.view == 'www.projects' %}class="current" aria-current="page"{% endif %}>Projects</a></li>
+            <li><a href="{% url "www.articles" %}" {% if meta.current.view == 'www.articles' %}class="current" aria-current="page"{% endif %}>Articles</a></li>
+          </ul>
+      </nav>
+      <nav class="navigation-secondary" role="navigation" aria-label="secondary">
+        <ul>  
+          <li><a href="{% url "www.resume" %}" {% if meta.current.view == 'www.resume' %}aria-current="page"{% endif %}>Professional Experience</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
