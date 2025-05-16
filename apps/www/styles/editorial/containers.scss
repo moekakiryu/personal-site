@@ -1,7 +1,10 @@
 .article-list {
   .article {
-    border-top: 1px dashed var(--color-primary);
-    padding-block: var(--spacing-sm) var(--spacing-lg);
+    padding-block: var(--spacing-sm);
+
+    &:first-child {
+      padding-top: 0;
+    }
   }
 }
 

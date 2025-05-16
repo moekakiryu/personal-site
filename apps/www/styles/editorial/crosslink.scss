@@ -32,6 +32,11 @@
     transition: transform var(--duration-short), filter var(--duration-short);
   }
 
+  .title {
+    display: block;
+    position: relative;
+  }
+
   .name, .date {
     display: block;
     margin: 0;
@@ -42,7 +47,21 @@
   }
 
   .date {
-    padding-inline: var(--spacing-xs) var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    padding-block: var(--spacing-xs);
+
+    &::after {
+      content: "";
+      flex-grow: 1;
+
+      height: var(--line-width);
+      border-radius: var(--rounded-full);
+      margin-left: var(--spacing-sm);
+
+      background-color: var(--color-primary);
+      overflow: hidden;
+    }
   }
 
   .description {
