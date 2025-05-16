@@ -74,6 +74,12 @@
 }
 
 .project {
+  .no-image {
+    border-left: var(--line-width) solid var(--color-primary);
+    padding-left: var(--spacing-sm);
+    transition: border-color var(--duration-short);
+  }
+
   svg {
     .accent {
       stroke: var(--color-primary);
@@ -82,6 +88,9 @@
   }
 
   &:hover {
+    .no-image {
+      border-color: var(--color-accent);
+    }
     svg {
       .accent {
         stroke: var(--color-accent);

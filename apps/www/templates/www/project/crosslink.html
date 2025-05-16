@@ -8,7 +8,7 @@
       <div class="image-container" style="background-image: url({{ MEDIA_URL }}{{ project.thumbnail }});"></div>
     {% endif %}
   {% endif %}
-  <div class="details">
+  <div class="details{% if not project.thumbnail %} no-image{% endif %}">
     <div class="title">
       <h3 class="name">
         {{ project.title }}
