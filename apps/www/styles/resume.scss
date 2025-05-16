@@ -21,15 +21,32 @@
   .skills-list {
     display: grid;
     gap: var(--spacing-sm);
+    grid-template-columns: repeat(2, 1fr);
 
     @media (--desktop) {
       grid-template-columns: repeat(4, 1fr);
     }
 
+    .skill {
+      border: var(--line-width) solid var(--color-primary);
+      border-radius: var(--rounded-sm);
+      padding: var(--spacing-sm);
+    }
+
+    svg {
+      display: block;
+      margin-inline: auto;
+      max-width: 128px;
+    }
+
+    h4 {
+      margin-top: var(--spacing-sm);
+    }
+
     span {
       display: inline-block;
       padding-block: 0.2em;
-      font-style: italic;
+      margin-right: .4em;
 
       &::after {
         content: ", ";
@@ -39,7 +56,6 @@
         content: none;
       }
     }
-
   }
 
   .line {

@@ -17,37 +17,30 @@
       </p>
     </div>
   </div>
-
   <div class="container">
     <h2>Toolkit</h2>
-      <div>
-        <p>
-          I believe in using the right tools for the right job, so actively
-          train to avoid getting pigeonholed into one set stack. Over my career
-          I've worked with a variety of frameworks and platforms, listed below.
-        </p>
-        <p>
-          When programming for fun, I really love using languages/systems that
-          I don't use in day-to-day work. Usually this ends up being small
-          scripts in Python or C, but can really include anything I feel like
-          at the time.
-        </p>
-      </div>
+    <p style="max-width: 300px;">
+      I love working with 'bare' technology. Whether this be low-level
+      programming or working with vanilla languages. However over the course
+      of my career I've been fortunate enough to work with quite a few
+      frameworks and architectures as well.
+    </p>
   </div>
   <div class="container">
     <div class="skills">
-      <svg id="curve-template" class="tablet"></svg>
       <div class="skills-list">
-        <div>
+        <div class="skill">
+          {% include "www/icons/language.svg" %}
           <h4>Languages</h4>
           <span>Python</span>
-          <span>Typescript / Javascript</span>
+          <span>Typescript</span>
+          <span>Javascript</span>
           <span>HTML</span>
           <span>CSS / SCSS</span>
           <span>C</span>
-          <span>GraphQL</span>
         </div>
-        <div>
+        <div class="skill">
+          {% include "www/icons/package.svg" %}
           <h4>Packages</h4>
           <span>React</span>
           <span>NextJS</span>
@@ -56,10 +49,12 @@
           <span>Redux</span>
           <span>RTK Query</span>
           <span>Django</span>
-          <span>Tailwind / Nativewind</span>
+          <span>Tailwind</span>
+          <span>Nativewind</span>
           <span>Cypress</span>
         </div>
-        <div>
+        <div class="skill">
+          {% include "www/icons/platform.svg" %}
           <h4>Platforms</h4>
           <span>Vercel</span>
           <span>Sitecore</span>
@@ -67,38 +62,31 @@
           <span>Webflow</span>
           <span>AEM Site Manager</span>
         </div>
-        <div>
+        <div class="skill">
+          {% include "www/icons/tools.svg" %}
           <h4>Tools</h4>
           <span>Adobe Photoshop</span>
-          <span>JIRA / Confluence</span>
+          <span>JIRA</span>
+          <span>Confluence</span>
           <span>Figma</span>
           <span>NGINX</span>
           <span>Bash</span>
           <span>NodeJS</span>
+          <span>Self-described git guru</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container grid bleed">
-    <div class="inner">
-      <h2>Education</h2>
-      <p>
-        I've studied computer science continuously from highschool to my first
-        position at DT Digital. During that time, I also undertook the following:
-      </p>
-      <h3>National Computer Science School program at UNSW</h3>
-      <h3>Bachelor of Science majoring in Computing and Software Systems (partially completed)</h3>
-    </div>
-  </div>
-    
   <div class="container">
-    <h2>My Experience</h2>
-    <p>
+    <h2>Experience</h2>
+    <p style="max-width: 300px;">
       I started my professional career in content entry, but quickly rose up
       the ranks to senior front-end developer. It's been quite a journey that
       I'd absolutely love to share.
     </p>
+  </div>
+  <div class="container">
     {% include "www/resume/timeline.html" %}
   </div>
 
