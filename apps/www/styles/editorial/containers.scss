@@ -59,12 +59,12 @@
     &.featured {
       order: -1;
       padding-block: var(--spacing-sm);
-      border-bottom: var(--line-width) dashed var(--color-accent);
+      border-bottom: var(--line-width) solid var(--color-primary);
       
       @media (--desktop) {
         order: unset;
         grid-column: 1 / 3;
-        border-top: var(--line-width) dashed var(--color-accent);
+        border-top: var(--line-width) solid var(--color-primary);
       }
 
       .details {
