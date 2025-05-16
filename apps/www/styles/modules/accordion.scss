@@ -5,6 +5,12 @@
 
   &-controls {
     padding-left: var(--spacing-sm);
+
+    // Note this assumes only 2 items. Add a helper class to enable this if we ever need more
+    @media (--desktop) {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   &-toggle {
