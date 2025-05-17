@@ -4,6 +4,11 @@
 
     &:first-child {
       padding-top: 0;
+      margin-top: 0;
+
+      .date {
+        padding-top: 0;
+      }
     }
   }
 }
