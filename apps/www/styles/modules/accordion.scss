@@ -46,17 +46,14 @@
   }
 
   &-item {
+    mask-image: linear-gradient(to right, black 50%, white 50%);
+    mask-size: 200%;
+    mask-mode: luminance;
+    mask-position-x: -100%;
+
     &.transitioning {
       position: absolute;
       width: 100%;
-
-      &.hidden {
-        pointer-events: none;
-      }
-    }
-
-    &.hidden {
-      opacity: 0;
     }
   }
 }

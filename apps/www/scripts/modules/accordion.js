@@ -5,7 +5,6 @@ export class Accordion extends BaseComponent {
 
   static classes = {
     transitioning: "transitioning",
-    hidden: "hidden",
   };
 
   constructor(name, element) {
@@ -22,7 +21,6 @@ export class Accordion extends BaseComponent {
 
     this.$$items.forEach(($item) => {
       if ($item.id !== this.state.activeItemId) {
-        $item.classList.add(Accordion.classes.hidden);
         $item.style.display = "none";
       }
     });
@@ -67,7 +65,7 @@ export class Accordion extends BaseComponent {
       );
     });
 
-    this.$$items.forEach(($item) => {
+    this.$$items.forEach(($item, index) => {
       const isActive = $item.id === this.state.activeItemId;
       const wasActive = $item.id === this.state.lastActiveItemId;
 
@@ -80,11 +78,13 @@ export class Accordion extends BaseComponent {
         activeAnimations.forEach((animation) => animation.cancel());
 
         requestAnimationFrame(() => {
-          const fadeAnimation = [{ opacity: 0 }, { opacity: 1 }];
+          // Assume there are only two accordion items
+          // TODO: If accordion is ever used elsewhere, refactor to account for multiple items
+          const swipeDirection = index == 0 ? -1 : 1;
+          const fadeAnimation = [{ maskPosition: 0 }, { maskPosition: `${swipeDirection * 100}%` }];
 
           const keyframes = isActive ? fadeAnimation : fadeAnimation.reverse();
           const timings = {
-            delay: isActive ? 100 : 0,
             duration: 250,
           };
 
@@ -92,9 +92,6 @@ export class Accordion extends BaseComponent {
             $item.classList.remove(Accordion.classes.transitioning);
             if (!isActive) {
               $item.style.display = "none";
-              $item.classList.add(Accordion.classes.hidden);
-            } else {
-              $item.classList.remove(Accordion.classes.hidden);
             }
           });
         });
