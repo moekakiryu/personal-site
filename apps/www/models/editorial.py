@@ -12,6 +12,12 @@ class Article(models.Model):
     unique=True,
     null=False,
   )
+  draft_slug = models.UUIDField(
+    default=uuid.uuid4,
+    editable=False,
+    unique=True,
+    null=False
+  )
   created = models.DateTimeField(
     auto_now_add=True,
     blank=False,
@@ -23,6 +29,9 @@ class Article(models.Model):
 
   # Content Fields
   is_spicy = models.BooleanField()
+  is_draft = models.BooleanField(
+    default=True
+  )
   title = models.CharField(
     max_length=255,
   )
