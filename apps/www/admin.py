@@ -30,6 +30,13 @@ class ArticleAdmin(admin.ModelAdmin):
     })
   )
 
+  # The default Article queryset hides drafts, this overrides that so all
+  # articles are visible in the admin
+  def get_queryset(self, request):
+     return super().get_queryset(request).model._base_manager.all()
+
+  # Override the default search algorithm when selecting an article from a
+  # Project's `article` field
   def get_search_results(self, request, article_list, search_term):
     article_list, use_distinct = super().get_search_results(request, article_list, search_term)
     active_models = request.GET.get('model_name', [])
