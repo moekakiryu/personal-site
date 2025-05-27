@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import Http404
 from django.forms.models import model_to_dict
+from django.core.exceptions import ObjectDoesNotExist
 
 from apps.www.models import Article, Project, Contract
 from utils.querysets import stratify
@@ -33,7 +34,13 @@ def articles(request, **kwargs):
 
 
 def article(request, article_id, **kwargs):
-  article = Article.objects.get(slug = article_id)
+  try:
+    article = Article.objects.get(slug = article_id)
+  except ObjectDoesNotExist:
+    try:
+      article = Article.drafts.get(draft_slug = article_id)
+    except ObjectDoesNotExist:
+     raise Http404
 
   return render(request, 'www/article/index.html', {
     'article': article

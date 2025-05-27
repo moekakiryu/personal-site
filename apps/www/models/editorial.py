@@ -4,7 +4,18 @@ from django.db import models
 from tinymce.models import HTMLField
 
 
+class ArticleManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().filter(is_draft = False)
+
+class ArticleDraftManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().filter(is_draft = True)
+
 class Article(models.Model):
+  objects = ArticleManager()
+  drafts = ArticleDraftManager()
+
   # Metadata
   slug = models.UUIDField(
     default=uuid.uuid4,
