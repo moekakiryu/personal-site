@@ -5,6 +5,30 @@ from apps.www.models import Article, Project, Employer, Contract
 
 class ArticleAdmin(admin.ModelAdmin):
   search_fields = ['title']
+  readonly_fields=(
+     'slug',
+     'draft_slug',
+  )
+  fieldsets = (
+    ('Metadata', {
+        'fields': (
+           'slug',
+           'draft_slug'
+        )
+    }),
+    ('Content', {
+        'fields': (
+            'title',
+            'content',
+        ),
+    }),
+    ('Options', {
+       'fields': (
+          'is_draft',
+          'is_spicy',
+       )
+    })
+  )
 
   def get_search_results(self, request, article_list, search_term):
     article_list, use_distinct = super().get_search_results(request, article_list, search_term)
@@ -24,7 +48,7 @@ class ProjectAdmin(admin.ModelAdmin):
   autocomplete_fields = ['article']
   fieldsets = (
       (None, {
-          "fields": (
+          'fields': (
               'title',
               'is_featured',
           ),
