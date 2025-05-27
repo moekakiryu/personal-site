@@ -38,7 +38,7 @@ def article(request, article_id, **kwargs):
     article = Article.objects.get(slug = article_id)
   except ObjectDoesNotExist:
     try:
-      article = Article.drafts.get(draft_slug = article_id)
+      article = Article.objects.get_draft(slug = article_id)
     except ObjectDoesNotExist:
      raise Http404
 
