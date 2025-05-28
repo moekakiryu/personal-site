@@ -232,8 +232,8 @@ TINYMCE_DEFAULT_CONFIG = {
     "plugins": [
       'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print',
       'preview', 'anchor', 'searchreplace', 'visualblocks', 'code',
-      'fullscreen', 'insertdatetime', 'media', 'table', 'paste', 'code', 'help',
-      'wordcount', 'code', 'codesample',
+      'fullscreen', 'image', 'insertdatetime', 'media', 'table', 'paste',
+      'code', 'help', 'wordcount', 'code', 'codesample',
     ],
     'fullscreen_native': True,
     'codesample_languages': [
@@ -256,7 +256,7 @@ TINYMCE_DEFAULT_CONFIG = {
       { 'name': 'formatting', 'items': ['bold', 'italic', 'underline', 'strikethrough']},
       { 'name': 'layout', 'items': ['headings', 'links']},
       { 'name': 'lists', 'items': ['alignment',  'bullist', 'numlist']},
-      { 'name': 'extra formatting', 'items': [ 'codesample', 'blockquote', 'subscript', 'superscript']},
+      { 'name': 'insert', 'items': ['image', 'codesample', 'blockquote', 'subscript', 'superscript']},
       { 'name': 'indent', 'items': ['outdent', 'indent']},
       { 'name': 'extra', 'items': ['code', 'fullscreen']},
     ],
@@ -278,3 +278,4 @@ TINYMCE_DEFAULT_CONFIG = {
       }
     }
 }
+TINYMCE_FILEBROWSER = True
