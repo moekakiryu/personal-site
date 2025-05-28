@@ -68,6 +68,9 @@ ROOT_URLCONF = 'core.urls'
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#installed-apps
 INSTALLED_APPS = [
+    # Admin Plugins
+    'filebrowser',
+
     # Django Core
     'django.contrib.admin',
     'django.contrib.auth',
