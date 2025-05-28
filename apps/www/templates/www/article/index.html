@@ -31,6 +31,9 @@
       <h1>{{ article.title }}</h1>
     </div>
   </div>
+  {% if article.is_draft %}
+    {% include "www/article/draft-banner.html" %}
+  {% endif %}
   <div class="container">
     {{ article.content|safe }}
   </div>

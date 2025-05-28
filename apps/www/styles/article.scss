@@ -9,3 +9,13 @@ code[class*="language-"], pre[class*="language-"] {
 .language-css .token.string, .style .token.string, .token.entity, .token.operator, .token.url {
   background: none;
 }
+
+.draft-banner {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+
+  hr {
+    flex-grow: 1;
+  }
+}
