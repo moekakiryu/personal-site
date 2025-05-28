@@ -50,7 +50,9 @@ class Article(models.Model):
     return self.title
 
   def get_absolute_url(self):
-    return reverse('www.article', kwargs={ 'article_id': self.slug })
+    preview_slug = self.draft_slug if self.is_draft else self.slug
+
+    return reverse('www.article', kwargs={ 'article_id': preview_slug })
 
 __all__ = [
   'Article',

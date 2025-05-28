@@ -45,7 +45,7 @@ class ArticleAdmin(admin.ModelAdmin):
     # fields which are able to be selected
     if 'autocomplete' in request.path and 'project' in active_models:
         # Remove articles already allocated to a project
-        article_list = article_list.filter(project__isnull=True)
+        article_list = article_list.filter(project__isnull=True).filter(is_draft=False)
 
     return article_list, use_distinct
 
