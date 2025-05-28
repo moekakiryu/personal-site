@@ -253,14 +253,18 @@ TINYMCE_DEFAULT_CONFIG = {
 
     "toolbar": [
       { 'name': 'history', 'items': ['undo', 'redo']},
-      { 'name': 'formatting', 'items': ['bold', 'italic', 'underline', 'strikethrough']},
-      { 'name': 'layout', 'items': ['headings', 'links']},
-      { 'name': 'lists', 'items': ['alignment',  'bullist', 'numlist']},
-      { 'name': 'insert', 'items': ['image', 'codesample', 'blockquote', 'subscript', 'superscript']},
-      { 'name': 'indent', 'items': ['outdent', 'indent']},
+      { 'name': 'formatting', 'items': ['headings', 'formats', 'links']},
+      { 'name': 'lists', 'items': ['bullist', 'numlist']},
+      { 'name': 'insert', 'items': ['image', 'codesample', 'blockquote']},
+      { 'name': 'indent', 'items': ['alignment', 'outdent', 'indent',]},
       { 'name': 'extra', 'items': ['code', 'fullscreen']},
     ],
     'toolbar_groups': {
+      'formats': {
+        'icon': 'format',
+        'tooltip': '',
+        'items': 'bold italic underline strikethrough subscript superscript',
+      },
       'headings': {
         'icon': 'change-case',
         'tooltip': 'Headings',
