@@ -83,6 +83,7 @@ INSTALLED_APPS = [
 
     # Local Applications
     'apps.www.apps.WwwConfig',
+    'apps.metro.apps.MetroConfig',
 ]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#middleware
