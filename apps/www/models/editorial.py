@@ -7,14 +7,12 @@ from tinymce.models import HTMLField
 class ArticleManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(is_draft = False)
-
-class ArticleDraftManager(models.Manager):
-  def get_queryset(self):
-    return super().get_queryset().filter(is_draft = True)
+  
+  def get_draft(self, *, slug):
+    return super().get_queryset().get(draft_slug = slug, is_draft = True)
 
 class Article(models.Model):
   objects = ArticleManager()
-  drafts = ArticleDraftManager()
 
   # Metadata
   slug = models.UUIDField(
