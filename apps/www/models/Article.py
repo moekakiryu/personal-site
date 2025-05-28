@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.urls import reverse
 from tinymce.models import HTMLField
 
 class ArticleManager(models.Manager):
@@ -47,6 +48,9 @@ class Article(models.Model):
 
   def __str__(self):
     return self.title
+
+  def get_absolute_url(self):
+    return reverse('www.article', kwargs={ 'article_id': self.slug })
 
 __all__ = [
   'Article',
