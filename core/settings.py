@@ -159,6 +159,9 @@ CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-use-sessions
 CSRF_USE_SESSIONS = True
 
+# https://docs.djangoproject.com/en/5.2/ref/settings/#x-frame-options
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 # https://docs.djangoproject.com/en/5.1/ref/settings/#secret-key
 if not get_environment('DJANGO_SECRET'):
   raise ValueError('Django secret key not found. Please set `DJANGO_SECRET` environment variable before continuing.')
