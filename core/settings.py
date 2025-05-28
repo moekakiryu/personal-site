@@ -228,6 +228,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "content_css": "tinymce-5-dark",
     "height": 500,
     "menubar": False,
+    'relative_urls': False,
 
     "plugins": [
       'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print',
