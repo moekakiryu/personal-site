@@ -64,7 +64,10 @@ def projects(request, **kwargs):
 
 
 def project(request, project_id, **kwargs):
-  project = Project.objects.get(slug = project_id)
+  try:
+    project = Project.objects.get(slug = project_id)
+  except ObjectDoesNotExist:
+    raise Http404
 
   return render(request, 'www/project/index.html', {
     'project': project,
