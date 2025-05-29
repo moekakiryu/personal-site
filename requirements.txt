@@ -1,5 +1,5 @@
 asgiref==3.8.1
-Django==5.1.7
+Django==5.2.1
 django-axes==7.0.2
 django-filebrowser-no-grappelli==4.0.2
 django-hosts==6.0
