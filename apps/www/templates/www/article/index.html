@@ -34,7 +34,7 @@
   {% if article.is_draft %}
     {% include "www/article/draft-banner.html" %}
   {% endif %}
-  <div class="container">
+  <div class="container rich-content">
     {{ article.content|safe }}
   </div>
   {% include "www/disclaimer.html" %}

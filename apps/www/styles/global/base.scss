@@ -135,3 +135,20 @@ svg {
     fill: var(--color-black);
   }
 }
+
+.rich-content {
+  img {
+    width: 100%;
+  }
+
+  figure {
+    margin: 0;
+
+    figcaption {
+      margin-bottom: var(--spacing-md);
+      padding-block: var(--spacing-xs);
+      border-bottom: 1px solid var(--color-primary);
+      font-size: 0.875em;
+    }
+  }
+}
