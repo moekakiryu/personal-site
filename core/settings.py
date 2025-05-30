@@ -242,6 +242,10 @@ TINYMCE_DEFAULT_CONFIG = {
     'image_dimensions': False,
     'object_resizing': False,
     'relative_urls': False,
+    'image_class_list': [
+      { 'title': 'Default', 'value': '' },
+      { 'title': 'Border', 'value': 'border' },
+    ],
 
     # Toolbar config
     "plugins": [

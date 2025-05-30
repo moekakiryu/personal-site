@@ -139,6 +139,10 @@ svg {
 .rich-content {
   img {
     width: 100%;
+
+    &.border {
+      border: var(--line-width) solid var(--color-primary);
+    }
   }
 
   figure {
