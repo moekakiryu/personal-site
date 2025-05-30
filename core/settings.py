@@ -223,20 +223,27 @@ ROOT_HOSTCONF = "core.hosts"
 DEFAULT_HOST = "www"
 
 TINYMCE_DEFAULT_CONFIG = {
+    # Global TinyMCE config
     "theme": "silver",
     "skin": "oxide-dark",
     "content_css": "tinymce-5-dark",
     "height": 500,
     "menubar": False,
+    'fullscreen_native': True,
+
+    # Image settings
+    'image_caption': True,
+    'image_dimensions': False,
+    'object_resizing': False,
     'relative_urls': False,
 
+    # Toolbar config
     "plugins": [
       'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'print',
       'preview', 'anchor', 'searchreplace', 'visualblocks', 'code',
       'fullscreen', 'image', 'insertdatetime', 'media', 'table', 'paste',
       'code', 'help', 'wordcount', 'code', 'codesample',
     ],
-    'fullscreen_native': True,
     'codesample_languages': [
       { 'text': 'JavaScript', 'value': 'javascript' },
       { 'text': 'TypeScript', 'value': 'typescript' },
