@@ -138,6 +138,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#static-root
 STATIC_ROOT = f"/var/www/{(get_environment('DJANGO_TARGET_DOMAIN') or 'default').strip('.')}/static"
 
+# https://docs.djangoproject.com/en/5.2/ref/settings/#staticfiles-dirs
+STATICFILES_DIRS = [
+  BASE_DIR / 'core/static',
+]
+
 # https://docs.djangoproject.com/en/5.1/ref/settings/#media-url
 MEDIA_URL = 'media/'
 
@@ -230,6 +235,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "height": 500,
     "menubar": False,
     'fullscreen_native': True,
+    'content_css':'dark, /static/admin/css/tinymce.css',
 
     # Image settings
     'image_caption': True,
