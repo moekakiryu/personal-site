@@ -162,11 +162,11 @@ SESSION_COOKIE_NAME = 'session'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-secure
 SESSION_COOKIE_SECURE = True
 
-# https://docs.djangoproject.com/en/5.1/ref/settings/#session-cookie-secure
-CSRF_COOKIE_SECURE = True
-
 # https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-use-sessions
 CSRF_USE_SESSIONS = True
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-cookie-age
+CSRF_COOKIE_AGE = None
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-trusted-origins
 CSRF_TRUSTED_ORIGINS = [
