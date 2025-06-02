@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 from utils.environment import Env, get_environment
+from utils.url import dot_to_star_wildcard
 
 # Project root
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -166,6 +167,13 @@ CSRF_COOKIE_SECURE = True
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-use-sessions
 CSRF_USE_SESSIONS = True
+
+# https://docs.djangoproject.com/en/5.1/ref/settings/#csrf-trusted-origins
+CSRF_TRUSTED_ORIGINS = [
+  *map(dot_to_star_wildcard, get_environment('DJANGO_ALLOWED_HOSTS')),
+  dot_to_star_wildcard(get_environment('DJANGO_TARGET_DOMAIN'))
+]
+
 
 # https://docs.djangoproject.com/en/5.2/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = 'SAMEORIGIN'
