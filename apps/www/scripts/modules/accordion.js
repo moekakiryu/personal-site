@@ -5,6 +5,7 @@ export class Accordion extends BaseComponent {
 
   static classes = {
     transitioning: "transitioning",
+    inactive: "inactive"
   };
 
   constructor(name, element) {
@@ -20,8 +21,15 @@ export class Accordion extends BaseComponent {
     );
 
     this.$$items.forEach(($item) => {
+      this.bindEvents($item, {
+        transitionend: {
+          listener: this.onTransitionEnd,
+          extraArgs: [$item]
+        },
+      })
       if ($item.id !== this.state.activeItemId) {
         $item.style.display = "none";
+        $item.classList.add(Accordion.classes.inactive)
       }
     });
   }
@@ -55,6 +63,17 @@ export class Accordion extends BaseComponent {
     this.state.activeItemId = $toggle.getAttribute("aria-controls");
   }
 
+  onTransitionEnd($item, { pseudoElement }) {
+    if (pseudoElement) {
+      return
+    }
+
+    if ($item.id !== this.state.activeItemId) {
+      $item.style.display = 'none'
+    }
+    $item.classList.remove(Accordion.classes.transitioning)
+  }
+
   render() {
     if (this.state.activeItemId === this.state.lastActiveItemId) return;
 
@@ -73,28 +92,15 @@ export class Accordion extends BaseComponent {
         $item.style.display = "";
         $item.classList.add(Accordion.classes.transitioning);
 
-        const activeAnimations = $item.getAnimations();
-
-        activeAnimations.forEach((animation) => animation.cancel());
-
-        requestAnimationFrame(() => {
-          // Assume there are only two accordion items
-          // TODO: If accordion is ever used elsewhere, refactor to account for multiple items
-          const swipeDirection = index == 0 ? -1 : 1;
-          const fadeAnimation = [{ maskPosition: 0 }, { maskPosition: `${swipeDirection * 100}%` }];
-
-          const keyframes = isActive ? fadeAnimation : fadeAnimation.reverse();
-          const timings = {
-            duration: 250,
-          };
-
-          $item.animate(keyframes, timings).finished.then(() => {
-            $item.classList.remove(Accordion.classes.transitioning);
-            if (!isActive) {
-              $item.style.display = "none";
-            }
-          });
-        });
+        // Instant timeout to prevent animation from being cancelled by the
+        // `display` toggle above
+        setTimeout(() => {
+          if (isActive) {
+            $item.classList.remove(Accordion.classes.inactive)
+          } else {
+            $item.classList.add(Accordion.classes.inactive)
+          }
+        }, 0)
       }
     });
   }

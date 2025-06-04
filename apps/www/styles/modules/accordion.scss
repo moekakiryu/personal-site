@@ -46,14 +46,34 @@
   }
 
   &-item {
-    mask-image: linear-gradient(to right, black 50%, white 50%);
-    mask-size: 200%;
-    mask-mode: luminance;
-    mask-position: -100%;
+    transition: opacity calc(1 * var(--duration-medium)) linear;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background: var(--color-white);
+      opacity: 0;
+      z-index: 1;
+
+      mask-image: url("/static/www/assets/fade-mask.png");
+      mask-mode: luminance;
+      transition:
+        opacity calc(1 * var(--duration-medium)) step-start;
+    }
 
     &.transitioning {
       position: absolute;
       width: 100%;
+    }
+
+    &.inactive {
+      opacity: 0;
+
+      &::after {
+        opacity: 1;
+      }
     }
   }
 }
