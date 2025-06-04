@@ -48,24 +48,24 @@
   &-item {
     transition: opacity calc(1 * var(--duration-medium)) linear;
 
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-
-      background: var(--color-white);
-      opacity: 0;
-      z-index: 1;
-
-      mask-image: url("/static/www/assets/fade-mask.png");
-      mask-mode: luminance;
-      transition:
-        opacity calc(1 * var(--duration-medium)) step-start;
-    }
-
     &.transitioning {
       position: absolute;
       width: 100%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        background: var(--color-white);
+        opacity: 0;
+        z-index: 1;
+
+        mask-image: url("/static/www/assets/fade-mask.png");
+        mask-mode: luminance;
+        transition:
+          opacity calc(1 * var(--duration-medium)) step-start;
+      }
     }
 
     &.inactive {
