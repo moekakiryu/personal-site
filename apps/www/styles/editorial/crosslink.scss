@@ -17,6 +17,10 @@
       transform: translateY(-.25rem);
     }
 
+    .date::after {
+      background-color: var(--color-accent);
+    }
+
     .read-more {
       color: var(--color-accent);
     }
