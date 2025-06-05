@@ -9,7 +9,8 @@
     "build:js:external": "esbuild --minify scripts/external/* --outdir=static/www/js",
     "dev": "run-p 'dev:*'",
     "dev:css": "yarn run build:css --watch",
-    "dev:js": "yarn run build:js --sourcemap --watch"
+    "dev:js": "yarn run build:js --sourcemap --watch",
+    "dev:external": "yarn run build:js:external"
   },
   "devDependencies": {
     "@types/node": "^22.13.9",
