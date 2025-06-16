@@ -75,7 +75,7 @@ def project(request, project_id, **kwargs):
 
 
 def resume(request, **kwargs):
-  contracts = Contract.objects.order_by('-start')
+  contracts = Contract.objects.order_by('-end')
 
   employers = []
   contract_group = []
