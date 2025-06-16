@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
+from django.db.models import F
 from django.forms.models import model_to_dict
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -75,7 +76,9 @@ def project(request, project_id, **kwargs):
 
 
 def resume(request, **kwargs):
-  contracts = Contract.objects.order_by('-end')
+  contracts = Contract.objects.annotate(
+    contract_span=F('end') - F('start')
+  ).order_by('-end__year','-end__month','-contract_span')
 
   employers = []
   contract_group = []
