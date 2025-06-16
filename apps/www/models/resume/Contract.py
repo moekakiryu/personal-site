@@ -21,9 +21,6 @@ class Contract(models.Model):
   )
   description = HTMLField()
 
-  def __str__(self):
-    return f'({self.employer.name}) {self.name}'
-  
 __all__ = [
   'Contract',
 ]

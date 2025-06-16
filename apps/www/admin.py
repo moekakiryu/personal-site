@@ -33,7 +33,7 @@ class ArticleAdmin(admin.ModelAdmin):
   # The default Article queryset hides drafts, this overrides that so all
   # articles are visible in the admin
   def get_queryset(self, request):
-     return super().get_queryset(request).model._base_manager.all()
+    return super().get_queryset(request).model._base_manager.all()
 
   # Override the default search algorithm when selecting an article from a
   # Project's `article` field
@@ -83,11 +83,18 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class EmployerAdmin(admin.ModelAdmin):
-   pass
+  pass
 
 
 class ContractAdmin(admin.ModelAdmin):
-   pass
+  list_display = ['name', 'employer','contract_dates']
+  ordering = ['-end',]
+
+  @admin.display(description="Date")
+  def contract_dates(self, obj):
+    start_date = obj.start.strftime('%b. %Y')
+    end_date = obj.end.strftime('%b. %Y')
+    return f'{start_date} - {end_date}'
 
 
 admin.site.register(Article, ArticleAdmin)
