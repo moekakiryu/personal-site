@@ -38,7 +38,7 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
    -ms-hyphens: none;
    hyphens: none;
  }
- 
+
  pre > code[class*="language-"] {
    font-size: 1em;
  }
@@ -75,7 +75,7 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
  .token.prolog,
  .token.doctype,
  .token.cdata {
-   color: #008000;
+   color: #505050;
    font-style: italic;
  }
  
@@ -84,9 +84,10 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
  }
  
  .token.string {
-   color: #A31515;
+   color: #3B7B24;
  }
- 
+
+ .token.function,
  .token.punctuation,
  .token.operator {
    color: #393A34; /* no highlight */
@@ -99,23 +100,15 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
  .token.variable,
  .token.constant,
  .token.inserted {
-   color: #36acaa;
+   color: #B3997A;
  }
  
  .token.atrule,
  .token.keyword,
- .token.attr-value,
- .language-autohotkey .token.selector,
- .language-json .token.boolean,
- .language-json .token.number,
- code[class*="language-css"] {
-   color: #0000ff;
+ .token.attr-value {
+   color: #1e01a9;
  }
- 
- .token.function {
-   color: #393A34;
- }
- 
+
  .token.deleted,
  .language-autohotkey .token.tag {
    color: #9a050f;
@@ -126,22 +119,9 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
    color: #00009f;
  }
  
- .token.important {
-   color: #e90;
- }
- 
- .token.important,
- .token.bold {
-   font-weight: bold;
- }
- 
- .token.italic {
-   font-style: italic;
- }
- 
  .token.class-name,
  .language-json .token.property {
-   color: #2B91AF;
+   color: #6F81B3;
  }
  
  .token.tag,
@@ -153,12 +133,12 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
  .token.property,
  .token.regex,
  .token.entity {
-   color: #ff0000;
+   color: #3B7B24;
  }
  
  .token.directive.tag .tag {
    background: #ffff00;
-   color: #393A34;
+   color: #6F81B3;
  }
  
  /* overrides color-values for the Line Numbers plugin
@@ -193,18 +173,14 @@ pre.diff-highlight>code .token.deleted:not(.prefix),pre>code.diff-highlight .tok
  }
 
  .token.keyword.module {
-  color: #dc1040;
+  color: #a92801;
   font-weight: bold;
  }
 
  .token.keyword.control-flow {
-    color: #0000ff;
-  }
-
-  .token.keyword.null.nil {
-    color: #0000ff;
+    color: #1e01a9;
   }
 
   .token.keyword {
-    color: #e90b0b;
+    color: #a92801;
   }
