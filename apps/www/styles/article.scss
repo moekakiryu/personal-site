@@ -19,3 +19,10 @@ code[class*="language-"], pre[class*="language-"] {
     flex-grow: 1;
   }
 }
+
+.rich-content {
+  a {
+    font-weight: normal;
+    text-decoration: underline dotted var(--color-accent) 2px;
+  }
+}
