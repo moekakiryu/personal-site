@@ -4,8 +4,6 @@
   gap: var(--spacing-md);
 
   &-controls {
-    padding-left: var(--spacing-sm);
-
     // Note this assumes only 2 items. Add a helper class to enable this if we ever need more
     @media (--desktop) {
       display: flex;
@@ -29,15 +27,15 @@
       text-align: left;
     }
 
+    h2::before {
+      content: "\00a0"/"";
+      padding-right: var(--spacing-xs);
+      color: var(--color-accent);
+    }
+
     // Place chevron before active button text
     &[aria-expanded="true"] h2::before {
       content: ">" / "";
-      position: absolute;
-
-      right: 100%;
-      padding-right: var(--spacing-xs);
-
-      color: var(--color-accent);
     }
   }
 
