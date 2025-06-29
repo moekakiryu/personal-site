@@ -69,7 +69,7 @@ function buildConnectorPath(start, end, curveRadius) {
   cursor.arc(fitRadius, directionalPi / 2, directionalPi);
   // Move horizontally
   cursor.line({ x: legs.x });
-  // Draw second curvz
+  // Draw second curve
   cursor.arc(fitRadius, 2 * directionalPi, (3 * directionalPi) / 2);
   // Move down
   cursor.line({ y: legs.y });

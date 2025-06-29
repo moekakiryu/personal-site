@@ -1,51 +1,38 @@
-# JS Scripts
+# Javascript Guidelines
 
-## Guidelines
+All scripts for this site are compiled with `esbuild`. These scripts should be
+saved in `apps/www/scripts`.
 
-1. Build self-contained objects for each set of functionality
+## Components
 
-    ```js
-    const MyModule = {
-      foo: false,
-      bar: 'value',
+All new components should be saved in the `apps/www/scripts/modules` folder,
+and be named in camelCase after the component they are implementing.
 
-      get computedValue() {/* ... s*/}
 
-      method() {/* ... */}
-    }
-    ```
+### BaseComponent components
 
-2. Each module should have a singe entry point, called `mount()` that takes no arguments
+A `BaseComponent` class has been provided to simplify the creation process.
+Using this class is optional but recommended.
 
-    ```js
-    const MyModule = {
-      mount() {
-        // Initialize MyModule here
-      }
-    }
-    ```
+### Manual components
 
-3. If you need to access a DOM element, use a dedicated CSS class following the format `js-[name]`.
-   Do not use existing CSS classes to target elements as this is likely to introduce flakiness.
+If the `BaseComponent` class is **not** used to make a new component, the new
+file must export an `init()` function as an entry point to attach all listeners
+to the relevant HTML elements.
 
-    ```html
-    <div class="centered card js-interactive-card">
-      <!-- ... -->
-    </div>
-    ```
+This function will be called with no arguments and should return `undefined`.
 
-4. Store any js classes in a `classes` attribute at the top of a module.
+### Integration
 
-    ```js
-    const MyModule = {
-      classes: {
-        card: 'js-interactive-card'
-      }
+After the new component has been created, import it in
+`apps/www/docs/scripts/index.js` and append it to the relevant array.
 
-      method() {
-        const element = document.getElementsByClassName(this.classes.card)
-      }
-    }
-    ```
+## External Files
 
-5. All functions should be pure and deterministic. 
+Some third party libraries require a javascript file to be embedded on the site
+to function correctly. If this happens, save all of these files in the
+`apps/www/scripts/external` folder, and name the file after the library that
+requires it.
+
+Any scripts saved in this file will not be minified or processed, but served
+as-is, including any comments (to allow for license headers).

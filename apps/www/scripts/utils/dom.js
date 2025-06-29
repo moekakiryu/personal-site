@@ -1,4 +1,4 @@
-function createElementCreator(creator) {
+function elementCreatorFactory(creator) {
   return function (tagName, attributes = {}, events = {}, ...children) {
     const element = creator(tagName);
 
@@ -20,7 +20,7 @@ export function bindEvents(element, eventMapping) {
   });
 }
 
-export const createElement = createElementCreator(document.createElement);
-export const createSvgElement = createElementCreator((...args) =>
+export const createElement = elementCreatorFactory(document.createElement);
+export const createSvgElement = elementCreatorFactory((...args) =>
   document.createElementNS("http://www.w3.org/2000/svg", ...args)
 );
