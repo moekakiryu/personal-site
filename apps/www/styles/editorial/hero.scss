@@ -103,6 +103,7 @@
     .image {
       width: 100%;
       margin-top: var(--spacing-sm);
+      border: var(--line-width) solid var(--color-primary);
     }
 
     .cta-container {
