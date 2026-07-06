@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib import admin
 
-from apps.melbourne.models import Review
+from apps.melbourne.models import Restaurant
 
 
 
-class ReviewAdmin(admin.ModelAdmin):
+class RestaurantAdmin(admin.ModelAdmin):
   pass
 
 
-admin.site.register(Review, ReviewAdmin)
+admin.site.register(Restaurant, RestaurantAdmin)

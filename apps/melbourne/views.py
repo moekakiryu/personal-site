@@ -4,19 +4,20 @@ from django.db.models import F
 from django.forms.models import model_to_dict
 from django.core.exceptions import ObjectDoesNotExist
 
-from apps.melbourne.models import Review
+from apps.melbourne.models import Restaurant
 from utils.querysets import stratify
 
 meals_order = [
-    Review.MealTypes.BRUNCH,
-    Review.MealTypes.LUNCH,
-    Review.MealTypes.DINNER,
-    Review.MealTypes.DESSERT,
-    Review.MealTypes.SNACK,
+    Restaurant.MealTypes.BRUNCH,
+    Restaurant.MealTypes.LUNCH,
+    Restaurant.MealTypes.DINNER,
+    Restaurant.MealTypes.DESSERT,
+    Restaurant.MealTypes.SNACK,
+    Restaurant.MealTypes.BAR,
 ]
 
 def home(request, **kwargs):
-  restaurants = Review.objects.all()
+  restaurants = Restaurant.objects.all()
 
   meals = {meal: [] for meal in meals_order}
   for restaurant in restaurants:
@@ -28,5 +29,5 @@ def home(request, **kwargs):
         for meal, restaurants in meals.items()
         if len(restaurants)
     },
-    'WaitTypes': Review.WaitTypes
+    'WaitTypes': Restaurant.WaitTypes
   })

@@ -1,1 +1,1 @@
-from .Review import *
+from .Restaurant import *

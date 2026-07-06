@@ -5,7 +5,7 @@ from django.urls import reverse
 from tinymce.models import HTMLField
 
 
-class Review(models.Model):
+class Restaurant(models.Model):
   class WaitTypes(models.TextChoices):
     NONE = "None"
     WAIT_EXPECTED = "Wait Expected"
@@ -19,6 +19,7 @@ class Review(models.Model):
     DINNER = "Dinner"
     DESSERT = "Dessert"
     SNACK = "Snack"
+    BAR = "Bar"
 
   # Metadata
   slug = models.UUIDField(
@@ -53,5 +54,5 @@ class Review(models.Model):
 
 
 __all__ = [
-  'Review',
+  'Restaurant',
 ]
