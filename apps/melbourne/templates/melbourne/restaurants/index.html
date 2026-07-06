@@ -3,7 +3,89 @@
 {% load static %}
 
 {% block content %}
-  <h1>Restaurant Recommendations</h1>
+  <div class="content">
+    <h1>Restaurant Recommendations</h1>
+    <p>
+      So, there's just too much good food in Melbourne to narrow it down to a
+      handful of 'best' spots, so instead I made an list of all of my favourite
+      places.<br><br>Hopefully this helps narrow things down a little!!<br>
+    </p>
+    <h2>Legend</h2>
+    <p class="legend-item">
+      <span class="entry">
+        <span class="icon">
+          {% include "melbourne/icons/star.svg" %}
+        </span>
+        Must try
+      </span>
+      <span class="definition">
+        Places marked must-try are either just exceptionally good, represent
+        quintessential Melbourne, or both. Basically, these are fun places with
+        good food.
+      </span>
+    </p>
+
+    <p class="legend-item">
+      <span class="entry">
+        <span class="icon">
+          {% include "melbourne/icons/timer-short.svg" %}
+        </span>
+        Small wait expected
+      </span>
+      <span class="definition">
+        Many places in Melbourne have queues to get in the door and these are no
+        exception. These places tend to move people through quickly, but larger
+        groups may have a bit of a wait during busy times.
+      </span>
+    </p>
+
+    <p class="legend-item">
+      <span class="entry">
+        <span class="icon">
+          {% include "melbourne/icons/timer-long.svg" %}
+        </span>
+        Long wait expected
+      </span>
+      <span class="definition">
+        These places are either very popular right now, or have very small
+        venues. Small groups may have to wait >20-30min and larger groups may
+        have to wait longer. I definitely recommend trying to hit these closer
+        to when they open (or any time before 10:30ish for brunches) to avoid
+        the crowds.
+      </span>
+    </p>
+
+    <p class="legend-item">
+      <span class="entry">
+        <span class="icon optional">
+          {% include "melbourne/icons/calendar.svg" %}
+        </span>
+        Booking recommended
+      </span>
+      <span class="definition">
+        These places do accept walk-ins (even for moderate-large groups), however
+        still get busy enough during peak hours that a booking can help a lot. 
+        However, if a booking is too much of a hassle, they will still do their
+        best to squeeze you in.
+      </span>
+    </p>
+
+
+    <p class="legend-item">
+      <span class="entry">
+        <span class="icon">
+          {% include "melbourne/icons/calendar.svg" %}
+        </span>
+        Booking required
+      </span>
+      <span class="definition">
+        These places either do not accept walk-ins or are so busy you will not
+        get a seat without a booking. Try to book as far in advance for these
+        restaurants.
+      </span>
+    </p>
+  </div>
+
 
   <div class="recommendations">
     {% for meal, restaurants in meals.items %}
@@ -47,7 +129,7 @@
                 {% endif %}
               </div>
 
-              <p class="cuisine">{{ restaurant.cuisine }}</p>
+              <p class="cuisine">{{ restaurant.cuisine }} ({{restaurant.price_type}})</p>
 
               <p class="blurb">{{ restaurant.blurb }}</p>
 

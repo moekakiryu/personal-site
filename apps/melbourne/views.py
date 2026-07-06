@@ -1,11 +1,7 @@
 from django.shortcuts import render
-from django.http import Http404
 from django.db.models import F
-from django.forms.models import model_to_dict
-from django.core.exceptions import ObjectDoesNotExist
 
 from apps.melbourne.models import Restaurant
-from utils.querysets import stratify
 
 meals_order = [
     Restaurant.MealTypes.BRUNCH,
@@ -17,7 +13,7 @@ meals_order = [
 ]
 
 def home(request, **kwargs):
-  restaurants = Restaurant.objects.all().order_by('-order')
+  restaurants = Restaurant.objects.all().order_by(F('order').asc(nulls_last=True))
 
   meals = {meal: [] for meal in meals_order}
   for restaurant in restaurants:

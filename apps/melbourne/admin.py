@@ -10,24 +10,22 @@ class RestaurantAdmin(admin.ModelAdmin):
     (None, {
       'fields': (
         'name',
-        (
-        'is_favorite',
-        'order',
-      ),
       ),
     }),
     ('At a glance', {
       'fields': (
-        'cuisine',
-        'meal_type',
-        'wait_type',
         'price_type',
+        'wait_type',
+        'meal_type',
+        'cuisine',
       )
     }),
     ('More Details', {
       'fields': (
         'blurb',
         'website',
+        'order',
+        'is_favorite',
       )
     })
   )

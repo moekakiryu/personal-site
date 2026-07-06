@@ -17,12 +17,18 @@ body {
   background: var(--background);
 }
 
-h1 {
+.content {
   margin-inline: 8px;
 }
 
 h1, h2, h3, h4 {
   font-family: 'Ledger';
+}
+
+.recommendations {
+  @media (--desktop) {
+    margin-top: 32px;
+  }
 }
 
 .recommendation {
@@ -51,6 +57,7 @@ h1, h2, h3, h4 {
   }
 
   @media (--desktop) {
+    text-align: left;
     border-top: 2px solid var(--accent);
   }
 
@@ -152,10 +159,32 @@ h1, h2, h3, h4 {
 }
 
 svg {
+  fill: var(--black);
+
   .optional & {
-    fill: var(--grey);
+    opacity: 25%;
   }
-  .required & {
-    fill: var(--black);
+}
+
+.legend-item {
+  .entry {
+    font-weight: bold;
+  }
+
+  .icon {
+    display: inline-block;
+    height: 1.5em;
+    width: 1.5em;
+    padding-right: 4px;
+    vertical-align: text-bottom;
+
+    svg {
+      max-height: 100%;
+    }
+  }
+
+  .definition {
+    display: block;
+    margin-top: 4px;
   }
 }
