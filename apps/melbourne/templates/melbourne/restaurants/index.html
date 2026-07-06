@@ -5,25 +5,53 @@
 {% block content %}
   <h1>Restaurant Recommendations</h1>
 
-  {% for meal, restaurants in meals.items %}
-    <h2>{{meal}}</h2>
+  <div class="recommendations">
+    {% for meal, restaurants in meals.items %}
+      <div class="meal-name">
+        <h2>{{meal}}</h2>
+      </div>
+      
+      <div class="restaurants">
+        {% for restaurant in restaurants %}
+          <div class="restaurant">
+            <h3>{{ restaurant.name }}</h3>
 
-    {% for restaurant in restaurants %}
-      <h3>{% if restaurant.is_favorite %}*{% endif %}{{ restaurant.name }}</h3>
+            <div class="attributes">
+              {% if restaurant.wait_type != WaitTypes.NONE %}
+                <div class="wait">
+                  {% if restaurant.wait_type == WaitTypes.WAIT_EXPECTED %}
+                    <span class="required" title="Wait expected">
+                      {% include "melbourne/icons/timer-short.svg" %}
+                    </span>
+                  {% elif restaurant.wait_type == WaitTypes.LONG_WAIT_EXPECTED %}
+                    <span class="required" title="Long wait expected">
+                      {% include "melbourne/icons/timer-long.svg" %}
+                    </span>
+                  {% elif restaurant.wait_type == WaitTypes.BOOKING_RECOMMENDED %}
+                    <span class="optional" title="Booking recommended">
+                      {% include "melbourne/icons/calendar.svg" %}
+                    </span>
+                  {% elif restaurant.wait_type == WaitTypes.BOOKING_REQUIRED %}
+                    <span class="required" title="Booking required">
+                      {% include "melbourne/icons/calendar.svg" %}
+                    </span>  
+                  {% endif %}
+                </div>
+              {% endif %}
 
-      {% if restaurant.wait_type == WaitTypes.NONE %}
-        <p>[No wait]</p>
-      {% elif restaurant.wait_type == WaitTypes.WAIT_EXPECTED %}
-        <p>[Wait expected]</p>
-      {% elif restaurant.wait_type == WaitTypes.LONG_WAIT_EXPECTED %}
-        <p>[Long Wait expected]</p>
-      {% elif restaurant.wait_type == WaitTypes.BOOKING_RECOMMENDED %}
-        <p>[Booking Recommended]</p>
-      {% elif restaurant.wait_type == WaitTypes.BOOKING_REQUIRED %}
-        <p>[Booking Required]</p>
-      {% endif %}
+              {% if restaurant.is_favorite %}
+                <div class="must-visit" title="Must visit">
+                  {% include "melbourne/icons/star.svg" %}
+                </div>
+              {% endif %}
+            </div>
 
-      <p>{{ restaurant.blurb }}</p>
+            <p class="blurb">{{ restaurant.blurb }}</p>
+
+            <a href="#">Visit site</a>
+          </div>
+        {% endfor %}
+      </div>
     {% endfor %}
-  {% endfor %}
+  </div>
 {% endblock content %}
