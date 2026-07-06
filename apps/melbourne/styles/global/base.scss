@@ -1,8 +1,10 @@
 :root {
   --black: #222;
-  --grey: #bbb;
+  --grey: #989898;
   --white: #fff;
   --hover: #ececec;
+  --accent: #377929;
+  --background: #f9f8f7;
 }
 
 * {
@@ -11,8 +13,12 @@
 
 body {
   font-family: 'Nunito';
-  padding-inline: 8px;
   color: var(--black);
+  background: var(--background);
+}
+
+h1 {
+  margin-inline: 8px;
 }
 
 h1, h2, h3, h4 {
@@ -22,7 +28,8 @@ h1, h2, h3, h4 {
 .recommendation {
   display: grid;
   grid-template-columns: 1fr;
-  margin-top: 64px;
+  padding-inline: 8px;
+  padding-block: 0 64px;
 
   @media (--desktop) {
     grid-template-columns: 1fr 3fr;
@@ -39,11 +46,12 @@ h1, h2, h3, h4 {
     display: inline-block;
     position: relative;
     padding-inline: 8px;
-    background: var(--white);
+
+    background: var(--background);
   }
 
   @media (--desktop) {
-    border-top: 2px solid var(--black);
+    border-top: 2px solid var(--accent);
   }
 
   @media (--until-desktop) {
@@ -52,9 +60,8 @@ h1, h2, h3, h4 {
       position: absolute;
       top: 50%;
       left: 0;
-      height: 2px;
       width: 100%;
-      background: var(--black);
+      border-top: 2px dashed var(--accent);
     }
   }
 }
@@ -77,6 +84,7 @@ h1, h2, h3, h4 {
   padding: 8px;
   border: 1px solid;
   border-radius: 4px;
+  background: var(--white);
 
   h3 {
     grid-area: title;
@@ -113,7 +121,7 @@ h1, h2, h3, h4 {
       text-transform: uppercase;
       font-family: 'Ledger';
       font-size: 0.75em;
-      color: var(--grey)
+      color: var(--accent)
     }
 
     &.blurb {

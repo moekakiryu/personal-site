@@ -18,6 +18,12 @@
               <h3>{{ restaurant.name }}</h3>
 
               <div class="attributes">
+                {% if restaurant.is_favorite %}
+                  <div class="must-visit" title="Must visit">
+                    {% include "melbourne/icons/star.svg" %}
+                  </div>
+                {% endif %}
+
                 {% if restaurant.wait_type != WaitTypes.NONE %}
                   <div class="wait">
                     {% if restaurant.wait_type == WaitTypes.WAIT_EXPECTED %}
@@ -39,19 +45,15 @@
                     {% endif %}
                   </div>
                 {% endif %}
-
-                {% if restaurant.is_favorite %}
-                  <div class="must-visit" title="Must visit">
-                    {% include "melbourne/icons/star.svg" %}
-                  </div>
-                {% endif %}
               </div>
 
               <p class="cuisine">{{ restaurant.cuisine }}</p>
 
               <p class="blurb">{{ restaurant.blurb }}</p>
 
-              <a href="#">Visit site</a>
+              {% if restaurant.website %}
+                <a href="{{restaurant.website}}" target="_blank">Visit site</a>
+              {% endif %}
             </div>
           {% endfor %}
         </div>

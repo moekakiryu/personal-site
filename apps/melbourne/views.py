@@ -17,7 +17,7 @@ meals_order = [
 ]
 
 def home(request, **kwargs):
-  restaurants = Restaurant.objects.all()
+  restaurants = Restaurant.objects.all().order_by('-order')
 
   meals = {meal: [] for meal in meals_order}
   for restaurant in restaurants:
