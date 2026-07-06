@@ -32,6 +32,10 @@ class Restaurant(models.Model):
     max_length=255,
   )
 
+  cuisine = models.CharField(
+    max_length=255,
+  )
+
   # Metadata
   meal_type = models.CharField(
     max_length=10,

@@ -1,16 +1,28 @@
+:root {
+  --black: #222;
+  --grey: #bbb;
+  --white: #fff;
+  --hover: #ececec;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
+  font-family: 'Nunito';
   padding-inline: 8px;
-  color: #222;
+  color: var(--black);
 }
 
-.recommendations {
+h1, h2, h3, h4 {
+  font-family: 'Ledger';
+}
+
+.recommendation {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 32px;
+  margin-top: 64px;
 
   @media (--desktop) {
     grid-template-columns: 1fr 3fr;
@@ -20,24 +32,45 @@ body {
 
 .meal-name {
   display: block;
-  border-top: 2px solid;
+  position: relative;
+  text-align: center;
 
   h2 {
-    margin-block: 1em 0;
+    display: inline-block;
+    position: relative;
+    padding-inline: 8px;
+    background: var(--white);
+  }
+
+  @media (--desktop) {
+    border-top: 2px solid var(--black);
+  }
+
+  @media (--until-desktop) {
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: var(--black);
+    }
   }
 }
 
 .restaurants {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 8px;
+  gap: 20px;
 }
 
 .restaurant {
   display: grid;
   grid-template:
     "title attributes" 
-    "content content" 
+    "cuisine cuisine"
+    "blurb blurb" 
     "cta cta" / 1fr auto;
   gap: 8px;
 
@@ -50,6 +83,7 @@ body {
     margin: 0;
 
     font-size: 1.4em;
+    font-weight: 200;
   }
 
   .attributes {
@@ -72,10 +106,22 @@ body {
   }
   
   p {
-    grid-area: content;
-
     margin: 0;
-    font-style: italic;
+
+    &.cuisine {
+      grid-area: cuisine;
+      text-transform: uppercase;
+      font-family: 'Ledger';
+      font-size: 0.75em;
+      color: var(--grey)
+    }
+
+    &.blurb {
+      grid-area: blurb;
+      margin-top: .5rem;
+      font-weight: 200;
+    }
+
   }
 
   a {
@@ -84,7 +130,7 @@ body {
     width: 100%;
     margin-top: 4px;
     padding: 4px;
-    border: 1px solid;
+    border: 1px dotted;
     border-radius: 4px;
 
     text-align: center;
@@ -92,16 +138,16 @@ body {
     color: inherit;
 
     &:hover {
-      background-color: #ececec;
+      background-color: var(--hover);
     }
   }
 }
 
 svg {
   .optional & {
-    fill: #b4b2b2;
+    fill: var(--grey);
   }
   .required & {
-    fill: black;
+    fill: var(--black);
   }
 }
