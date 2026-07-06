@@ -42,7 +42,7 @@ class Restaurant(models.Model):
   is_favorite = models.BooleanField()
 
   # Content Fields
-  title = models.CharField(
+  name = models.CharField(
     max_length=255,
   )
   blurb = models.TextField(
@@ -50,7 +50,7 @@ class Restaurant(models.Model):
   )
 
   def __str__(self):
-    return self.title
+    return self.name
 
 
 __all__ = [
