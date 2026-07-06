@@ -21,7 +21,6 @@ class Restaurant(models.Model):
     SNACK = "Snack"
     BAR = "Bar"
 
-  # Metadata
   slug = models.UUIDField(
     default=uuid.uuid4,
     editable=False,
@@ -29,22 +28,25 @@ class Restaurant(models.Model):
     null=False,
   )
 
-  wait_type = models.CharField(
-    max_length=30,
-    choices=WaitTypes.choices
+  name = models.CharField(
+    max_length=255,
   )
 
+  # Metadata
   meal_type = models.CharField(
     max_length=10,
     choices=MealTypes.choices
   )
 
+  wait_type = models.CharField(
+    max_length=30,
+    choices=WaitTypes.choices
+  )
+
   is_favorite = models.BooleanField()
 
   # Content Fields
-  name = models.CharField(
-    max_length=255,
-  )
+
   blurb = models.TextField(
     max_length=120,
   )
