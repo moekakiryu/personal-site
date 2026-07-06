@@ -1,0 +1,29 @@
+{% extends "melbourne/base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <h1>Restaurant Recommendations</h1>
+
+  {% for meal, restaurants in meals.items %}
+    <h2>{{meal}}</h2>
+
+    {% for restaurant in restaurants %}
+      <h3>{% if restaurant.is_favorite %}*{% endif %}{{ restaurant.title }}</h3>
+
+      {% if restaurant.wait_type == WaitTypes.NONE %}
+        <p>[No wait]</p>
+      {% elif restaurant.wait_type == WaitTypes.WAIT_EXPECTED %}
+        <p>[Wait expected]</p>
+      {% elif restaurant.wait_type == WaitTypes.LONG_WAIT_EXPECTED %}
+        <p>[Long Wait expected]</p>
+      {% elif restaurant.wait_type == WaitTypes.BOOKING_RECOMMENDED %}
+        <p>[Booking Recommended]</p>
+      {% elif restaurant.wait_type == WaitTypes.BOOKING_REQUIRED %}
+        <p>[Booking Required]</p>
+      {% endif %}
+
+      <p>{{ restaurant.blurb }}</p>
+    {% endfor %}
+  {% endfor %}
+{% endblock content %}

@@ -9,6 +9,7 @@ class Review(models.Model):
   class WaitTypes(models.TextChoices):
     NONE = "None"
     WAIT_EXPECTED = "Wait Expected"
+    LONG_WAIT_EXPECTED = "Long Wait Expected"
     BOOKING_RECOMMENDED = "Booking Recommended"
     BOOKING_REQUIRED = "Booking Required"
 
@@ -36,6 +37,8 @@ class Review(models.Model):
     max_length=10,
     choices=MealTypes.choices
   )
+
+  is_favorite = models.BooleanField()
 
   # Content Fields
   title = models.CharField(
