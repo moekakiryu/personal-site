@@ -1,0 +1,28 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  {# General Metadata#}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% block head.meta %}{% endblock head.meta %}
+
+  {# Stylesheets #}
+  <link rel="preload" href="{% static 'melbourne/css/main.min.css' %}" as="style">
+  <link rel="stylesheet" href="{% static 'melbourne/css/main.min.css' %}">
+  {% block head.styles %}{% endblock head.styles %}
+
+  {# Javascript #}
+  <script src="{% static "melbourne/js/main.min.js" %}" defer></script>
+
+  {# Title #}
+  <title>{% block head.title %} {{ meta.current.name|default:"Page" }} {% endblock head.title %} | Cas Lewandowski</title>
+</head>
+
+<body class="layout-container line-numbers match-braces no-brace-select">
+  <main class="layout-content" role="main">
+    {% block content%}{% endblock content %}
+  </main>
+</body>
+</html>

@@ -301,6 +301,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@raymondlewandowski/melbourne@workspace:apps/melbourne":
+  version: 0.0.0-use.local
+  resolution: "@raymondlewandowski/melbourne@workspace:apps/melbourne"
+  dependencies:
+    "@types/node": "npm:^22.13.9"
+    autoprefixer: "npm:^10.4.20"
+    cssnano: "npm:^7.0.6"
+    dotenv: "npm:^16.4.7"
+    esbuild: "npm:^0.25.2"
+    npm-run-all: "npm:^4.1.5"
+    postcss: "npm:^8.5.3"
+    postcss-cli: "npm:^11.0.0"
+    postcss-custom-media: "npm:^11.0.5"
+    postcss-header: "npm:^3.0.3"
+    postcss-import: "npm:^16.1.0"
+    postcss-nested: "npm:^7.0.2"
+    postcss-scss: "npm:^4.0.9"
+  languageName: unknown
+  linkType: soft
+
 "@raymondlewandowski/www@workspace:apps/www":
   version: 0.0.0-use.local
   resolution: "@raymondlewandowski/www@workspace:apps/www"
