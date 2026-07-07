@@ -45,7 +45,10 @@ h1, h2, h3, h4 {
 
 .meal-name {
   display: block;
-  position: relative;
+  position: sticky;
+  top: 0;
+  background: var(--background);
+  box-shadow: 0 4px 8px -9px var(--black);
   text-align: center;
 
   h2 {
@@ -58,6 +61,7 @@ h1, h2, h3, h4 {
 
   @media (--desktop) {
     text-align: left;
+    box-shadow: none;
     border-top: 2px solid var(--accent);
   }
 
