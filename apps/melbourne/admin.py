@@ -17,6 +17,7 @@ class RestaurantAdmin(admin.ModelAdmin):
         'price_type',
         'wait_type',
         'meal_type',
+        'cover_type',
         'cuisine',
       )
     }),

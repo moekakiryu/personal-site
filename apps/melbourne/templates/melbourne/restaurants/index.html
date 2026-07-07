@@ -106,6 +106,12 @@
                   </div>
                 {% endif %}
 
+                {% if restaurant.cover_type == CoverType.NO_COVER %}
+                  <div title="Outdoors - No Cover">
+                    {% include "melbourne/icons/umbrella.svg" %}
+                  </div>
+                {% endif %}
+
                 {% if restaurant.wait_type != WaitTypes.NONE %}
                   <div class="wait">
                     {% if restaurant.wait_type == WaitTypes.WAIT_EXPECTED %}

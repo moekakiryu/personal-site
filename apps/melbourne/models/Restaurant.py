@@ -26,6 +26,10 @@ class Restaurant(models.Model):
     AVERAGE = "$$"
     EXPENSIVE = "$$$"
 
+  class CoverType(models.TextChoices):
+    COVER = "cover"
+    NO_COVER = "no_cover"
+
   slug = models.UUIDField(
     default=uuid.uuid4,
     editable=False,
@@ -59,7 +63,12 @@ class Restaurant(models.Model):
 
   price_type = models.CharField(
     max_length=5,
-    choices=PriceType
+    choices=PriceType.choices
+  )
+
+  cover_type = models.CharField(
+    max_length=15,
+    choices=CoverType.choices
   )
 
   is_favorite = models.BooleanField()
@@ -67,7 +76,7 @@ class Restaurant(models.Model):
   # Content Fields
 
   blurb = models.TextField(
-    max_length=120,
+    max_length=240,
   )
 
   website = models.URLField(

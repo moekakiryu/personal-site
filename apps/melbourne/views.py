@@ -25,5 +25,6 @@ def home(request, **kwargs):
         for meal, restaurants in meals.items()
         if len(restaurants)
     },
-    'WaitTypes': Restaurant.WaitTypes
+    'WaitTypes': Restaurant.WaitTypes,
+    'CoverType': Restaurant.CoverType,
   })
