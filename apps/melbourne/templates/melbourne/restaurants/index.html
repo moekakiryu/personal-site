@@ -11,6 +11,9 @@
       places.<br><br>Hopefully this helps narrow things down a little!!<br>
     </p>
     <h2>Legend</h2>
+
+    <hr>
+
     <p class="legend-item">
       <span class="entry">
         <span class="icon">
@@ -24,6 +27,8 @@
         good food.
       </span>
     </p>
+
+    <hr>
 
     <p class="legend-item">
       <span class="entry">
@@ -70,7 +75,6 @@
       </span>
     </p>
 
-
     <p class="legend-item">
       <span class="entry">
         <span class="icon">
@@ -84,8 +88,25 @@
         restaurants.
       </span>
     </p>
-  </div>
 
+    <hr>
+
+    <p class="legend-item">
+      <span class="entry">
+        <span class="icon">
+          {% include "melbourne/icons/umbrella.svg" %}
+        </span>
+        No indoor seating
+      </span>
+      <span class="definition">
+        These places are either takeaway only or don't have much space inside,
+        so plan on bringing a jacket when you visit. Note some of these have no
+        seats at all, while others just don't have protection from the elements.
+      </span>
+    </p>
+
+    <hr>
+  </div>
 
   <div class="recommendations">
     {% for meal, restaurants in meals.items %}
