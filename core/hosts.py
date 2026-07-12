@@ -5,4 +5,5 @@ host_patterns = patterns('',
     host(r'', settings.ROOT_URLCONF, name='www'),
     host(r'metro', 'apps.metro.urls', name='metro'),
     host(r'melbourne', 'apps.melbourne.urls', name='melbourne'),
+    host(r'xor', 'apps.xor.urls', name='xor'),
 )
