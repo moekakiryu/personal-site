@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <script type="text/javascript">
+        const documentUrl = new URL(document.location)
+
+        const encrypted = documentUrl.searchParams.get('encrypted')
+        const paramKey = documentUrl.searchParams.get('key')
+
+
+        const xorCipher = {
+            encrypt: function(string, key) {
+                return Array.from(string)
+                    .map((char, index) => char.charCodeAt(0) ^ key[index % key.length].charCodeAt(0))
+                    .map(dec => dec.toString(16).padStart(2, '0'))
+                    .join('')
+            },
+            decrypt: function(string, key) {
+                return string.match(/.{1,2}/g)
+                    .map((hex, index) => parseInt(hex, 16) ^ key[index % key.length].charCodeAt(0))
+                    .map(code => String.fromCharCode(code))
+                    .join('')
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const outputEle = document.getElementById('output')
+            const key = paramKey ?? prompt('Please enter encryption key')
+
+            if (encrypted) {
+                outputEle.textContent = xorCipher.decrypt(encrypted, key)
+            } else {
+                outputEle.textContent = xorCipher.encrypt(prompt('Please enter text to be encrypted'), key)
+            }
+        })
+    </script>
+</head>
+<body>
+    <div id="output"></div>
+</body>
+</html>

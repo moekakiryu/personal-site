@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'apps.www.apps.WwwConfig',
     'apps.metro.apps.MetroConfig',
     'apps.melbourne.apps.MelbourneConfig',
+    'apps.xor.apps.XorConfig',
 ]
 
 # https://docs.djangoproject.com/en/5.1/ref/settings/#middleware
