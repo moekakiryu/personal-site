@@ -1,15 +1,16 @@
 # Portfolio Website
 
-This directory contains the source code for my personal website:
+This directory contains the source code for a mircosite displaying my favorite
+restaurants around Melbourne.
 
-[https://raymondlewandowski.dev](https://raymondlewandowski.dev)
+[https://melbourne.raymondlewandowski.dev](https://melbourne.raymondlewandowski.dev)
 
 ## Commands
 
 All app-specific commands are run with yarn. For django app management, please
 interact with `manage.py` in the root directory for this project.
 
-| Name                | Description 
+| Name                | Description
 |---------------------|------------------
 | `build`             | Build all static assets for this application (see commands below)
 | `build:css`         | Build and minify css files
@@ -23,9 +24,4 @@ interact with `manage.py` in the root directory for this project.
 
 This is almost entirely a static site, as such very little build steps are
 required. This site will be built and deployed automatically with the
-core application. 
-
-## Guidelines
-
-1. [CSS / Styling](./docs/Styling.md)
-1. [JS / Scripts](./docs/Scripts.md)
+core application.

@@ -54,6 +54,8 @@ See: https://docs.djangoproject.com/en/5.1/ref/django-admin/#available-commands
 ## Project Index
 
 1. [Portfolio Website](./apps/www/README.md)
+1. [Melbourne Restaurant Recommendations](./apps/melbourne/README.md)
+1. [XOR Encryption Tool](./apps/xor/README.md)
 
 ## Guidelines
 
