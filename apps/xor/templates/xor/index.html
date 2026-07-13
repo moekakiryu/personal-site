@@ -12,22 +12,22 @@
 
       const xorCipher = {
         encrypt: function(string, key) {
-          return Array.from(string)
-            .map((char, index) => char.charCodeAt(0) ^ key[index % key.length].charCodeAt(0))
-            .map(dec => dec.toString(16).padStart(2, '0'))
-            .join('')
+          return new TextEncoder()
+            .encode(string)
+            .map((int, index) => int ^ key[index % key.length].charCodeAt(0))
+            .toBase64()
         },
-        decrypt: function(string, key) {
-          return string.match(/.{1,2}/g)
-            .map((hex, index) => parseInt(hex, 16) ^ key[index % key.length].charCodeAt(0))
-            .map(code => String.fromCharCode(code))
-            .join('')
+        decrypt: function(base64, key) {
+          return new TextDecoder().decode(
+            Uint8Array
+              .fromBase64(base64)
+              .map((int, index) => int ^ key[index % key.length].charCodeAt(0))
+          )
         }
       }
 
       const setAttributeVisibility = (attribute, isVisible) => {
         document.querySelectorAll(`[${attribute}]`).forEach(ele => {
-          console.log(ele, isVisible)
           if (isVisible) {
             ele.classList.remove('hidden')
           } else {
