@@ -58,7 +58,7 @@
         elements.encryptButton.addEventListener('click', () => {
           elements.output.textContent = xorCipher.encrypt(
             elements.textInput.value,
-            elements.keyInput.value,
+            elements.keyInput.value.trim(),
           )
           elements.actions.style.display = null
         })
@@ -73,7 +73,7 @@
         })
 
         if (encrypted) {
-          const key = paramKey ?? prompt('Please enter encryption key')
+          const key = paramKey ?? prompt('Please enter encryption key').trim()
 
           elements.output.textContent = xorCipher.decrypt(encrypted, key)
           setAttributeVisibility(attributes.encryptOnly, false)
