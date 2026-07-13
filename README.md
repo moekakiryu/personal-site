@@ -51,6 +51,49 @@ See: https://docs.djangoproject.com/en/5.1/ref/django-admin/#available-commands
 | `build`             | Run build scripts for all applications
 | `dev`               | Run dev scripts for all applications
 
+## Folder Structure
+
+*nb Only common files are included in this tree. Config files (such as
+.gitignore and Django's asgi.py) and meta files (such as \_\_init\_\_.py) have
+been excluded.*
+
+```
+personal-site
+├── apps                    # Source code for individual sites
+│  └── <app name>
+│    ├── models/            # Django ORM configuration
+│    ├── migrations/
+│    │
+│    ├── scripts/           # Front end content
+│    ├── styles/
+│    ├── static/
+│    ├── templates/
+│    │
+│    ├── admin.py           # Django app files
+│    ├── apps.py
+│    ├── urls.py
+│    └── views.py
+│
+├── core                    # Source for global Django config
+│  ├── context_processors/  # Custom Django context processors
+│  │
+│  ├── static/              # Global static files [1]
+│  ├── templatetags/        # Custom Django template tags
+│  ├── templates/           # Global Django templates [2]
+│  │
+│  ├── hosts.py             # Subdomain configuration
+│  ├── urls.py              # Top-level URL mapping
+│  └── settings.py          # Main Django config
+│
+├── docs                    # Project documentation
+├── scripts                 # Shell scripts for use by CI/CD
+└── utils                   # Global python helper functions
+```
+
+1. Primarily for use in the django admin portal, but is technically usable by
+   all subdomains.
+2. For example, pages such as default HTTP error pages
+
 ## Project Index
 
 1. [Portfolio Website](./apps/www/README.md)
