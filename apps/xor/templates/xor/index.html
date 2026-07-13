@@ -25,6 +25,17 @@
         }
       }
 
+      const setAttributeVisibility = (attribute, isVisible) => {
+        document.querySelectorAll(`[${attribute}]`).forEach(ele => {
+          console.log(ele, isVisible)
+          if (isVisible) {
+            ele.classList.remove('hidden')
+          } else {
+            ele.classList.add('hidden')
+          }
+        })
+      }
+
       document.addEventListener('DOMContentLoaded', () => {
         const elements = {
           output: document.getElementById('output'),
@@ -42,17 +53,6 @@
         const attributes = {
           encryptOnly: 'encrypt-only',
           decryptOnly: 'decrypt-only',
-        }
-
-        const setAttributeVisibility = (attribute, isVisible) => {
-          document.querySelectorAll(`[${attribute}]`).forEach(ele => {
-            console.log(ele, isVisible)
-            if (isVisible) {
-              ele.classList.remove('hidden')
-            } else {
-              ele.classList.add('hidden')
-            }
-          })
         }
 
         elements.encryptButton.addEventListener('click', () => {
