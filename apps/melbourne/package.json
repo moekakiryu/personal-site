@@ -18,7 +18,7 @@
     "cssnano": "^7.0.6",
     "dotenv": "^16.4.7",
     "esbuild": "^0.25.2",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.18",
     "postcss-cli": "^11.0.1",
     "postcss-custom-media": "^11.0.5",
     "postcss-header": "^3.0.3",

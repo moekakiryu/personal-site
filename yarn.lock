@@ -284,7 +284,7 @@ __metadata:
     dotenv: "npm:^16.4.7"
     esbuild: "npm:^0.25.2"
     npm-run-all2: "npm:^9.0.2"
-    postcss: "npm:^8.5.3"
+    postcss: "npm:^8.5.18"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^11.0.5"
     postcss-header: "npm:^3.0.3"
@@ -304,7 +304,7 @@ __metadata:
     dotenv: "npm:^16.4.7"
     esbuild: "npm:^0.25.2"
     npm-run-all2: "npm:^9.0.2"
-    postcss: "npm:^8.5.3"
+    postcss: "npm:^8.5.18"
     postcss-cli: "npm:^11.0.1"
     postcss-custom-media: "npm:^11.0.5"
     postcss-header: "npm:^3.0.3"
@@ -1386,12 +1386,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.8":
-  version: 3.3.9
-  resolution: "nanoid@npm:3.3.9"
+"nanoid@npm:^3.3.12":
+  version: 3.3.16
+  resolution: "nanoid@npm:3.3.16"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 10c0/4515abe53db7b150cf77074558efc20d8e916d6910d557b5ce72e8bbf6f8e7554d3d7a0d180bfa65e5d8e99aa51b207aa8a3bf5f3b56233897b146d592e30b24
+  checksum: 10c0/bbf2dcffe22d2b62d16de2711752070b539c0f644c7916f823ad6521986b2078cbe524f2d6240f58c46e9141ea0c7b87a029e100c0f7f175228cacaf30e41bba
   languageName: node
   linkType: hard
 
@@ -2012,14 +2012,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.3":
-  version: 8.5.3
-  resolution: "postcss@npm:8.5.3"
+"postcss@npm:^8.5.18":
+  version: 8.5.18
+  resolution: "postcss@npm:8.5.18"
   dependencies:
-    nanoid: "npm:^3.3.8"
+    nanoid: "npm:^3.3.12"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
-  checksum: 10c0/b75510d7b28c3ab728c8733dd01538314a18c52af426f199a3c9177e63eb08602a3938bfb66b62dc01350b9aed62087eabbf229af97a1659eb8d3513cec823b3
+  checksum: 10c0/6fbab24a457ca5b90d423c333d0bab13e6646fda646e83235eed892f9e4f2dc6c50689ddc5ac1632fc085be2e096d2e8e03779ac092de6353e1cfcbbc3681685
   languageName: node
   linkType: hard
 
