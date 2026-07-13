@@ -3,42 +3,161 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>XOR Encryption Tool</title>
     <script type="text/javascript">
-        const documentUrl = new URL(document.location)
+      const searchParams = new URLSearchParams(document.location.search)
 
-        const encrypted = documentUrl.searchParams.get('encrypted')
-        const paramKey = documentUrl.searchParams.get('key')
+      const encrypted = searchParams.get('encrypted')
+      const paramKey = searchParams.get('key')
 
+      const xorCipher = {
+        encrypt: function(string, key) {
+          return Array.from(string)
+            .map((char, index) => char.charCodeAt(0) ^ key[index % key.length].charCodeAt(0))
+            .map(dec => dec.toString(16).padStart(2, '0'))
+            .join('')
+        },
+        decrypt: function(string, key) {
+          return string.match(/.{1,2}/g)
+            .map((hex, index) => parseInt(hex, 16) ^ key[index % key.length].charCodeAt(0))
+            .map(code => String.fromCharCode(code))
+            .join('')
+        }
+      }
 
-        const xorCipher = {
-            encrypt: function(string, key) {
-                return Array.from(string)
-                    .map((char, index) => char.charCodeAt(0) ^ key[index % key.length].charCodeAt(0))
-                    .map(dec => dec.toString(16).padStart(2, '0'))
-                    .join('')
-            },
-            decrypt: function(string, key) {
-                return string.match(/.{1,2}/g)
-                    .map((hex, index) => parseInt(hex, 16) ^ key[index % key.length].charCodeAt(0))
-                    .map(code => String.fromCharCode(code))
-                    .join('')
-            }
+      document.addEventListener('DOMContentLoaded', () => {
+        const elements = {
+          output: document.getElementById('output'),
+
+          // 'Encrypt' form
+          textInput: document.getElementById('text-input'),
+          keyInput: document.getElementById('key-input'),
+          encryptButton: document.getElementById('encrypt-button'),
+
+          // Quick actions
+          copyToClipboard: document.getElementById('copy-to-clipboard'),
+          getUrl: document.getElementById('get-url'),
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const outputEle = document.getElementById('output')
-            const key = paramKey ?? prompt('Please enter encryption key')
+        const attributes = {
+          encryptOnly: 'encrypt-only',
+          decryptOnly: 'decrypt-only',
+        }
 
-            if (encrypted) {
-                outputEle.textContent = xorCipher.decrypt(encrypted, key)
+        const setAttributeVisibility = (attribute, isVisible) => {
+          document.querySelectorAll(`[${attribute}]`).forEach(ele => {
+            console.log(ele, isVisible)
+            if (isVisible) {
+              ele.classList.remove('hidden')
             } else {
-                outputEle.textContent = xorCipher.encrypt(prompt('Please enter text to be encrypted'), key)
+              ele.classList.add('hidden')
             }
+          })
+        }
+
+        elements.encryptButton.addEventListener('click', () => {
+          elements.output.textContent = xorCipher.encrypt(
+            elements.textInput.value,
+            elements.keyInput.value,
+          )
+          elements.actions.style.display = null
         })
+
+        elements.getUrl.addEventListener('click', () => {
+          searchParams.set('encrypted', elements.output.textContent)
+          window.location.search = searchParams
+        })
+
+        elements.copyToClipboard.addEventListener('click', () => {
+          navigator.clipboard.writeText(elements.output.textContent)
+        })
+
+        if (encrypted) {
+          const key = paramKey ?? prompt('Please enter encryption key')
+
+          elements.output.textContent = xorCipher.decrypt(encrypted, key)
+          setAttributeVisibility(attributes.encryptOnly, false)
+          setAttributeVisibility(attributes.decryptOnly, true)
+        } else {
+          setAttributeVisibility(attributes.encryptOnly, true)
+          setAttributeVisibility(attributes.decryptOnly, false)
+        }
+      })
     </script>
+
+    <style>
+      .hidden {
+        display: none !important;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+        gap: 1rem;
+      }
+
+      .labeled {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+      }
+
+      .actions {
+        display: flex;
+        gap: .5rem;
+      }
+
+      .actions > * {
+        flex: 100% 1 1;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: .85rem;
+      }
+
+      hr {
+        width: 100%;
+        border-top: 1px solid;
+        border-bottom: none;
+        margin-block: 0 .5em;
+      }
+
+      #output {
+        word-break: break-all;
+        min-height: 1.25em;
+        padding: 8px 12px;
+        background-color: #eee;
+      }
+    </style>
 </head>
 <body>
-    <div id="output"></div>
+  <div class="form">
+    <div class="form" encrypt-only>
+      <div class="labeled">
+        <label for="text-input">Input</label>
+        <textarea id="text-input"></textarea>
+      </div>
+
+      <div class="labeled">
+        <label for="key-input">Key</label>
+        <input type="text" id="key-input">
+      </div>
+
+      <button id="encrypt-button">Encrypt</button>
+      <hr>
+    </div>
+
+    <div class="labeled">
+      <label for="output" encrypt-only>Result</label>
+      <div id="output"></div>
+    </div>
+
+    <div class="actions">
+      <button id="copy-to-clipboard">Copy to clipboard</button>
+      <button id="get-url" encrypt-only>Get URL</button>
+    </div>
+  </div>
 </body>
 </html>
